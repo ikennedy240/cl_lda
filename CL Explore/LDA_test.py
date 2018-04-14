@@ -1,3 +1,4 @@
+#i need all these things 
 import logging
 import os
 from gensim import corpora, models, similarities, matutils
