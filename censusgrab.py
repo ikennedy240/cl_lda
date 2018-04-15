@@ -77,7 +77,7 @@ def JoinNewData(old, new):
 
 def StateTractData(st):
     try:
-        x = pd.read_csv("/resources"+st+"tracts.csv",dtype = {'GEOID10':object,'blockid':object})
+        x = pd.read_csv("resources/"+st+"tracts.csv", dtype = {'GEOID10':object,'blockid':object})
         print('read file')
     except:
         #Census API code
@@ -100,6 +100,10 @@ def mergeCLandCensus(cldata,state,thresh=67):
     #create a dummy variable '1' for neighborhoods with white population over a certain percentage
     cl_withtracts['high_white']=np.where(cl_withtracts['percent_white']>=thresh, 1, 0)
     return cl_withtracts
+
+cldata = pd.read_csv('data/cl_lda4_14.csv', dtype = {'GEOID10':object,'blockid':object}, index_col=0)
+
+
 
 def prepforML(cldata,state='WA',thresh=67, x_cols = 'body_text', y_cols = 'high_white'):
     #we need a DF with one column called 'body_text' filled with CL
@@ -154,15 +158,41 @@ def getNeighborhoodStopWords(rawhoods, city='seattle', merge=True, force_update=
 
 def makeNeighborhoodList(hoodseries, save=True):
     #clean up some basic stuff in hoods
-    hoods = pd.Series(hoodseries.dropna()).str.replace(r'\(|\)','').str.lower().str.replace(', ?wa','').str.replace(r'.+\d.+','')
+    hoods = pd.Series(hoodseries.dropna()).str.replace(r'\(|\)','').str.lower().str.replace(', ?wa$','').str.replace(r'.*\d.*','')
     #split the hoods on commas and slashes and then add those to the list and count frequency
-    hoods = hoods[hoods!=''].str.split(r',|/|-|&|#', expand=True).stack().str.strip().reset_index(drop=True).value_counts()
+    hoods = hoods[hoods!=''].str.split(r',|/|-|&|#|\|', expand=True).stack().str.strip().reset_index(drop=True)
+    #check the length
+    hoods = pd.concat([hoods, hoods.str.len()], axis = 1)
+    #clear those with less than 3 chars and more than 25 chars
+    hoods = hoods[hoods[1]>3]
+    hoods = hoods[hoods[1]<25]
+    #only inluce hoods that show up more than 3 times
+    hoods = list(hoods[0].value_counts()[hoods[0].value_counts()>1].index)
     #writes to file
     if save:
         with open('resources/hoods.txt', 'w') as f:
-            [f.write(x+', ') for x in hoods.index]
+            [f.write(x+', ') for x in hoods]
     #returns list of neighborhood names with counts
     return hoods
+
+
+for name in hoods:
+    df['body_text'] = df.body_text.str.replace(r' ?'+name+' ?', " #HOOD ", case=False)
+    if hoods.index(name) % 100 == 0:
+        print(hoods.index(name))
+
+test = seattlefull.body_text
+test = test.str.replace("QR Code Link to This Post", '').str.replace(r'\n','').str.replace(r'\r',' ').str.strip()
+test = test.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*','#URL').str.replace(r'http\S*', '#URL').str.replace(r'\d+', '#NUMBER')
+test = test.str.replace(r'^,+','').str.replace(r',,+','')str.strip()
+
+df.body_text = test
+df.to_csv('seattlefull.csv')
+
+
+df_cleaned = df.body_text.dropna()
+df_cleaned.shape
+#returns list of neighborhood names with counts
 
 #merge with sklearn default english stopwords list
 #Import Ian's Seattle Data, clean it up and match to census tract
@@ -178,9 +208,10 @@ ian = seattlefull.drop('neighborhood', axis = 1)
 cl_full = pd.read_csv('data/full_cl_dump.csv')
 cl_full.shape
 
-cl_dropped = cl_full.drop_duplicates(['latitude','longitude','price'])
-
-cl_dropped['body_100']=cl_dropped.body_text.str.slice(stop=100).copy()
+cl_dropped = df.drop_duplicates(['latitude','longitude','price'])
+cl_dropped.shape
+cl_dropped['body_100']=cl_dropped.body_text.str.slice(stop=1000).copy()
+cl_dropped.body_100.unique().shape
 cl_dropped.to_csv('data/cl_dropped.csv')
 ##Import CHess's set, rename column to 'body_text, make sure GEOID10 is type object'
 

@@ -14,7 +14,13 @@ import difflib
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 # these stopwords include neighborhood names and some other domain specific terms
+with open('resources/hoods.txt') as f:
+    hoods = f.read()
+stopwords = hoods + " ".join(list(stop_words.ENGLISH_STOP_WORDS))
+with open('resources/stopwords.txt') as f:
+    f.write(stopwords)
 stopwords = stop_words.ENGLISH_STOP_WORDS
+
 
 
 #takes a list of documents and returns a corpus and dictionary
@@ -28,14 +34,13 @@ def df_to_corpus(documents):
     return(corpus, dictionary)
 
 #this is a bad filename for what is a large set of craigslist data
-df = pd.read_csv("data/cl_dropped.csv", index_col = 0).reset_index(drop=True).dropna()
-
+df = pd.read_csv("data/cl_lda4_14.csv", index_col = 0)
 #clean up the text for readablility
-df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','').dropna()
+#df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','').dropna()
 #drop texts with no word characters after cleaning, then resets the index, preserving the
 #imported index as id (this is so I can mess around with what gets dropped)
 
-df = df[df.body_text.str.contains(r'\w')]
+#df = df[df.body_text.str.contains(r'\w')]
 
 #there were a lot of almost identical texts, this is a dirty way to filter them out
 df['body_100']=df.body_text.str.slice(stop=100)
@@ -47,14 +52,14 @@ corpus, dictionary = df_to_corpus(df.body_text.str.replace(r'\W',' ').values)
 dictionary.save('models/cl_dictionary4_12.dict')
 #Then fit an LDA model (or load model 4_12 below)
 n_topics = 50
-n_passes = 20
+n_passes = 100
 #Run this if you have access to more than one core set workers=n_cores-1
-model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0, workers=3)
+model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 1000, minimum_probability=0, workers=3)
 #otherwise run this
 #model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
 
 #save the model for future use
-model.save('models/4_12model')
+model.save('models/4_14model')
 #reload an old model
 #model = models.LdaModel.load('models/4_12model')
 
@@ -67,14 +72,15 @@ df = df.join(pd.DataFrame(doc_topic_matrix))
 
 
 #save the mearged df so we don't have to run the model next time
-df.to_csv('data/cl_lda4_12.csv')
+df.to_csv('data/cl_lda4_14.csv')
 #use these lines to load saved data:
 #df= pd.read_csv('cl_lda4_12.csv', index_col=0)
 #df.rename(dict(zip(df.columns[3:],range(n_topics))),axis=1, inplace=True)
 
+
+
 #make a list of topics and clean it for readablility
 topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
-
 
 #Count the occurence of each topic by high_white
 no_text = df.drop(['body_text','id'], axis = 1).copy()
