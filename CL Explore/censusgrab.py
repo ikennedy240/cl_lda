@@ -77,7 +77,7 @@ def JoinNewData(old, new):
 
 def StateTractData(st):
     try:
-        x = pd.read_csv(st+"tracts.csv",dtype = {'GEOID10':object,'blockid':object})
+        x = pd.read_csv("/resources"+st+"tracts.csv",dtype = {'GEOID10':object,'blockid':object})
         print('read file')
     except:
         #Census API code
@@ -152,36 +152,28 @@ def getNeighborhoodStopWords(rawhoods, city='seattle', merge=True, force_update=
         pd.Series(list(stopwords)).to_csv(city+"stopwords.csv")
     return stopwords
 
-#merge with sklearn default english stopwords list
-help("modules")
+def makeNeighborhoodList(hoodseries, save=True):
+    #clean up some basic stuff in hoods
+    hoods = pd.Series(hoodseries.dropna()).str.replace(r'\(|\)','').str.lower().str.replace(', ?wa','').str.replace(r'.+\d.+','')
+    #split the hoods on commas and slashes and then add those to the list and count frequency
+    hoods = hoods[hoods!=''].str.split(r',|/|-|&|#', expand=True).stack().str.strip().reset_index(drop=True).value_counts()
+    #writes to file
+    if save:
+        with open('resources/hoods.txt', 'w') as f:
+            [f.write(x+', ') for x in hoods.index]
+    #returns list of neighborhood names with counts
+    return hoods
 
+#merge with sklearn default english stopwords list
+os.chdir('/Users/ikennedy/OneDrive - UW/UW/GIT/cl_lda/CL Explore')
 #Import Ian's Seattle Data, clean it up and match to census tract
 #import previous data
-os.chdir("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data")
-seattlefull =  pd.read_csv("seattlefull.csv", dtype = {'GEOID10':object,'blockid':object}).rename(columns={'body':'body_text'})
-
-#import a new file
-files = os.listdir('New Data')
-del(files[1])
-files
-dates = ['1/16', '1/21', '1/22', '1/26', '2/2', '1/27', '1/19', '1/25', '2/1', '1/24', '1/30', '1/18']
-count = 0
-files[11]
-dates[11]
-date ='1/16'
--for date in dates:
-    seattlenew = pd.read_csv('New Data/'+files[count]).rename(columns={'body':'body_text'})
-    seattlenew['date'] = date
-    seattle = getCensusCode(seattlenew)
-    seattle.to_csv('seattle1_16.csv')
-    print(date)
+seattlefull =  pd.read_csv("seattlefull.csv", dtype = {'GEOID10':object,'blockid':object}, index_col=0).rename(columns={'body':'body_text'})
 
 
-if count==0:
-    seattle = seattlenew
-seattle = seattle.append(seattlenew)
-print(count)
-count+=1
+
+
+
 
 
 seattle.shape
