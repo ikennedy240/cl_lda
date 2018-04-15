@@ -1,9 +1,10 @@
-#i need all these things 
+#i need all these things
 import logging
 import os
 from gensim import corpora, models, similarities, matutils
 import pandas as pd
 from sklearn.feature_extraction import text
+from sklearn.feature_extraction import stop_words
 from operator import itemgetter
 import numpy as np
 import regex as re
@@ -13,8 +14,7 @@ import difflib
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 # these stopwords include neighborhood names and some other domain specific terms
-with open('data/stopwords.txt') as f:
-    stopwords = [x.strip() for x in f.readlines()]
+stopwords = stop_words.ENGLISH_STOP_WORDS
 
 
 #takes a list of documents and returns a corpus and dictionary
@@ -28,12 +28,13 @@ def df_to_corpus(documents):
     return(corpus, dictionary)
 
 #this is a bad filename for what is a large set of craigslist data
-df = pd.read_csv("data/cl_data.csv", index_col = 0).reset_index(drop=True)
+df = pd.read_csv("data/cl_dropped.csv", index_col = 0).reset_index(drop=True).dropna()
 
 #clean up the text for readablility
-df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','')
+df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','').dropna()
 #drop texts with no word characters after cleaning, then resets the index, preserving the
 #imported index as id (this is so I can mess around with what gets dropped)
+
 df = df[df.body_text.str.contains(r'\w')]
 
 #there were a lot of almost identical texts, this is a dirty way to filter them out

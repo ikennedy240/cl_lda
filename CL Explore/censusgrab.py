@@ -165,44 +165,28 @@ def makeNeighborhoodList(hoodseries, save=True):
     return hoods
 
 #merge with sklearn default english stopwords list
-os.chdir('/Users/ikennedy/OneDrive - UW/UW/GIT/cl_lda/CL Explore')
 #Import Ian's Seattle Data, clean it up and match to census tract
 #import previous data
-seattlefull =  pd.read_csv("seattlefull.csv", dtype = {'GEOID10':object,'blockid':object}, index_col=0).rename(columns={'body':'body_text'})
+
+ian = seattlefull.drop('neighborhood', axis = 1)
+# makes a column list to merge my scraped data with Chris's
+# colnames = ian.columns
+# merge = hess_cl[['GEOID10', 'matchAddress', 'GISJOIN', 'body_text', 'listingDate','lat','lng','postID', 'scrapedRent']]
+# name_dict = dict(zip(merge.columns, colnames))
 
 
+cl_full = pd.read_csv('data/full_cl_dump.csv')
+cl_full.shape
 
+cl_dropped = cl_full.drop_duplicates(['latitude','longitude','price'])
 
-
-
-
-seattle.shape
-seattle.to_csv("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data/15_2.csv")
-seattle = pd.read_csv("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data/15_2.csv")
-seattlenew = getCensusCode(seattle)
-seattlefull = seattlefull.append(seattlenew)
-seattlefull.date.unique()
-#append the new data
-seattlefull.shape
-#update the file
-seattlefull.to_csv('seattlefull.csv')
-seattlefull.head()
-
-seattlefull.head()
+cl_dropped['body_100']=cl_dropped.body_text.str.slice(stop=100).copy()
+cl_dropped.to_csv('data/cl_dropped.csv')
 ##Import CHess's set, rename column to 'body_text, make sure GEOID10 is type object'
-hess_cl = pd.read_csv("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data/chcl.csv", dtype = {'GEOID10':object}).rename(columns={'listingText':'body_text'})
 
 #clean and export only columns 'body_text' and 'highwhite'
-hess_ml = prepforML(hess_cl, thresh= 40)
 
-#Repeat Above For Seattle sample, excluding date for validation
-date = '12/31'
-ian_ml = prepforML(seattlefull, thresh = 40).copy()
-df = hess_ml.append(ian_ml)
-df.to_csv("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data/test_df.csv")
-df = pd.read_csv("/Users/ikennedy/OneDrive - UW/UW/Personal R/CL STUFF/Chris's Data/test_df.csv")
-#repeat above for validation set using specific date
-validation = prepforML(seattlefull[seattlefull.date==date]).copy()
+
 
 '''prepare a train/test set and a validation set'''
 # Split data into training and test sets
