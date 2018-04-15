@@ -34,7 +34,7 @@ def df_to_corpus(documents):
     return(corpus, dictionary)
 
 #this is a bad filename for what is a large set of craigslist data
-df = pd.read_csv("data/cl_lda4_14.csv", index_col = 0)
+df = pd.read_csv("data/cl_dropped.csv", index_col = 0).dropna()
 #clean up the text for readablility
 #df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','').dropna()
 #drop texts with no word characters after cleaning, then resets the index, preserving the
@@ -45,21 +45,28 @@ df = pd.read_csv("data/cl_lda4_14.csv", index_col = 0)
 #there were a lot of almost identical texts, this is a dirty way to filter them out
 df['body_100']=df.body_text.str.slice(stop=100)
 df = df.drop_duplicates('body_100').drop('body_100', axis=1).reset_index().rename({'index':'id'},axis=1)
-df.shape
-
+df.body_text.str.contains('dollasigns').sum()
+test = df.body_text[df.body_text.str.contains('\$+')]
+test.shape
+df.body_text = df.body_text.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', 'ichi')
+df.body_text = df.body_text.str.replace('\$\$+','dollasigns').str.replace('\$', 'dollasign')
+df['body_text_clean'] = df.body_text.str.replace(r'\W',' ')
 #calls above funtion to make a corpus and dictionary, only passes word characters
-corpus, dictionary = df_to_corpus(df.body_text.str.replace(r'\W',' ').values)
-dictionary.save('models/cl_dictionary4_12.dict')
+df.body_text_clean = df.body_text_clean.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$')
+df.to_csv('data/seattle_cleaned')
+
+corpus, dictionary = df_to_corpus(df.body_text_clean.values)
+dictionary.save('models/cl_dictionary4_15.dict')
 #Then fit an LDA model (or load model 4_12 below)
 n_topics = 50
-n_passes = 100
+n_passes = 20
 #Run this if you have access to more than one core set workers=n_cores-1
-model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 1000, minimum_probability=0, workers=3)
+model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0, workers=3)
 #otherwise run this
-#model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
+model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
 
 #save the model for future use
-model.save('models/4_14model')
+model.save('models/4_15model')
 #reload an old model
 #model = models.LdaModel.load('models/4_12model')
 

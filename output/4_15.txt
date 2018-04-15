@@ -1,0 +1,737 @@
+Topic # 9  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.05
+difference    0.06
+prop          2.14
+Name: 9, dtype: float64 
+ Topic 9: hood, number, pet, lounge, s, community, modern, building, home, rooftop, located, views, panorama, deck, access, just, parking, new, sq, ft
+Topic # 41  occurred in 
+ all_r         0.12
+high_white    0.12
+low_white     0.07
+difference    0.06
+prop          1.89
+Name: 41, dtype: float64 
+ Topic 41: number, hood, sound, pet, puget, community, mercer, living, pets, views, building, center, style, apartment, home, luxury, homes, select, rent
+Topic # 12  occurred in 
+ all_r         0.06
+high_white    0.06
+low_white     0.03
+difference    0.03
+prop          1.86
+Name: 12, dtype: float64 
+ Topic 12: rooftop, âœ, number, deck, kitchen, open, metropolitan, air, east, connection, steps, parking, astro, music, ceiling, lower, walkways, outside, tile, space
+Topic # 3  occurred in 
+ all_r         0.11
+high_white    0.12
+low_white     0.06
+difference    0.05
+prop          1.84
+Name: 3, dtype: float64 
+ Topic 3: number, hood, pet, living, community, home, built, apartment, center, ft, sq, homes, url, s, rent, access, room, kitchen, hour
+Topic # 24  occurred in 
+ all_r         0.12
+high_white    0.13
+low_white     0.07
+difference    0.06
+prop          1.83
+Name: 24, dtype: float64 
+ Topic 24: number, hood, community, available, lake, ï, contact, numberth, url, unit, area, black, views, apartment, bedrooms, units, bedroom, visit, opportunity, new
+Topic # 4  occurred in 
+ all_r         0.10
+high_white    0.11
+low_white     0.06
+difference    0.05
+prop          1.81
+Name: 4, dtype: float64 
+ Topic 4: hood, number, room, community, homes, martin, kitchen, center, url, designed, amenities, deck, people, s, pet, area, floor, views, walk, storage
+Topic # 27  occurred in 
+ all_r         0.08
+high_white    0.08
+low_white     0.05
+difference    0.03
+prop          1.65
+Name: 27, dtype: float64 
+ Topic 27: number, views, rooftop, homes, windows, walton, s, deck, sound, dinner, city, feature, floor, hood, friends, enjoy, spectacular, natural, marble, finishes
+Topic # 47  occurred in 
+ all_r         0.09
+high_white    0.09
+low_white     0.06
+difference    0.03
+prop          1.60
+Name: 47, dtype: float64 
+ Topic 47: number, hood, century, ago, best, contact, email, offers, unsolicited, services, days, minute, deal, friend, location, g, housing, post, s, posted
+Topic # 10  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.07
+difference    0.04
+prop          1.57
+Name: 10, dtype: float64 
+ Topic 10: number, hood, community, bedroom, apartments, s, homes, center, pet, numberam, appliances, numberpm, stainless, sq, hour, ft, studio, wood, url, home
+Topic # 36  occurred in 
+ all_r         0.08
+high_white    0.09
+low_white     0.06
+difference    0.03
+prop          1.53
+Name: 36, dtype: float64 
+ Topic 36: number, hood, pet, deposit, monthly, opportunity, bed, flat, plan, housing, building, equal, single, belmont, fee, storage, time, price, availability
+Topic # 34  occurred in 
+ all_r         0.23
+high_white    0.24
+low_white     0.16
+difference    0.08
+prop          1.49
+Name: 34, dtype: float64 
+ Topic 34: hood, number, s, blocks, pet, away, bus, just, center, month, minutes, new, light, located, walk, park, coffee, market, bike
+Topic # 13  occurred in 
+ all_r         0.08
+high_white    0.08
+low_white     0.05
+difference    0.02
+prop          1.47
+Name: 13, dtype: float64 
+ Topic 13: hood, modern, term, university, lofts, long, concrete, relocation, transportation, industrial, boeing, lawrence, keywords, living, cafe, public, brand, hang, trendy, apartment
+Topic # 30  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.08
+difference    0.03
+prop          1.45
+Name: 30, dtype: float64 
+ Topic 30: number, hood, lounge, kitchen, room, pet, bedroom, home, floor, living, community, views, center, resident, city, url, outdoor, housing, numberam, numberpm
+Topic # 48  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.08
+difference    0.03
+prop          1.42
+Name: 48, dtype: float64 
+ Topic 48: number, hood, pet, room, resident, center, place, parking, apartment, s, garage, views, access, pm, site, storage, field, url, stadium
+Topic # 45  occurred in 
+ all_r         0.10
+high_white    0.10
+low_white     0.07
+difference    0.03
+prop          1.37
+Name: 45, dtype: float64 
+ Topic 45: number, hood, pet, bull, breed, center, pit, animal, animals, access, terriers, breeds, dog, welcome, dogs, pool, numberth, bedroom, american, restrictions
+Topic # 43  occurred in 
+ all_r         0.10
+high_white    0.10
+low_white     0.07
+difference    0.03
+prop          1.36
+Name: 43, dtype: float64 
+ Topic 43: hood, number, central, home, quality, s, resident, inspired, appliances, fitness, storage, amenities, upgraded, art, site, center, lavish, features, community, service
+Topic # 6  occurred in 
+ all_r         0.12
+high_white    0.13
+low_white     0.10
+difference    0.03
+prop          1.33
+Name: 6, dtype: float64 
+ Topic 6: number, hood, trail, center, room, bedroom, park, community, gilman, burke, garage, art, homes, bike, access, fitness, state, private, apartments, outdoor
+Topic # 44  occurred in 
+ all_r         0.14
+high_white    0.15
+low_white     0.11
+difference    0.04
+prop          1.32
+Name: 44, dtype: float64 
+ Topic 44: number, pet, refundable, s, kitchen, pets, months, deck, fee, dogs, non, home, center, patio, access, walk, large, station, garage
+Topic # 32  occurred in 
+ all_r         0.16
+high_white    0.16
+low_white     0.12
+difference    0.04
+prop          1.31
+Name: 32, dtype: float64 
+ Topic 32: number, months, access, dogs, controlled, book, numberlb, windows, high, internet, floor, today, garage, air, oven, month, smoking, hood, ready
+Topic # 14  occurred in 
+ all_r         0.21
+high_white    0.22
+low_white     0.17
+difference    0.05
+prop          1.29
+Name: 14, dtype: float64 
+ Topic 14: number, fee, deposit, rent, month, application, refundable, credit, non, s, pet, lease, security, income, required, check, property, monthly, rental
+Topic # 5  occurred in 
+ all_r         0.19
+high_white    0.19
+low_white     0.15
+difference    0.04
+prop          1.29
+Name: 5, dtype: float64 
+ Topic 5: hood, home, living, apartments, kitchen, just, space, apartment, today, enjoy, modern, ll, community, bedroom, new, great, flooring, west, wood, beautiful
+Topic # 46  occurred in 
+ all_r         0.29
+high_white    0.29
+low_white     0.24
+difference    0.06
+prop          1.25
+Name: 46, dtype: float64 
+ Topic 46: number, hood, room, unit, parking, month, bedroom, available, large, rent, kitchen, floor, deposit, bath, lease, living, contact, pets, home
+Topic # 0  occurred in 
+ all_r         0.10
+high_white    0.11
+low_white     0.09
+difference    0.02
+prop          1.22
+Name: 0, dtype: float64 
+ Topic 0: hood, number, room, pricing, s, center, appliances, pet, amli, kitchens, apartments, fitness, living, kitchen, community, conference, updated, subject, storage, change
+Topic # 31  occurred in 
+ all_r         0.16
+high_white    0.17
+low_white     0.14
+difference    0.03
+prop          1.21
+Name: 31, dtype: float64 
+ Topic 31: access, community, parking, lounge, easy, number, area, controlled, hood, managed, studio, public, garage, maintenance, features, fitness, view, transportation, emergency, available
+Topic # 8  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.10
+difference    0.01
+prop          1.13
+Name: 8, dtype: float64 
+ Topic 8: number, plans, apartments, floor, enjoy, hood, spacious, rent, home, bedroom, work, patios, views, leases, offer, balconies, rates, line, payment, residents
+Topic # 35  occurred in 
+ all_r         0.09
+high_white    0.10
+low_white     0.09
+difference    0.01
+prop          1.11
+Name: 35, dtype: float64 
+ Topic 35: school, middle, elementary, high, number, community, real, home, estate, schools, phone, local, sinclair, lease, apartment, near, wa, does, hood, sw
+Topic # 20  occurred in 
+ all_r         0.19
+high_white    0.19
+low_white     0.17
+difference    0.02
+prop          1.11
+Name: 20, dtype: float64 
+ Topic 20: hood, w, ng, ance, number, space, restaurants, park, o, studio, bedroom, large, needle, walk, street, custom, neighborhood, foot, windows, kitchen
+Topic # 42  occurred in 
+ all_r         0.25
+high_white    0.25
+low_white     0.23
+difference    0.02
+prop          1.10
+Name: 42, dtype: float64 
+ Topic 42: number, numberpm, numberam, saturday, hood, friday, monday, sunday, tuesday, wa, wednesday, thursday, numberth, url, hours, street, community, s, view, office
+Topic # 37  occurred in 
+ all_r         0.10
+high_white    0.10
+low_white     0.10
+difference    0.01
+prop          1.07
+Name: 37, dtype: float64 
+ Topic 37: number, hood, numberpm, pet, center, numberam, community, fitness, storage, new, modern, kitchen, room, countertops, appliances, apartments, flooring, home, walk, closets
+Topic # 11  occurred in 
+ all_r         0.12
+high_white    0.12
+low_white     0.11
+difference    0.01
+prop          1.07
+Name: 11, dtype: float64 
+ Topic 11: hood, number, community, apartment, homes, pool, just, nearby, amenities, day, live, center, access, lease, wa, living, fitness, pet, apartments, residents
+Topic # 17  occurred in 
+ all_r         0.21
+high_white    0.21
+low_white     0.20
+difference    0.01
+prop          1.06
+Name: 17, dtype: float64 
+ Topic 17: number, pm, hood, reports, screening, accept, tenant, reusable, comprehensive, defined, rcw, pursuant, url, pet, wa, s, monday, saturday, city, friday
+Topic # 33  occurred in 
+ all_r         0.25
+high_white    0.25
+low_white     0.24
+difference    0.01
+prop          1.03
+Name: 33, dtype: float64 
+ Topic 33: hood, number, home, floor, community, apartment, appliances, new, today, spacious, open, located, stainless, free, tour, just, steel, apartments, features, walk
+Topic # 21  occurred in 
+ all_r         0.13
+high_white    0.13
+low_white     0.12
+difference    0.00
+prop          1.02
+Name: 21, dtype: float64 
+ Topic 21: hood, energy, efficient, number, appliances, green, high, apartments, natural, star, lighting, bedroom, rooftop, views, flooring, ll, work, light, access, countertops
+Topic # 29  occurred in 
+ all_r         0.17
+high_white    0.17
+low_white     0.17
+difference    0.00
+prop          0.99
+Name: 29, dtype: float64 
+ Topic 29: number, months, tour, book, dogs, numberlb, notes, schedule, today, access, leasing, hood, parking, cats, small, center, online, appointments, online
+Topic # 22  occurred in 
+ all_r         0.09
+high_white    0.09
+low_white     0.10
+difference    0.00
+prop          0.99
+Name: 22, dtype: float64 
+ Topic 22: number, hood, pet, fees, units, bedroom, select, private, community, west, apartments, friendly, shops, art, applicant, appliances, qualification, wa, link, design
+Topic # 1  occurred in 
+ all_r         0.15
+high_white    0.15
+low_white     0.15
+difference    0.00
+prop          0.99
+Name: 1, dtype: float64 
+ Topic 1: number, hood, community, pet, home, bedroom, center, homes, apartments, apartment, living, wa, pm, access, private, bath, amenities, fitness, opportunity, sq
+Topic # 2  occurred in 
+ all_r         0.14
+high_white    0.14
+low_white     0.14
+difference    0.00
+prop          0.97
+Name: 2, dtype: float64 
+ Topic 2: number, hood, pet, pm, s, rent, community, living, allowed, housing, room, home, bedroom, max, just, apartment, weight, pets, center
+Topic # 25  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.12
+difference    0.01
+prop          0.94
+Name: 25, dtype: float64 
+ Topic 25: number, hood, home, community, pet, center, appliances, stainless, new, bedroom, apartments, fitness, lounge, rooftop, deck, storage, s, amenities, apartment, ft
+Topic # 26  occurred in 
+ all_r         0.17
+high_white    0.17
+low_white     0.19
+difference    0.02
+prop          0.90
+Name: 26, dtype: float64 
+ Topic 26: number, private, appliances, closet, hood, washer, dryer, view, apartment, dishwasher, managed, balcony, features, storage, walk, patio, unit, microwave, stove, refrigerator
+Topic # 23  occurred in 
+ all_r         0.21
+high_white    0.21
+low_white     0.24
+difference    0.03
+prop          0.89
+Name: 23, dtype: float64 
+ Topic 23: number, hood, pet, bedroom, center, community, homes, access, pool, housing, pets, home, ft, fitness, opportunity, restrictions, sq, bath, rent
+Topic # 19  occurred in 
+ all_r         0.13
+high_white    0.12
+low_white     0.14
+difference    0.02
+prop          0.88
+Name: 19, dtype: float64 
+ Topic 19: year, ï, round, wall, floor, tub, amenities, hot, community, open, room, hood, pool, t, seasonal, center, size, hour, plans, closets
+Topic # 15  occurred in 
+ all_r         0.20
+high_white    0.19
+low_white     0.22
+difference    0.03
+prop          0.88
+Name: 15, dtype: float64 
+ Topic 15: number, hood, numberth, ne, turn, left, right, exit, ave, apartments, st, wa, home, bedroom, center, street, n, apartment, ft, north
+Topic # 28  occurred in 
+ all_r         0.25
+high_white    0.25
+low_white     0.29
+difference    0.05
+prop          0.84
+Name: 28, dtype: float64 
+ Topic 28: number, hood, available, unit, pet, bedroom, apartments, center, equal, bath, housing, opportunity, wa, home, contact, url, ft, s, office
+Topic # 16  occurred in 
+ all_r         0.16
+high_white    0.16
+low_white     0.19
+difference    0.03
+prop          0.83
+Name: 16, dtype: float64 
+ Topic 16: hood, number, lake, miles, washington, minutes, park, located, center, community, square, s, easy, access, bristol, airport, shopping, offers, offer, just
+Topic # 40  occurred in 
+ all_r         0.22
+high_white    0.21
+low_white     0.26
+difference    0.05
+prop          0.81
+Name: 40, dtype: float64 
+ Topic 40: contact, subject, change, info, availability, pricing, hood, lease, home, today, url, today, number, based, hill, term, apartments, home, website
+Topic # 39  occurred in 
+ all_r         0.11
+high_white    0.11
+low_white     0.14
+difference    0.03
+prop          0.80
+Name: 39, dtype: float64 
+ Topic 39: number, hood, apartments, internet, community, home, bedroom, speed, high, area, access, friendly, pm, available, washer, pool, walk, center, patio, wa
+Topic # 18  occurred in 
+ all_r         0.12
+high_white    0.12
+low_white     0.15
+difference    0.03
+prop          0.79
+Name: 18, dtype: float64 
+ Topic 18: â, number, hood, apartment, pet, rent, allowed, amenities, home, apartments, park, deposit, url, community, wa, pool, homes, center, living
+Topic # 7  occurred in 
+ all_r         0.14
+high_white    0.14
+low_white     0.19
+difference    0.05
+prop          0.75
+Name: 7, dtype: float64 
+ Topic 7: new, hood, apartments, brand, bus, line, apartment, bedroom, flooring, close, great, enjoy, floor, dining, court, upgrades, south, come, homes, shopping
+Topic # 38  occurred in 
+ all_r         0.28
+high_white    0.27
+low_white     0.40
+difference    0.12
+prop          0.68
+Name: 38, dtype: float64 
+ Topic 38: pool, center, apartment, fitness, hood, site, washer, patio, dryer, community, maintenance, apartments, burning, clubhouse, fireplace, homes, wood, balcony, bedroom, closets
+Topic # 49  occurred in 
+ all_r         0.09
+high_white    0.09
+low_white     0.13
+difference    0.04
+prop          0.68
+Name: 49, dtype: float64 
+ Topic 49: hood, pools, w, court, area, center, indoor, community, apartment, basketball, mosaic, live, sparkling, hills, art, state, amenities, fitness, homes, swimming
+
+ ------- Sample Documents ------- 
+
+
+Topic # 41  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 41, dtype: float64 
+ Topic 41: number, hood, sound, pet, puget, community, mercer, living, pets, views, building, center, style, apartment, home, luxury, homes, select, rent
+
+ Top 5 answers fitting topic 41 are: 
+ 
+
+Topic 41 Rank 1
+: 
+ Was  99.52 percent topic 41 :
+ Call Now - show contact info This is a Studio, #NUMBER Bath, approximately #NUMBER Sq. Ft. The Island Lifestyle. The Mercer Luxury Apartment Homes is the jewel of #HOOD . From the sparkling waters of our heated year round pool, to the soaring ceilings that go up to #NUMBERft high, and everything in between, The Mercer is the whole package. Whether you prefer the contemporary, urban designs of the Mercer West building which is only one year old, or the warm classic design of the East Building, we've got it. Get your heart rate up in the state of the art fitness center, and relax in the dry sauna after. Get to know your neighbors at our monthly community events, or go out on the town to #HOOD or #HOOD , both just right across the bridgeichi Come down to The Mercer and see for yourselfichi Features: Granite and White Quartz countertops, Stainless Steel Appliances, Berber Carpets, Cherry wood, Black and Tan cabinetry, Built-In Microwaves, Walk-In Closets, #NUMBER' to #NUMBER' Ceilings with Crown Molding, Pre-Wired for High Speed Internet up to #NUMBER Mbps, Plank Wood Style Flooring in select homes, Balconies on select units, All-Concrete Building for Enhanced Sound Insulation, Central A/C & Heating in Every Residence Community Amenities: Guest Suite Available for Residents, Controlled entry access, On-Site Storage / Bike Storage, Three Outdoor BBQ's, Three Large Courtyards, Wi-Fi Hotspots, State of the Art Fitness Center, Outdoor Heated Swimming Pool & Jacuzzi, Clubhouse / Lounge with Full Kitchen, Dry-Heat Sauna, Living GREEN, Designated Dog Run - Pets are welcomeichi, Business Center, Sol de Mercer Tanning Spa, Smoke-Free Community Pet Policy: The Mercer welcomes your pets. Our homes accommodate two pets per home. Additional deposits and breed restrictions apply. For more information please call today. Pet Rent: dollasign#NUMBER for one pet and dollasign#NUMBER for two pets. Want more information? Follow this link: #URL Equal Housing Opportunity gN#NUMBERXsCC#NUMBER 
+
+Topic 41 Rank 2
+: 
+ Was  99.52 percent topic 41 :
+ Call Now - show contact info This is a #NUMBER-#NUMBER Sq. Ft., #NUMBER Bedroom, #NUMBER Bath, Apartment Home. The Island Lifestyle. The Mercer Luxury Apartment Homes is the jewel of #HOOD . From the sparkling waters of our heated year round pool, to the soaring ceilings that go up to #NUMBERft high, and everything in between, The Mercer is the whole package. Whether you prefer the contemporary, urban designs of the Mercer West building which is only one year old, or the warm classic design of the East Building, we've got it. Get your heart rate up in the state of the art fitness center, and relax in the dry sauna after. Get to know your neighbors at our monthly community events, or go out on the town to #HOOD or #HOOD , both just right across the bridgeichi Come down to The Mercer and see for yourselfichi Features: Plank Wood Style Flooring in select homes, Built-In Microwaves, All-Concrete Building for Enhanced Sound Insulation, Walk-In Closets, Pre-Wired for High Speed Internet up to #NUMBER Mbps, Cherry wood, Black and Tan cabinetry, Stainless Steel Appliances, Granite and White Quartz countertops, Balconies on select units, Central A/C & Heating in Every Residence, #NUMBER' to #NUMBER' Ceilings with Crown Molding, Berber Carpets Community Amenities: State of the Art Fitness Center, On-Site Storage / Bike Storage, Outdoor Heated Swimming Pool & Jacuzzi, Controlled entry access, Sol de Mercer Tanning Spa, Three Large Courtyards, Three Outdoor BBQ's, Dry-Heat Sauna, Wi-Fi Hotspots, Designated Dog Run - Pets are welcomeichi, Living GREEN, Guest Suites Available for Residents, Smoke-Free Community, Business Center, Clubhouse / Lounge with Full Kitchen Pet Policy: The Mercer welcomes your pets. Our homes accommodate two pets per home. Additional deposits and breed restrictions apply. For more information please call today. Pet Rent: dollasign#NUMBER for one pet and dollasign#NUMBER for two pets. Use the link below for more details: #URL Equal Housing Opportunity #NUMBERzRzxUFsZgwN 
+
+Topic 41 Rank 3
+: 
+ Was  99.52 percent topic 41 :
+ Call Now -  This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. The Island Lifestyle. The Mercer Luxury Apartment Homes is the jewel of #HOOD . From the sparkling waters of our heated year round pool, to the soaring ceilings that go up to #NUMBERft high, and everything in between, The Mercer is the whole package. Whether you prefer the contemporary, urban designs of the Mercer West building which is only one year old, or the warm classic design of the East Building, we've got it. Get your heart rate up in the state of the art fitness center, and relax in the dry sauna after. Get to know your neighbors at our monthly community events, or go out on the town to #HOOD or #HOOD , both just right across the bridgeichi Come down to The Mercer and see for yourselfichi Features:,Built-In Microwaves, Plank Wood Style Flooring in select homes, Balconies on select units, Cherry wood, Black and Tan cabinetry, All-Concrete Building for Enhanced Sound Insulation, Walk-In Closets, Berber Carpets, Central A/C & Heating in Every Residence, Stainless Steel Appliances, Pre-Wired for High Speed Internet up to #NUMBER Mbps, #NUMBER' to #NUMBER' Ceilings with Crown Molding, Granite and White Quartz countertops Community Amenities:,Business Center, State of the Art Fitness Center, Designated Dog Run - Pets are welcomeichi, Sol de Mercer Tanning Spa, Three Large Courtyards, Smoke-Free Community, On-Site Storage / Bike Storage, Guest Suite Available for Residents, Three Outdoor BBQ's, Controlled entry access, Outdoor Heated Swimming Pool & Jacuzzi, Clubhouse / Lounge with Full Kitchen, Living GREEN, Dry-Heat Sauna, Wi-Fi Hotspots Pet Policy:,The Mercer welcomes your pets. Our homes accommodate two pets per home. Additional deposits and breed restrictions apply. For more information please call today.Pet Rent: dollasign#NUMBER for one pet and dollasign#NUMBER for two pets. Want more information on this unit? See link #URL Housing Opportunity TMb#NUMBERrHEX#NUMBERlg 
+
+Topic 41 Rank 4
+: 
+ Was  99.52 percent topic 41 :
+ Call Now - show contact info This is a Studio, #NUMBER Bath, approximately #NUMBER Sq. Ft. The Island Lifestyle. The Mercer Luxury Apartment Homes is the jewel of #HOOD . From the sparkling waters of our heated year round pool, to the soaring ceilings that go up to #NUMBERft high, and everything in between, The Mercer is the whole package. Whether you prefer the contemporary, urban designs of the Mercer West building which is only one year old, or the warm classic design of the East Building, we've got it. Get your heart rate up in the state of the art fitness center, and relax in the dry sauna after. Get to know your neighbors at our monthly community events, or go out on the town to #HOOD or #HOOD , both just right across the bridgeichi Come down to The Mercer and see for yourselfichi Features: Cherry wood, Black and Tan cabinetry, Granite and White Quartz countertops, Built-In Microwaves, Balconies on select units, All-Concrete Building for Enhanced Sound Insulation, Berber Carpets, Stainless Steel Appliances, Pre-Wired for High Speed Internet up to #NUMBER Mbps, Walk-In Closets, #NUMBER' to #NUMBER' Ceilings with Crown Molding, Central A/C & Heating in Every Residence, Plank Wood Style Flooring in select homes Community Amenities: Controlled entry access, State of the Art Fitness Center, Business Center, Dry-Heat Sauna, On-Site Storage / Bike Storage, Three Large Courtyards, Guest Suite Available for Residents, Sol de Mercer Tanning Spa, Smoke-Free Community, Clubhouse / Lounge with Full Kitchen, Outdoor Heated Swimming Pool & Jacuzzi, Wi-Fi Hotspots, Three Outdoor BBQ's, Living GREEN, Designated Dog Run - Pets are welcomeichi Pet Policy: The Mercer welcomes your pets. Our homes accommodate two pets per home. Additional deposits and breed restrictions apply. For more information please call today. Pet Rent: dollasign#NUMBER for one pet and dollasign#NUMBER for two pets. Use the link below for more details: #URL Equal Housing Opportunity EKe#NUMBERzRaOH 
+
+Topic 41 Rank 5
+: 
+ Was  99.51 percent topic 41 :
+ Call Now -  This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. The Island Lifestyle. The Mercer Luxury Apartment Homes is the jewel of #HOOD . From the sparkling waters of our heated year round pool, to the soaring ceilings that go up to #NUMBERft high, and everything in between, The Mercer is the whole package. Whether you prefer the contemporary, urban designs of the Mercer West building which is only one year old, or the warm classic design of the East Building, we've got it. Get your heart rate up in the state of the art fitness center, and relax in the dry sauna after. Get to know your neighbors at our monthly community events, or go out on the town to #HOOD or #HOOD , both just right across the bridgeichi Come down to The Mercer and see for yourselfichi Features:,Granite and White Quartz countertops, #NUMBER' to #NUMBER' Ceilings with Crown Molding, Berber Carpets, Cherry wood, Black and Tan cabinetry, Stainless Steel Appliances, Central A/C & Heating in Every Residence, Plank Wood Style Flooring in select homes, All-Concrete Building for Enhanced Sound Insulation, Pre-Wired for High Speed Internet up to #NUMBER Mbps, Walk-In Closets, Built-In Microwaves, Balconies on select units Community Amenities:,Outdoor Heated Swimming Pool & Jacuzzi, Living GREEN, Three Outdoor BBQ's, On-Site Storage / Bike Storage, Guest Suite Available for Residents, Business Center, Designated Dog Run - Pets are welcomeichi, State of the Art Fitness Center, Three Large Courtyards, Clubhouse / Lounge with Full Kitchen, Wi-Fi Hotspots, Sol de Mercer Tanning Spa, Controlled entry access, Smoke-Free Community, Dry-Heat Sauna Pet Policy:,The Mercer welcomes your pets. Our homes accommodate two pets per home. Additional deposits and breed restrictions apply. For more information please call today.Pet Rent: dollasign#NUMBER for one pet and dollasign#NUMBER for two pets. Want more info? See the link #URL Housing Opportunity #NUMBERf#NUMBERVpmaIJid 
+
+Topic # 12  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 12, dtype: float64 
+ Topic 12: rooftop, âœ, number, deck, kitchen, open, metropolitan, air, east, connection, steps, parking, astro, music, ceiling, lower, walkways, outside, tile, space
+
+ Top 5 answers fitting topic 12 are: 
+ 
+
+Topic 12 Rank 1
+: 
+ Was  99.06 percent topic 12 :
+ Call Now - show contact info This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Life at East Howe Steps is relaxed, stylish and filled with modern conveniences to warm your home. Revel in your personal space with the latest design accents, including tile backsplashes in kitchens and showers. Soak up the beauty outside your doors with our expansive rooftop deck and open-air walkways and courtyards. Features: Private decks*, Fiber optic wiring connection, Deluxe vinyl flooring, Stainless steel kitchen appliances, Ceiling fans*, Tile kitchen and shower backplash, In-unit washer and dryer *in select units Community Amenities: Open-air walkways, Rooftop deck, Two covered, open-air courtyards, BBQ, Covered parking spaces, Fire pit, Street parking available for guests, Bike storage stalls Interested in more information? Visit link below: #URL Equal Housing Opportunity ngHNk#NUMBERU#NUMBERW#NUMBERz 
+
+Topic 12 Rank 2
+: 
+ Was  96.09 percent topic 12 :
+ Call Now - show contact info This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Life at East Howe Steps is relaxed, stylish and filled with modern conveniences to warm your home. Revel in your personal space with the latest design accents, including tile backsplashes in kitchens and showers. Soak up the beauty outside your doors with our expansive rooftop deck and open-air walkways and courtyards. Features: Tile kitchen and shower backplash, Ceiling fans*, In-unit washer and dryer, Fiber optic wiring connection, Private decks*, Stainless steel kitchen appliances, Deluxe vinyl flooring *in select units Community Amenities: Street parking available for guests, Open-air walkways, BBQ, Two covered, open-air courtyards, Covered parking spaces, Bike storage stalls, Fire pit, Rooftop deck Interested in more information? See link below: #URL Equal Housing Opportunity tNWUeR#NUMBERpz 
+
+Topic 12 Rank 3
+: 
+ Was  92.16 percent topic 12 :
+ Call Now - show contact info This is a #NUMBER Bedroom + #NUMBER Den, #NUMBER Bath, approximately #NUMBER Sq. Ft. Life at East Howe Steps is relaxed, stylish and filled with modern conveniences to warm your home. Revel in your personal space with the latest design accents, including tile backsplashes in kitchens and showers. Soak up the beauty outside your doors with our expansive rooftop deck and open-air walkways and courtyards. Features: Tile kitchen and shower backplash, Deluxe vinyl flooring, Ceiling fans*, Private decks*, Fiber optic wiring connection, In-unit washer and dryer, Stainless steel kitchen appliances *in select units Community Amenities: Covered parking spaces, Fire pit, Open-air walkways, Two covered, open-air courtyards, Bike storage stalls, Street parking available for guests, Rooftop deck, BBQ More unit details at: #URL Equal Housing Opportunity u#NUMBERKsb#NUMBERDWfCLL 
+
+Topic 12 Rank 4
+: 
+ Was  91.69 percent topic 12 :
+ East Howe Steps #NUMBER #HOOD Avenue East, #HOOD , WA, #NUMBER Interested in more information? See link below: #URL Call Now: show contact info Your Home in the New #HOOD This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Life at East Howe Steps is relaxed, stylish and filled with modern conveniences to warm your home. Revel in your personal space with the latest design accents, including tile backsplashes in kitchens and showers. Soak up the beauty outside your doors with our expansive rooftop deck and open-air walkways and courtyards. Features - Stainless steel kitchen appliances - In-unit washer and dryer - Fiber optic wiring connection - Tile kitchen and shower backplash - Deluxe vinyl flooring - Private decks* - Ceiling fans* *in select units Community Amenities - Street parking available for guests - BBQ - Open-air walkways - Two covered, open-air courtyards - Fire pit - Bike storage stalls - Covered parking spaces - Rooftop deck Equal Housing Opportunity UmOhl#NUMBERLL#NUMBERhW#NUMBER 
+
+Topic 12 Rank 5
+: 
+ Was  87.66 percent topic 12 :
+ East Howe Steps #NUMBER #HOOD Avenue East, #HOOD , WA, #NUMBER Visit This Website to See More: #URL Call Now: show contact info Your Home in the New #HOOD This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Life at East Howe Steps is relaxed, stylish and filled with modern conveniences to warm your home. Revel in your personal space with the latest design accents, including tile backsplashes in kitchens and showers. Soak up the beauty outside your doors with our expansive rooftop deck and open-air walkways and courtyards. Features - Stainless steel kitchen appliances - Fiber optic wiring connection - Tile kitchen and shower backplash - Ceiling fans* - Deluxe vinyl flooring - In-unit washer and dryer - Private decks* *in select units Community Amenities - BBQ - Street parking available for guests - Two covered, open-air courtyards - Rooftop deck - Covered parking spaces - Open-air walkways - Bike storage stalls - Fire pit Equal Housing Opportunity fy#NUMBERF#NUMBERbHR#NUMBER 
+
+Topic # 3  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 3, dtype: float64 
+ Topic 3: number, hood, pet, living, community, home, built, apartment, center, ft, sq, homes, url, s, rent, access, room, kitchen, hour
+
+ Top 5 answers fitting topic 3 are: 
+ 
+
+Topic 3 Rank 1
+: 
+ Was  99.73 percent topic 3 :
+ Aspira #NUMBER Terry Ave, #HOOD , WA, #NUMBER Use this link for more information: #URL Call Now: show contact info Welcome home to Aspira #HOOD This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. Welcome to Aspira #HOOD Apartment Homes, #HOOD 's finest in high-rise living. Aspira was built with you in mind, focusing on creating a community atmosphere with the lowest impact possible on our environment. Aspira is #HOOD 's first #NUMBER Star Built Green high-rise, built to help protect our beautiful #HOOD Northwest environment. For more information about the Built Green Company and Program, please visit #URL At Aspira, #HOOD is truly at your fingertips. With a #NUMBER% walk score, from #URL you never have to venture far from home to enjoy everything that urban living has to offer. In case you do need to venture farther from home, Aspira also has a #NUMBER% transit scoreichi You can also enjoy the benefits of Sola Salon, or a glass of wine, appetizers or a full meal at La Lot Restaurant & Bar, both in our retail space below. Our pet friendly apartment homes offer very spacious floor plans with every convenience imaginable. Every home features unmatched views which can include Elliott Bay, the Space Needle, the Cascade and Olympic mountain ranges, Mt. Rainier, Mt. Baker, #HOOD and so much more. We have over #NUMBER,#NUMBER sq. ft. of amenity space; which includes our Yoga Studio, State-of-the-art fitness center, Party Lounge, Theater Lounge, Outdoor Terrace with fire pit and grills, two pet decks, business center and conference room, all open #NUMBER hours. We host many community events which are designed to pamper each and every person living here. Though we have a variety of floor plans, there is limited availability. Features - Walk-In Closets* - Kitchen Island - Balconies* - Gas Range* - Wheelchair Access - Spectacular Views ranging from the Space Needle, #HOOD , Puget Sound, The Cascades and City Skyline - Disposal - Operable Energy Efficient Windows - Cable Ready - Low VOC Paints, Carpeting, Sealants for Healthier Air - Energy Efficient Appliances - Dishwasher - Refrigerator - Hardwood Flooring* - Window Coverings - Granite Countertops* - Built-In Microwaves - #NUMBER Foot Ceilings - Water-Saving Lavatories and Showerheads - Floor-to-Ceiling Windows - Washer & Dryer - Central Heat and Air Conditioning *In select homes Community Amenities - Controlled Access Garage Parking - On-Site Maintenance with #NUMBER-hour Emergency Maintenance - Keyless guest entry - Night Patrol - Conference Room - #NUMBER Star Built-Green Building - Smoke Free Building - Pet Terrace - Eco Terrace with #NUMBER Gas Barbecues - #NUMBER hour Fitness Center and Yoga studio - Concierge Services - Controlled Access Building - Media / Theater Room with Plenty of room for entertaining - Spectacular views of the #HOOD Skyline and #HOOD * - Business Center with complementary internet, computers and printing - Professional On-Site Management - Community Lounge with full kitchen, coffee and tea - #NUMBER% Walk Score, #NUMBER% Transit Score - Rent Cafe Resident Portal for an array of services - Guest Suites - Guest Parking - Free for one hour - Package and Dry Cleaning Acceptance Office Hours Monday - Friday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Saturday - Sunday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Pet Policy Pet friendly Equal Housing Opportunity wN#NUMBERI#NUMBERa#NUMBERpT 
+
+Topic 3 Rank 2
+: 
+ Was  99.73 percent topic 3 :
+ Aspira #NUMBER Terry Ave, #HOOD , WA, #NUMBER Follow This Link for More Information: #URL Call Now: show contact info Welcome home to Aspira #HOOD This is a #NUMBER Bedroom, #NUMBER.#NUMBER Bath, approximately #NUMBER Sq. Ft. Welcome to Aspira #HOOD Apartment Homes, #HOOD 's finest in high-rise living. Aspira was built with you in mind, focusing on creating a community atmosphere with the lowest impact possible on our environment. Aspira is #HOOD 's first #NUMBER Star Built Green high-rise, built to help protect our beautiful #HOOD Northwest environment. For more information about the Built Green Company and Program, please visit #URL At Aspira, #HOOD is truly at your fingertips. With a #NUMBER% walk score, from #URL you never have to venture far from home to enjoy everything that urban living has to offer. In case you do need to venture farther from home, Aspira also has a #NUMBER% transit scoreichi You can also enjoy the benefits of Sola Salon, or a glass of wine, appetizers or a full meal at La Lot Restaurant & Bar, both in our retail space below. Our pet friendly apartment homes offer very spacious floor plans with every convenience imaginable. Every home features unmatched views which can include Elliott Bay, the Space Needle, the Cascade and Olympic mountain ranges, Mt. Rainier, Mt. Baker, #HOOD and so much more. We have over #NUMBER,#NUMBER sq. ft. of amenity space; which includes our Yoga Studio, State-of-the-art fitness center, Party Lounge, Theater Lounge, Outdoor Terrace with fire pit and grills, two pet decks, business center and conference room, all open #NUMBER hours. We host many community events which are designed to pamper each and every person living here. Though we have a variety of floor plans, there is limited availability. Features - Central Heat and Air Conditioning - Hardwood Flooring* - Gas Range* - Balconies* - Granite Countertops* - #NUMBER Foot Ceilings - Water-Saving Lavatories and Showerheads - Disposal - Cable Ready - Floor-to-Ceiling Windows - Dishwasher - Walk-In Closets* - Operable Energy Efficient Windows - Refrigerator - Kitchen Island - Washer & Dryer - Spectacular Views ranging from the Space Needle, #HOOD , Puget Sound, The Cascades and City Skyline - Wheelchair Access - Energy Efficient Appliances - Low VOC Paints, Carpeting, Sealants for Healthier Air - Built-In Microwaves - Window Coverings *In select homes Community Amenities - Controlled Access Garage Parking - Package and Dry Cleaning Acceptance - Smoke Free Building - Guest Parking - Free for one hour - Conference Room - Media / Theater Room with Plenty of room for entertaining - Rent Cafe Resident Portal for an array of services - Pet Terrace - Business Center with complementary internet, computers and printing - Eco Terrace with #NUMBER Gas Barbecues - Controlled Access Building - Community Lounge with full kitchen, coffee and tea - #NUMBER% Walk Score, #NUMBER% Transit Score - Concierge Services - #NUMBER hour Fitness Center and Yoga studio - Professional On-Site Management - On-Site Maintenance with #NUMBER-hour Emergency Maintenance - Spectacular views of the #HOOD Skyline and #HOOD * - Guest Suites - Keyless guest entry - #NUMBER Star Built-Green Building - Night Patrol Office Hours Monday - Friday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Saturday - Sunday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Pet Policy Pet friendly Equal Housing Opportunity cjH#NUMBERQfyI#NUMBER 
+
+Topic 3 Rank 3
+: 
+ Was  99.73 percent topic 3 :
+ Welcome home to Aspira #HOOD Welcome to Aspira #HOOD Apartment Homes, #HOOD 's finest in high-rise living. Aspira was built with you in mind, focusing on creating a community atmosphere with the lowest impact possible on our environment. Aspira is #HOOD 's first #NUMBER Star Built Green high-rise, built to help protect our beautiful #HOOD Northwest environment. For more information about the Built Green Company and Program, please visit #URL At Aspira, #HOOD is truly at your fingertips. With a #NUMBER% walk score, from #URL you never have to venture far from home to enjoy everything that urban living has to offer. In case you do need to venture farther from home, Aspira also has a #NUMBER% transit scoreichi You can also enjoy the benefits of Sola Salon, or a glass of wine, appetizers or a full meal at La Lot Restaurant & Bar, both in our retail space below. Our pet friendly apartment homes offer very spacious floor plans with every convenience imaginable. Every home features unmatched views which can include Elliott Bay, the Space Needle, the Cascade and Olympic mountain ranges, Mt. Rainier, Mt. Baker, #HOOD and so much more. We have over #NUMBER,#NUMBER sq. ft. of amenity space; which includes our Yoga Studio, State-of-the-art fitness center, Party Lounge, Theater Lounge, Outdoor Terrace with fire pit and grills, two pet decks, business center and conference room, all open #NUMBER hours. We host many community events which are designed to pamper each and every person living here. Though we have a variety of floor plans, there is limited availability. Call Now: show contact info Follow The Link Below: #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. Features - Operable Energy Efficient Windows - Floor-to-Ceiling Windows - Energy Efficient Appliances - Washer & Dryer - Window Coverings - Cable Ready - Granite Countertops* - #NUMBER Foot Ceilings - Refrigerator - Wheelchair Access - Low VOC Paints, Carpeting, Sealants for Healthier Air - Spectacular Views ranging from the Space Needle, #HOOD , Puget Sound, The Cascades and City Skyline - Gas Range* - Walk-In Closets* - Central Heat and Air Conditioning - Dishwasher - Kitchen Island - Built-In Microwaves - Balconies* - Water-Saving Lavatories and Showerheads - Hardwood Flooring* - Disposal *In select homes Community Amenities - Night Patrol - Controlled Access Building - Rent Cafe Resident Portal for an array of services - Smoke Free Building - On-Site Maintenance with #NUMBER-hour Emergency Maintenance - Professional On-Site Management - Eco Terrace with #NUMBER Gas Barbecues - Community Lounge with full kitchen, coffee and tea - Pet Terrace - Media / Theater Room with Plenty of room for entertaining - #NUMBER Star Built-Green Building - Concierge Services - Guest Parking - Free for one hour - Business Center with complementary internet, computers and printing - Guest Suites - Controlled Access Garage Parking - Keyless guest entry - #NUMBER% Walk Score, #NUMBER% Transit Score - Spectacular views of the #HOOD Skyline and #HOOD * - Package and Dry Cleaning Acceptance - #NUMBER hour Fitness Center and Yoga studio - Conference Room Pet Policy Pet friendly Office Hours Monday - Friday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Saturday - Sunday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Aspira #NUMBER Terry Ave, #HOOD , WA, #NUMBER Equal Housing Opportunity W#NUMBEROZtTQ#NUMBER 
+
+Topic 3 Rank 4
+: 
+ Was  99.73 percent topic 3 :
+ Aspira #NUMBER Terry Ave, #HOOD , WA, #NUMBER Want more info? See the link below: #URL Call Now: show contact info Welcome home to Aspira #HOOD This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Welcome to Aspira #HOOD Apartment Homes, #HOOD 's finest in high-rise living. Aspira was built with you in mind, focusing on creating a community atmosphere with the lowest impact possible on our environment. Aspira is #HOOD 's first #NUMBER Star Built Green high-rise, built to help protect our beautiful #HOOD Northwest environment. For more information about the Built Green Company and Program, please visit #URL At Aspira, #HOOD is truly at your fingertips. With a #NUMBER% walk score, from #URL you never have to venture far from home to enjoy everything that urban living has to offer. In case you do need to venture farther from home, Aspira also has a #NUMBER% transit scoreichi You can also enjoy the benefits of Sola Salon, or a glass of wine, appetizers or a full meal at La Lot Restaurant & Bar, both in our retail space below. Our pet friendly apartment homes offer very spacious floor plans with every convenience imaginable. Every home features unmatched views which can include Elliott Bay, the Space Needle, the Cascade and Olympic mountain ranges, Mt. Rainier, Mt. Baker, #HOOD and so much more. We have over #NUMBER,#NUMBER sq. ft. of amenity space; which includes our Yoga Studio, State-of-the-art fitness center, Party Lounge, Theater Lounge, Outdoor Terrace with fire pit and grills, two pet decks, business center and conference room, all open #NUMBER hours. We host many community events which are designed to pamper each and every person living here. Though we have a variety of floor plans, there is limited availability. Features - Low VOC Paints, Carpeting, Sealants for Healthier Air - Disposal - Central Heat and Air Conditioning - Refrigerator - Spectacular Views ranging from the Space Needle, #HOOD , Puget Sound, The Cascades and City Skyline - Walk-In Closets* - Floor-to-Ceiling Windows - Built-In Microwaves - Energy Efficient Appliances - Window Coverings - Operable Energy Efficient Windows - Balconies* - Dishwasher - Washer & Dryer - Wheelchair Access - Kitchen Island - Granite Countertops* - #NUMBER Foot Ceilings - Hardwood Flooring* - Water-Saving Lavatories and Showerheads - Cable Ready - Gas Range* *In select homes Community Amenities - Keyless guest entry - Community Lounge with full kitchen, coffee and tea - Night Patrol - Business Center with complementary internet, computers and printing - Rent Cafe Resident Portal for an array of services - #NUMBER hour Fitness Center and Yoga studio - Package and Dry Cleaning Acceptance - #NUMBER Star Built-Green Building - Guest Parking - Free for one hour - Controlled Access Building - Controlled Access Garage Parking - Pet Terrace - Guest Suites - Media / Theater Room with Plenty of room for entertaining - #NUMBER% Walk Score, #NUMBER% Transit Score - Spectacular views of the #HOOD Skyline and #HOOD * - Concierge Services - Conference Room - Smoke Free Building - On-Site Maintenance with #NUMBER-hour Emergency Maintenance - Eco Terrace with #NUMBER Gas Barbecues - Professional On-Site Management Office Hours Monday - Friday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Saturday - Sunday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Pet Policy Pet friendly Equal Housing Opportunity lbcLSCmAmd#NUMBERn 
+
+Topic 3 Rank 5
+: 
+ Was  99.73 percent topic 3 :
+ Aspira #NUMBER Terry Ave, #HOOD , WA, #NUMBER Full Color Brochure Here: #URL Call Now: show contact info Welcome home to Aspira #HOOD This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Welcome to Aspira #HOOD Apartment Homes, #HOOD 's finest in high-rise living. Aspira was built with you in mind, focusing on creating a community atmosphere with the lowest impact possible on our environment. Aspira is #HOOD 's first #NUMBER Star Built Green high-rise, built to help protect our beautiful #HOOD Northwest environment. For more information about the Built Green Company and Program, please visit #URL At Aspira, #HOOD is truly at your fingertips. With a #NUMBER% walk score, from #URL you never have to venture far from home to enjoy everything that urban living has to offer. In case you do need to venture farther from home, Aspira also has a #NUMBER% transit scoreichi You can also enjoy the benefits of Sola Salon, or a glass of wine, appetizers or a full meal at La Lot Restaurant & Bar, both in our retail space below. Our pet friendly apartment homes offer very spacious floor plans with every convenience imaginable. Every home features unmatched views which can include Elliott Bay, the Space Needle, the Cascade and Olympic mountain ranges, Mt. Rainier, Mt. Baker, #HOOD and so much more. We have over #NUMBER,#NUMBER sq. ft. of amenity space; which includes our Yoga Studio, State-of-the-art fitness center, Party Lounge, Theater Lounge, Outdoor Terrace with fire pit and grills, two pet decks, business center and conference room, all open #NUMBER hours. We host many community events which are designed to pamper each and every person living here. Though we have a variety of floor plans, there is limited availability. Features - Central Heat and Air Conditioning - Wheelchair Access - Refrigerator - Window Coverings - Energy Efficient Appliances - Hardwood Flooring* - Kitchen Island - Washer & Dryer - Operable Energy Efficient Windows - Built-In Microwaves - Gas Range* - Disposal - Granite Countertops* - Dishwasher - #NUMBER Foot Ceilings - Walk-In Closets* - Low VOC Paints, Carpeting, Sealants for Healthier Air - Floor-to-Ceiling Windows - Water-Saving Lavatories and Showerheads - Cable Ready - Balconies* - Spectacular Views ranging from the Space Needle, #HOOD , Puget Sound, The Cascades and City Skyline *In select homes Community Amenities - Conference Room - Controlled Access Garage Parking - Concierge Services - Business Center with complementary internet, computers and printing - Smoke Free Building - Professional On-Site Management - Rent Cafe Resident Portal for an array of services - #NUMBER hour Fitness Center and Yoga studio - Package and Dry Cleaning Acceptance - Guest Parking - Free for one hour - Community Lounge with full kitchen, coffee and tea - Eco Terrace with #NUMBER Gas Barbecues - Controlled Access Building - Keyless guest entry - Spectacular views of the #HOOD Skyline and #HOOD * - Media / Theater Room with Plenty of room for entertaining - Pet Terrace - Guest Suites - #NUMBER% Walk Score, #NUMBER% Transit Score - Night Patrol - On-Site Maintenance with #NUMBER-hour Emergency Maintenance - #NUMBER Star Built-Green Building Office Hours Monday - Friday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Saturday - Sunday #NUMBER:#NUMBER AM-#NUMBER:#NUMBER PM Pet Policy Pet friendly Equal Housing Opportunity aa#NUMBERc#NUMBERrRVrAbU 
+
+Topic # 24  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 24, dtype: float64 
+ Topic 24: number, hood, community, available, lake, ï, contact, numberth, url, unit, area, black, views, apartment, bedrooms, units, bedroom, visit, opportunity, new
+
+ Top 5 answers fitting topic 24 are: 
+ 
+
+Topic 24 Rank 1
+: 
+ Was  99.67 percent topic 24 :
+ Black Lake West #HOOD Apartments - Cozy Convenience Pleasant landscaped views await on these one, two, and three bedroom homes nestled into #NUMBER acres of rolling park-like hills. Cozy. Af #HOOD able. Convenient. Come see our tasteful #NUMBER-Hour Gym with top of the line equipment.  Want to take a swim? Dip into our indoor pool or hot tubichi Contact us today to see if Black Lake West #HOOD will be the next place you call home. Two Bedroom Two Bath #NUMBER Black Lake Blvd, #HOOD WA #NUMBER Square Footageï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER ft  #NUMBER Unit Typeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER Bedroom #NUMBER Bath Lease Durationï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER-#NUMBER Months Depositï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dollasign#NUMBER Fullsize Washer & Dryer Included Wood Burning Fireplaces in Select Units Private Balconies with Additional Storage Range, Refrigerator, Dishwasher & Disposal Upgraded Gourmet Kitchens in Select Units Pets? We love petsichi Fury friends are welcome Want to see more? Visit our website at #URL to view all our available floorplans or give us a call to schedule a tour at show contact info Community Amenities Close To #HOOD #HOOD and Capital Mall Near Evergreen State College & South Puget Sound Community College On-site Management & Maintenance Convenient to I#NUMBER & H#NUMBER Playground Heated Indoor & Outdoor Pools Exercise/Weight Room Fenced Dog Park Garages & Covered Spaces Available Shoot Some Pool In The Clubhouse Black Lake Apartments Cozy Af #HOOD able Convenience #NUMBER Bedrooms | #NUMBER Bedrooms | #NUMBER Bedrooms #NUMBER Black Lake Blvd #HOOD , WA #NUMBER #URL Office Hours Mon-Fri:	#NUMBERam-#NUMBERpm Sat-Sun:	#NUMBERam-#NUMBERpm For more information or to schedule a tour give us a call at show contact info or email us at show contact info Interior images shown are representative of advertised floor plan layout. Finishes and minor details of available unit may vary. Black Lake is professionally managed by Tarragon Property Services and units are available on an equal opportunity basis. Pricing shown is based on a #NUMBER month lease with a move-in date set to the same day a unit is made available and is only valid on the day this ad was placed. Actual pricing may vary based on the time of application, lease duration, and move-in date required. Please visit our website to find out more about current rental rates, availability dates, and rental criteria: #URL 
+
+Topic 24 Rank 2
+: 
+ Was  99.65 percent topic 24 :
+ Come See Why We're West #HOOD 's Favorite Communityichi Nestled on #NUMBER beautiful acres framed with a rolling park-like setting, Black Lake Apartments offers pleasant landscaped views as well as spacious recreational areas. dollasign#NUMBER,#NUMBER #NUMBER Bedroom/#NUMBERBath #NUMBER Black Lake Blvd, #HOOD , WA #NUMBER Square Footageï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER ft#NUMBER Unit Typeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Two Br #NUMBER Bath | Lease Durationï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER-#NUMBER Months Depositï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dollasign#NUMBER Apartment Amenities Close To #HOOD #HOOD and Capital Mall Near Evergreen State College & South Puget Sound Community College On-site Management & Maintenance Convenient to I#NUMBER & H#NUMBER Playground Heated Indoor & Outdoor Pools Exercise/Weight Room Fenced Dog Park Garages & Covered Spaces Available Shoot Some Pool In The Clubhouse Want to see more? Visit our website at #URL to view all our available floorplans or give us a call to schedule a tour at show contact info Unit Amenities Fullsize Washer & Dryer Included Wood Burning Fireplaces in Select Units Upgraded Gourmet Kitchens in Select Units Range, Refrigerator, Dishwasher & Disposal Private Balconies with Additional Storage Pets? We love petsichi Fury friends are welcome Black Lake Apartments Cozy Af #HOOD able Convenience #NUMBER Bedrooms | #NUMBER Bedrooms | #NUMBER Bedrooms #NUMBER Black Lake Blvd #HOOD , WA #NUMBER #URL Office Hours Mon-Fri:	#NUMBERam-#NUMBERpm Sat-Sun:	#NUMBERam-#NUMBERpm For more information or to schedule a tour give us a call at show contact info or email us at show contact info Interior images shown are representative of advertised floor plan layout. Finishes and minor details of available unit may vary. Black Lake is professionally managed by Tarragon Property Services and units are available on an equal opportunity basis. Pricing shown is based on a #NUMBER month lease with a move-in date set to the same day a unit is made available and is only valid on the day this ad was placed. Actual pricing may vary based on the time of application, lease duration, and move-in date required. Please visit our website to find out more about current rental rates, availability dates, and rental criteria: #URL 
+
+Topic 24 Rank 3
+: 
+ Was  99.64 percent topic 24 :
+ Black Lake West #HOOD Apartments - Cozy Convenience Pleasant landscaped views await on these one, two, and three bedroom homes nestled into #NUMBER acres of rolling park-like hills. Cozy. Af #HOOD able. Convenient. Come see our tasteful #NUMBER-Hour Gym with top of the line equipment.  Want to take a swim? Dip into our indoor pool or hot tubichi Contact us today to see if Black Lake West #HOOD will be the next place you call home. dollasign#NUMBER #NUMBER Bedroom #NUMBER Bathroom #NUMBER Black Lake Blvd, #HOOD WA #NUMBER Square Footageï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER ft  #NUMBER Unit Typeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER Br #NUMBER Bath Lease Durationï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER-#NUMBER Months Depositï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dollasign#NUMBER Full size Washer & Dryer Included Wood Burning Fireplaces in Select Units Private Balconies with Additional Storage Range, Refrigerator, Dishwasher & Disposal Upgraded Gourmet Kitchens in Select Units Pets? We love petsichi Fury friends are welcome Want to see more? Visit our website at #URL to view all our available floorplans or give us a call to schedule a tour at show contact info Community Amenities Close To #HOOD #HOOD and Capital Mall Near Evergreen State College & South Puget Sound Community College On-site Management & Maintenance Convenient to I#NUMBER & H#NUMBER Playground Heated Indoor & Outdoor Pools Exercise/Weight Room Fenced Dog Park Garages & Covered Spaces Available Shoot Some Pool In The Clubhouse Black Lake Apartments Cozy Af #HOOD able Convenience #NUMBER Bedrooms | #NUMBER Bedrooms | #NUMBER Bedrooms #NUMBER Black Lake Blvd #HOOD , WA #NUMBER #URL Office Hours Mon-Fri:	#NUMBERam-#NUMBERpm Sat-Sun:	#NUMBERam-#NUMBERpm For more information or to schedule a tour give us a call at show contact info or email us at show contact info Interior images shown are representative of advertised floor plan layout. Finishes and minor details of available unit may vary. Black Lake Apartments is professionally managed by Tarragon Property Services and units are available on an equal opportunity basis. 
+
+Topic 24 Rank 4
+: 
+ Was  99.64 percent topic 24 :
+ Black Lake West #HOOD Apartments - Cozy Convenience Pleasant landscaped views await on these one, two, and three bedroom homes nestled into #NUMBER acres of rolling park-like hills. Cozy. Af #HOOD able. Convenient. Come see our tasteful #NUMBER-Hour Gym with top of the line equipment.  Want to take a swim? Dip into our indoor pool or hot tubichi Contact us today to see if Black Lake West #HOOD will be the next place you call home. dollasign#NUMBER #NUMBER Bedroom #NUMBER Bathroom #NUMBER Black Lake Blvd, #HOOD WA #NUMBER Square Footageï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER ft  #NUMBER Unit Typeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER Br #NUMBER Bath Lease Durationï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER-#NUMBER Months Depositï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dollasign#NUMBER Full size Washer & Dryer Included Wood Burning Fireplaces in Select Units Private Balconies with Additional Storage Range, Refrigerator, Dishwasher & Disposal Upgraded Gourmet Kitchens in Select Units Pets? We love petsichi Fury friends are welcome Want to see more? Visit our website at #URL to view all our available floorplans or give us a call to schedule a tour at show contact info Community Amenities Close To #HOOD #HOOD and Capital Mall Near Evergreen State College & South Puget Sound Community College On-site Management & Maintenance Convenient to I#NUMBER & H#NUMBER Playground Heated Indoor & Outdoor Pools Exercise/Weight Room Fenced Dog Park Garages & Covered Spaces Available Shoot Some Pool In The Clubhouse Black Lake Apartments Cozy Af #HOOD able Convenience #NUMBER Bedrooms | #NUMBER Bedrooms | #NUMBER Bedrooms #NUMBER Black Lake Blvd #HOOD , WA #NUMBER #URL Office Hours Mon-Fri:	#NUMBERam-#NUMBERpm Sat-Sun:	#NUMBERam-#NUMBERpm For more information or to schedule a tour give us a call at show contact info or email us at show contact info Interior images shown are representative of advertised floor plan layout. Finishes and minor details of available unit may vary. Black Lake Apartments is professionally managed by Tarragon Property Services and units are available on an equal opportunity basis. 
+
+Topic 24 Rank 5
+: 
+ Was  99.63 percent topic 24 :
+ Black Lake West #HOOD Apartments - Cozy Convenience Pleasant landscaped views await on these one, two, and three bedroom homes nestled into #NUMBER acres of rolling park-like hills. Cozy. Af #HOOD able. Convenient. Come see our tasteful #NUMBER-Hour Gym with top of the line equipment.  Want to take a swim? Dip into our indoor pool or hot tubichi Contact us today to see if Black Lake West #HOOD will be the next place you call home. dollasign#NUMBER Bedroom #NUMBER Bathroom #NUMBER Black Lake Blvd, #HOOD WA #NUMBER Square Footageï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER ft  #NUMBER Unit Typeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER Br #NUMBER Bath Lease Durationï¿½ï¿½ï¿½ï¿½ï¿½ #NUMBER-#NUMBER Months Depositï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dollasign#NUMBER Full size Washer & Dryer Included Wood Burning Fireplaces in Select Units Private Balconies with Additional Storage Range, Refrigerator, Dishwasher & Disposal Upgraded Gourmet Kitchens in Select Units Pets? We love petsichi Fury friends are welcome Want to see more? Visit our website at #URL to view all our available floorplans or give us a call to schedule a tour at show contact info Community Amenities Close To #HOOD #HOOD and Capital Mall Near Evergreen State College & South Puget Sound Community College On-site Management & Maintenance Convenient to I#NUMBER & H#NUMBER Playground Heated Indoor & Outdoor Pools Exercise/Weight Room Fenced Dog Park Garages & Covered Spaces Available Shoot Some Pool In The Clubhouse Black Lake Apartments Cozy Af #HOOD able Convenience #NUMBER Bedrooms | #NUMBER Bedrooms | #NUMBER Bedrooms #NUMBER Black Lake Blvd #HOOD , WA #NUMBER #URL Office Hours Mon-Fri:	#NUMBERam-#NUMBERpm Sat-Sun:	#NUMBERam-#NUMBERpm For more information or to schedule a tour give us a call at show contact info or email us at show contact info Interior images shown are representative of advertised floor plan layout. Finishes and minor details of available unit may vary. Black Lake Apartments is professionally managed by Tarragon Property Services and units are available on an equal opportunity basis. 
+
+Topic # 4  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 4, dtype: float64 
+ Topic 4: hood, number, room, community, homes, martin, kitchen, center, url, designed, amenities, deck, people, s, pet, area, floor, views, walk, storage
+
+ Top 5 answers fitting topic 4 are: 
+ 
+
+Topic 4 Rank 1
+: 
+ Was  99.63 percent topic 4 :
+ The Martin Luxury Apartments,#NUMBER #NUMBERth Avenue, #HOOD , WA, #NUMBERInterested In This Unit? Use this link for more #URL Now for #NUMBER:  This is a #NUMBER Bedroom + #NUMBER Den, #NUMBER Bath, approximately #NUMBER Sq. Ft. Every aspect of The Martin's design, from its sweeping hard wood floors that recall the lively tones of the #HOOD Northwest to casually sophisticated interiors are reminiscent of classic #HOOD luxury. The Martin is inspired by the unique geography and inimitable style of everything #HOOD #HOOD has to offer. Throughout The Martin, an expansive array of beautifully designed indoor and outdoor amenities and an unparalleled range of services offer residents the best of the authentic #HOOD lifestyle every day. Here, The Martin's residents will find themselves at the heart of the excitement in a trend-setting community that truly is made in #HOOD .With glittering views of the city, Puget Sound, #HOOD and Space Needle, The Martin invites you to lift a glass to the world at your feet.Virtual tour: #URL Our prices depend on multiple factors. Therefore, prices shown in this advertisement are subject to change at anytime without notice. Features,- Energy Star-rated stainless-steel Whirlpool kitchen appliances ,- Tiled tub surrounds ,- Mesh fabric roller shades ,- Quartz countertops in kitchen and bathrooms ,- Walk-in closets in most homes ,- Nearly floor-to-ceiling windows in most homes ,- Spacious open floor plans ,- High-efficiency water fixtures ,- Energy- and water-efficient front-load washer/dryers ,- Air conditioning ,- Gas ranges ,- Tile backsplash in kitchens and baths ,- Contemporary cabinetry with soft-close hardware ,- Well-designed kitchens with lots of storage ,- Under-cabinet lighting in most homes Community Amenities,- Dog washing room / dog relief area ,- Self-service package pick-up lockers ,- #HOOD #HOOD location ,- Walk score of #NUMBER ,- Resident storage ,- Business center and conference room ,- Fitness center with cardio equipment, free weights and stretching area ,- Guest suite ,- Dining deck with grills ,- Media/gaming room ,- Roof deck with community pea-patch ,- Community room with full kitchen Office Hours,M-F #NUMBERam-#NUMBERpm,Sat. #NUMBERam-#NUMBERpm,Sun. #NUMBERam-#NUMBERpm*Prices are subject to change without notice.* Pet Policy,#NUMBER pets maximum,Cats and Dogs,#NUMBERlb Weight Limit,Breed restrictions apply ,We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity S#NUMBERvYzbf 
+
+Topic 4 Rank 2
+: 
+ Was  99.63 percent topic 4 :
+ The Martin Luxury Apartments,#NUMBER #NUMBERth Avenue, #HOOD , WA, #NUMBERNeed more information? Copy this #URL Now for #NUMBER:  This is a #NUMBER Bedroom + #NUMBER Den, #NUMBER Bath, approximately #NUMBER Sq. Ft. Every aspect of The Martin's design, from its sweeping hard wood floors that recall the lively tones of the #HOOD Northwest to casually sophisticated interiors are reminiscent of classic #HOOD luxury. The Martin is inspired by the unique geography and inimitable style of everything #HOOD #HOOD has to offer. Throughout The Martin, an expansive array of beautifully designed indoor and outdoor amenities and an unparalleled range of services offer residents the best of the authentic #HOOD lifestyle every day. Here, The Martin's residents will find themselves at the heart of the excitement in a trend-setting community that truly is made in #HOOD .With glittering views of the city, Puget Sound, #HOOD and Space Needle, The Martin invites you to lift a glass to the world at your feet.Virtual tour: #URL Our prices depend on multiple factors. Therefore, prices shown in this advertisement are subject to change at anytime without notice. Features,- Well-designed kitchens with lots of storage ,- Contemporary cabinetry with soft-close hardware ,- Walk-in closets in most homes ,- Under-cabinet lighting in most homes ,- Nearly floor-to-ceiling windows in most homes ,- Tile backsplash in kitchens and baths ,- Tiled tub surrounds ,- Energy- and water-efficient front-load washer/dryers ,- Air conditioning ,- High-efficiency water fixtures ,- Energy Star-rated stainless-steel Whirlpool kitchen appliances ,- Gas ranges ,- Mesh fabric roller shades ,- Spacious open floor plans ,- Quartz countertops in kitchen and bathrooms Community Amenities,- Dog washing room / dog relief area ,- Guest suite ,- Self-service package pick-up lockers ,- Resident storage ,- Roof deck with community pea-patch ,- Fitness center with cardio equipment, free weights and stretching area ,- Community room with full kitchen ,- #HOOD #HOOD location ,- Walk score of #NUMBER ,- Business center and conference room ,- Media/gaming room ,- Dining deck with grills Office Hours,M-F #NUMBERam-#NUMBERpm,Sat. #NUMBERam-#NUMBERpm,Sun. #NUMBERam-#NUMBERpm*Prices are subject to change without notice.* Pet Policy,#NUMBER pets maximum,Cats and Dogs,#NUMBERlb Weight Limit,Breed restrictions apply ,We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity vQOTAZw#NUMBERo 
+
+Topic 4 Rank 3
+: 
+ Was  99.63 percent topic 4 :
+ The Martin Luxury Apartments,#NUMBER #NUMBERth Avenue, #HOOD , WA, #NUMBERNeed more information? Copy this #URL Now:  This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Every aspect of The Martin's design, from its sweeping hard wood floors that recall the lively tones of the #HOOD Northwest to casually sophisticated interiors are reminiscent of classic #HOOD luxury. The Martin is inspired by the unique geography and inimitable style of everything #HOOD #HOOD has to offer. Throughout The Martin, an expansive array of beautifully designed indoor and outdoor amenities and an unparalleled range of services offer residents the best of the authentic #HOOD lifestyle every day. Here, The Martin's residents will find themselves at the heart of the excitement in a trend-setting community that truly is made in #HOOD .With glittering views of the city, Puget Sound, #HOOD and Space Needle, The Martin invites you to lift a glass to the world at your feet.Virtual tour: #URL Our prices depend on multiple factors. Therefore, prices shown in this advertisement are subject to change at anytime without notice. Features,- Tiled tub surrounds ,- Energy Star-rated stainless-steel Whirlpool kitchen appliances ,- Energy- and water-efficient front-load washer/dryers ,- Tile backsplash in kitchens and baths ,- Contemporary cabinetry with soft-close hardware ,- Spacious open floor plans ,- Air conditioning ,- Well-designed kitchens with lots of storage ,- Gas ranges ,- Under-cabinet lighting in most homes ,- High-efficiency water fixtures ,- Quartz countertops in kitchen and bathrooms ,- Nearly floor-to-ceiling windows in most homes ,- Mesh fabric roller shades ,- Walk-in closets in most homes Community Amenities,- Self-service package pick-up lockers ,- Fitness center with cardio equipment, free weights and stretching area ,- Dining deck with grills ,- Roof deck with community pea-patch ,- Media/gaming room ,- Dog washing room / dog relief area ,- Guest suite ,- Business center and conference room ,- Walk score of #NUMBER ,- Resident storage ,- Community room with full kitchen ,- #HOOD #HOOD location Office Hours,M-F #NUMBERam-#NUMBERpm,Sat. #NUMBERam-#NUMBERpm,Sun. #NUMBERam-#NUMBERpm*Prices are subject to change without notice.* Pet Policy,#NUMBER pets maximum,Cats and Dogs,#NUMBERlb Weight Limit,Breed restrictions apply ,We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity haTTmmP#NUMBERj#NUMBERO 
+
+Topic 4 Rank 4
+: 
+ Was  99.63 percent topic 4 :
+ The Martin Luxury Apartments,#NUMBER #NUMBERth Avenue, #HOOD , WA, #NUMBERUse this link for more #URL Now for #NUMBER :  This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Every aspect of The Martin's design, from its sweeping hard wood floors that recall the lively tones of the #HOOD Northwest to casually sophisticated interiors are reminiscent of classic #HOOD luxury. The Martin is inspired by the unique geography and inimitable style of everything #HOOD #HOOD has to offer. Throughout The Martin, an expansive array of beautifully designed indoor and outdoor amenities and an unparalleled range of services offer residents the best of the authentic #HOOD lifestyle every day. Here, The Martin's residents will find themselves at the heart of the excitement in a trend-setting community that truly is made in #HOOD .With glittering views of the city, Puget Sound, #HOOD and Space Needle, The Martin invites you to lift a glass to the world at your feet.Virtual tour: #URL Our prices depend on multiple factors. Therefore, prices shown in this advertisement are subject to change at anytime without notice. Features,- Energy Star-rated stainless-steel Whirlpool kitchen appliances ,- Well-designed kitchens with lots of storage ,- Contemporary cabinetry with soft-close hardware ,- Energy- and water-efficient front-load washer/dryers ,- Gas ranges ,- Walk-in closets in most homes ,- Tile backsplash in kitchens and baths ,- Tiled tub surrounds ,- High-efficiency water fixtures ,- Quartz countertops in kitchen and bathrooms ,- Spacious open floor plans ,- Mesh fabric roller shades ,- Air conditioning ,- Under-cabinet lighting in most homes ,- Nearly floor-to-ceiling windows in most homes Community Amenities,- Community room with full kitchen ,- Resident storage ,- Walk score of #NUMBER ,- Self-service package pick-up lockers ,- #HOOD #HOOD location ,- Dining deck with grills ,- Media/gaming room ,- Roof deck with community pea-patch ,- Business center and conference room ,- Guest suite ,- Fitness center with cardio equipment, free weights and stretching area ,- Dog washing room / dog relief area Office Hours,M-F #NUMBERam-#NUMBERpm,Sat. #NUMBERam-#NUMBERpm,Sun. #NUMBERam-#NUMBERpm*Prices are subject to change without notice.* Pet Policy,#NUMBER pets maximum,Cats and Dogs,#NUMBERlb Weight Limit,Breed restrictions apply ,We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity IlvyEDFqrB#NUMBERY 
+
+Topic 4 Rank 5
+: 
+ Was  99.62 percent topic 4 :
+ Welcome Home. Imagine Yourself Living Hereichi Call Now: show contact info The Martin Luxury Apartments #NUMBER #NUMBERth Avenue, #HOOD , WA, #NUMBER Interested in more information? Visit link below: #URL This is a #NUMBER Bedroom + #NUMBER Den, #NUMBER Bath, approximately #NUMBER Sq. Ft. Every aspect of The Martin's design, from its sweeping hard wood floor plans that recall the lively tones of the #HOOD Northwest to casually sophisticated interiors are reminiscent of classic #HOOD luxury. The Martin is inspired by the unique geography and inimitable style of everything #HOOD #HOOD has to offer. Throughout The Martin, an expansive array of beautifully designed indoor and outdoor amenities and an unparalleled range of services offer residents the best of the authentic #HOOD lifestyle every day. Here, The Martin's residents will find themselves at the heart of the excitement in a trend-setting community that truly is made in #HOOD . With glittering views of the city, Puget Sound, #HOOD and Space Needle, The Martin invites you to lift a glass to the world at your feet. Virtual tour: #URL * Our prices depend on multiple factors. Therefore, prices shown in this advertisement are subject to change at anytime without notice. Features - Air conditioning - Contemporary cabinetry with soft-close hardware - Well-designed kitchens with lots of storage - Quartz countertops in kitchen and bathrooms - Walk-in closets in most homes - Gas ranges - Energy Star-rated stainless-steel Whirlpool kitchen appliances - Tile backsplash in kitchens and baths - Tiled tub surrounds - Energy- and water-efficient front-load washer/dryers - High-efficiency water fixtures - Nearly floor-to-ceiling windows in most homes - Spacious open floor plans - Under-cabinet lighting in most homes - Mesh fabric roller shades Community Amenities - Dog washing room / dog relief area - Roof deck with community pea-patch - Media/gaming room - Business center and conference room - Fitness center with cardio equipment, free weights and stretching area - Dining deck with grills - Resident storage - Self-service package pick-up lockers - #HOOD #HOOD location - Walk score of #NUMBER - Community room with full kitchen - Guest suite Pet Policy #NUMBER pets maximum Cats and Dogs #NUMBERlb Weight Limit Breed restrictions apply Office Hours M-F #NUMBERam-#NUMBERpm Sat. #NUMBERam-#NUMBERpm Sun. #NUMBERam-#NUMBERpm Equal Housing Opportunity 
+
+Topic # 27  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 27, dtype: float64 
+ Topic 27: number, views, rooftop, homes, windows, walton, s, deck, sound, dinner, city, feature, floor, hood, friends, enjoy, spectacular, natural, marble, finishes
+
+ Top 5 answers fitting topic 27 are: 
+ 
+
+Topic 27 Rank 1
+: 
+ Was  99.73 percent topic 27 :
+ Welcome To Your New Homeichi , Call Now: , #NUMBER Vine St, #HOOD , WA, #NUMBER,Use this link for more #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. , "Stunning views, inspired design and musing gathering spaces. It's sophisticated leased living - Walton's way. Situated on the corner of Western and Vine, on the quiet side of #HOOD , Walton's coveted location, along a lushly landscaped Green street, features Puget Sound water views from the first floor to the rooftop deck. The sustainably constructed homes feature #NUMBER-#NUMBER' loft ceilings, bamboo hardwood floors, silestone and marble surfaces, contemporary cabinetry concealing high-end European appliances, and walls of windows. Settle in to the Grand Library with your favorite author and delight in the warmth of the fireplace. Savor your morning coffee from a window seat on the waterfront. Or, gather some friends for dinner on the rooftop deck with breathtaking views of all there is to love here in #HOOD . From sleek interior finishes, to phenomenal amenities, and architectural surprises throughout - Walton is a thoughtful, purposeful place to call home." , - Refined Finishes and Sophisticated Interiors , - Kitchens feature quality European appliances such as Blomberg and Fulgor with sleek, concealed cabinet fronts , - Windows: Most homes feature floor-to-ceiling windows that frame gorgeous city and water views. Select windows within the homes open to let fresh air inside , - Flooring: Bamboo hardwood floors throughout , - #NUMBER% of homes feature high-efficiency heating and cooling systems , - Exposed Concrete Ceilings , - Each home comes with a Whirlpool stacked washer and dryer , - Counters: Solid-slab silestone is as durable as it is beautiful. Unlike granite or marble, it will not scratch or wear with time , - Enjoy our spacious, air-conditioned Fitness Center outfitted with commercial-grade cardio machines with individual entertainment screens. Or, flex on the universal weight system, free weights, yoga mats and more , - Cyclists enjoy a dedicated entrance to the private Resident Cycle Room with direct street access and a custom workshop and tools , - Elegant Design, Natural Textures and Modern Touches , - Just off the main entrance, the Grand Library beckons you to come in--go ahead, stay a while. Literary classics and modern-day best sellers line floor-to-ceiling bookcases. Recline by the fire, work from the window seat in your own personal corner office, or sip and socialize in a comfortable conversation area , - Steel Beams and Walls of Glass Reflect the Dramatics Views of the City and Sound , - Walton likes to party and knows how to maximize your waterfront experience from a spectacular rooftop deck. Host a dinner party at the communal group table, or gather 'round the fire pit for laughter. Outdoor barbecues, tables for two to sixteen, and comfortable lounging and seating invite you to take in spectacular sunsets over the city, mountains and Sound , - Green Globes Certification , - Private underground parking for all vehicle types. Don't like gas? No problem, just plug in to one of our electric vehicle charging stations , - Pets are popular roommates. Tails wag at the mere mention of the Rooftop Pet Walk. Your four-legged friend will appreciate patches of natural grass , - Your guests will enjoy luxury accommodations right here at Walton in the well-appointed Guest Suite for out-of-town family and friends , Two pets are allowed per residence. They must equal #NUMBERpds or less. No breed restrictions dollasign#NUMBER refundable pet deposit. , By appointment only ,Equal Housing Opportunity , 
+
+Topic 27 Rank 2
+: 
+ Was  99.73 percent topic 27 :
+ "Stunning views, inspired design and musing gathering spaces. It's sophisticated leased living - Walton's way. Situated on the corner of Western and Vine, on the quiet side of #HOOD , Walton's coveted location, along a lushly landscaped Green street, features Puget Sound water views from the first floor to the rooftop deck. The sustainably constructed homes feature #NUMBER-#NUMBER' loft ceilings, bamboo hardwood floors, silestone and marble surfaces, contemporary cabinetry concealing high-end European appliances, and walls of windows. Settle in to the Grand Library with your favorite author and delight in the warmth of the fireplace. Savor your morning coffee from a window seat on the waterfront. Or, gather some friends for dinner on the rooftop deck with breathtaking views of all there is to love here in #HOOD . From sleek interior finishes, to phenomenal amenities, and architectural surprises throughout - Walton is a thoughtful, purposeful place to call home." , Call Now: ,Want more info on this unit? See the link #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. , - Refined Finishes and Sophisticated Interiors , - Flooring: Bamboo hardwood floors throughout , - Windows: Most homes feature floor-to-ceiling windows that frame gorgeous city and water views. Select windows within the homes open to let fresh air inside , - Counters: Solid-slab silestone is as durable as it is beautiful. Unlike granite or marble, it will not scratch or wear with time , - Each home comes with a Whirlpool stacked washer and dryer , - Exposed Concrete Ceilings , - #NUMBER% of homes feature high-efficiency heating and cooling systems , - Kitchens feature quality European appliances such as Blomberg and Fulgor with sleek, concealed cabinet fronts , - Pets are popular roommates. Tails wag at the mere mention of the Rooftop Pet Walk. Your four-legged friend will appreciate patches of natural grass , - Green Globes Certification , - Walton likes to party and knows how to maximize your waterfront experience from a spectacular rooftop deck. Host a dinner party at the communal group table, or gather 'round the fire pit for laughter. Outdoor barbecues, tables for two to sixteen, and comfortable lounging and seating invite you to take in spectacular sunsets over the city, mountains and Sound , - Your guests will enjoy luxury accommodations right here at Walton in the well-appointed Guest Suite for out-of-town family and friends , - Elegant Design, Natural Textures and Modern Touches , - Private underground parking for all vehicle types. Don't like gas? No problem, just plug in to one of our electric vehicle charging stations , - Steel Beams and Walls of Glass Reflect the Dramatics Views of the City and Sound , - Enjoy our spacious, air-conditioned Fitness Center outfitted with commercial-grade cardio machines with individual entertainment screens. Or, flex on the universal weight system, free weights, yoga mats and more , - Cyclists enjoy a dedicated entrance to the private Resident Cycle Room with direct street access and a custom workshop and tools , - Just off the main entrance, the Grand Library beckons you to come in--go ahead, stay a while. Literary classics and modern-day best sellers line floor-to-ceiling bookcases. Recline by the fire, work from the window seat in your own personal corner office, or sip and socialize in a comfortable conversation area , Two pets are allowed per residence. They must equal #NUMBERpds or less. No breed restrictions dollasign#NUMBER refundable pet deposit. , By appointment only , #NUMBER Vine St, #HOOD , WA, #NUMBER,Equal Housing Opportunity , 
+
+Topic 27 Rank 3
+: 
+ Was  99.73 percent topic 27 :
+ "Stunning views, inspired design and musing gathering spaces. It's sophisticated leased living - Walton's way. Situated on the corner of Western and Vine, on the quiet side of #HOOD , Walton's coveted location, along a lushly landscaped Green street, features Puget Sound water views from the first floor to the rooftop deck. The sustainably constructed homes feature #NUMBER-#NUMBER' loft ceilings, bamboo hardwood floors, silestone and marble surfaces, contemporary cabinetry concealing high-end European appliances, and walls of windows. Settle in to the Grand Library with your favorite author and delight in the warmth of the fireplace. Savor your morning coffee from a window seat on the waterfront. Or, gather some friends for dinner on the rooftop deck with breathtaking views of all there is to love here in #HOOD . From sleek interior finishes, to phenomenal amenities, and architectural surprises throughout - Walton is a thoughtful, purposeful place to call home." , Call Now: ,Want more info on this unit? See the link #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. , - Windows: Most homes feature floor-to-ceiling windows that frame gorgeous city and water views. Select windows within the homes open to let fresh air inside , - Refined Finishes and Sophisticated Interiors , - Kitchens feature quality European appliances such as Blomberg and Fulgor with sleek, concealed cabinet fronts , - Each home comes with a Whirlpool stacked washer and dryer , - Exposed Concrete Ceilings , - Counters: Solid-slab silestone is as durable as it is beautiful. Unlike granite or marble, it will not scratch or wear with time , - Flooring: Bamboo hardwood floors throughout , - #NUMBER% of homes feature high-efficiency heating and cooling systems , - Pets are popular roommates. Tails wag at the mere mention of the Rooftop Pet Walk. Your four-legged friend will appreciate patches of natural grass , - Private underground parking for all vehicle types. Don't like gas? No problem, just plug in to one of our electric vehicle charging stations , - Elegant Design, Natural Textures and Modern Touches , - Enjoy our spacious, air-conditioned Fitness Center outfitted with commercial-grade cardio machines with individual entertainment screens. Or, flex on the universal weight system, free weights, yoga mats and more , - Walton likes to party and knows how to maximize your waterfront experience from a spectacular rooftop deck. Host a dinner party at the communal group table, or gather 'round the fire pit for laughter. Outdoor barbecues, tables for two to sixteen, and comfortable lounging and seating invite you to take in spectacular sunsets over the city, mountains and Sound , - Steel Beams and Walls of Glass Reflect the Dramatics Views of the City and Sound , - Cyclists enjoy a dedicated entrance to the private Resident Cycle Room with direct street access and a custom workshop and tools , - Your guests will enjoy luxury accommodations right here at Walton in the well-appointed Guest Suite for out-of-town family and friends , - Just off the main entrance, the Grand Library beckons you to come in--go ahead, stay a while. Literary classics and modern-day best sellers line floor-to-ceiling bookcases. Recline by the fire, work from the window seat in your own personal corner office, or sip and socialize in a comfortable conversation area , - Green Globes Certification , Two pets are allowed per residence. They must equal #NUMBERpds or less. No breed restrictions dollasign#NUMBER refundable pet deposit. , By appointment only , #NUMBER Vine St, #HOOD , WA, #NUMBER,Equal Housing Opportunity , 
+
+Topic 27 Rank 4
+: 
+ Was  99.73 percent topic 27 :
+ We are pet friendly , Call Now: , #NUMBER Vine St, #HOOD , WA, #NUMBER,More unit details #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. , "Stunning views, inspired design and musing gathering spaces. It's sophisticated leased living - Walton's way. Situated on the corner of Western and Vine, on the quiet side of #HOOD , Walton's coveted location, along a lushly landscaped Green street, features Puget Sound water views from the first floor to the rooftop deck. The sustainably constructed homes feature #NUMBER-#NUMBER' loft ceilings, bamboo hardwood floors, silestone and marble surfaces, contemporary cabinetry concealing high-end European appliances, and walls of windows. Settle in to the Grand Library with your favorite author and delight in the warmth of the fireplace. Savor your morning coffee from a window seat on the waterfront. Or, gather some friends for dinner on the rooftop deck with breathtaking views of all there is to love here in #HOOD . From sleek interior finishes, to phenomenal amenities, and architectural surprises throughout - Walton is a thoughtful, purposeful place to call home." , - Kitchens feature quality European appliances such as Blomberg and Fulgor with sleek, concealed cabinet fronts , - Refined Finishes and Sophisticated Interiors , - Each home comes with a Whirlpool stacked washer and dryer , - #NUMBER% of homes feature high-efficiency heating and cooling systems , - Flooring: Bamboo hardwood floors throughout , - Windows: Most homes feature floor-to-ceiling windows that frame gorgeous city and water views. Select windows within the homes open to let fresh air inside , - Counters: Solid-slab silestone is as durable as it is beautiful. Unlike granite or marble, it will not scratch or wear with time , - Exposed Concrete Ceilings , - Steel Beams and Walls of Glass Reflect the Dramatics Views of the City and Sound , - Green Globes Certification , - Walton likes to party and knows how to maximize your waterfront experience from a spectacular rooftop deck. Host a dinner party at the communal group table, or gather 'round the fire pit for laughter. Outdoor barbecues, tables for two to sixteen, and comfortable lounging and seating invite you to take in spectacular sunsets over the city, mountains and Sound , - Pets are popular roommates. Tails wag at the mere mention of the Rooftop Pet Walk. Your four-legged friend will appreciate patches of natural grass , - Enjoy our spacious, air-conditioned Fitness Center outfitted with commercial-grade cardio machines with individual entertainment screens. Or, flex on the universal weight system, free weights, yoga mats and more , - Cyclists enjoy a dedicated entrance to the private Resident Cycle Room with direct street access and a custom workshop and tools , - Just off the main entrance, the Grand Library beckons you to come in--go ahead, stay a while. Literary classics and modern-day best sellers line floor-to-ceiling bookcases. Recline by the fire, work from the window seat in your own personal corner office, or sip and socialize in a comfortable conversation area , - Your guests will enjoy luxury accommodations right here at Walton in the well-appointed Guest Suite for out-of-town family and friends , - Elegant Design, Natural Textures and Modern Touches , - Private underground parking for all vehicle types. Don't like gas? No problem, just plug in to one of our electric vehicle charging stations , Two pets are allowed per residence. They must equal #NUMBERpds or less. No breed restrictions dollasign#NUMBER refundable pet deposit. , By appointment only ,Equal Housing Opportunity , 
+
+Topic 27 Rank 5
+: 
+ Was  99.73 percent topic 27 :
+ "Stunning views, inspired design and musing gathering spaces. It's sophisticated leased living - Walton's way. Situated on the corner of Western and Vine, on the quiet side of #HOOD , Walton's coveted location, along a lushly landscaped Green street, features Puget Sound water views from the first floor to the rooftop deck. The sustainably constructed homes feature #NUMBER-#NUMBER' loft ceilings, bamboo hardwood floors, silestone and marble surfaces, contemporary cabinetry concealing high-end European appliances, and walls of windows. Settle in to the Grand Library with your favorite author and delight in the warmth of the fireplace. Savor your morning coffee from a window seat on the waterfront. Or, gather some friends for dinner on the rooftop deck with breathtaking views of all there is to love here in #HOOD . From sleek interior finishes, to phenomenal amenities, and architectural surprises throughout - Walton is a thoughtful, purposeful place to call home." , Call Now: ,Use the link below for more #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER-#NUMBER Sq. Ft. , - Refined Finishes and Sophisticated Interiors , - Exposed Concrete Ceilings , - Kitchens feature quality European appliances such as Blomberg and Fulgor with sleek, concealed cabinet fronts , - #NUMBER% of homes feature high-efficiency heating and cooling systems , - Counters: Solid-slab silestone is as durable as it is beautiful. Unlike granite or marble, it will not scratch or wear with time , - Windows: Most homes feature floor-to-ceiling windows that frame gorgeous city and water views. Select windows within the homes open to let fresh air inside , - Flooring: Bamboo hardwood floors throughout , - Each home comes with a Whirlpool stacked washer and dryer , - Elegant Design, Natural Textures and Modern Touches , - Enjoy our spacious, air-conditioned Fitness Center outfitted with commercial-grade cardio machines with individual entertainment screens. Or, flex on the universal weight system, free weights, yoga mats and more , - Walton likes to party and knows how to maximize your waterfront experience from a spectacular rooftop deck. Host a dinner party at the communal group table, or gather 'round the fire pit for laughter. Outdoor barbecues, tables for two to sixteen, and comfortable lounging and seating invite you to take in spectacular sunsets over the city, mountains and Sound , - Your guests will enjoy luxury accommodations right here at Walton in the well-appointed Guest Suite for out-of-town family and friends , - Steel Beams and Walls of Glass Reflect the Dramatics Views of the City and Sound , - Private underground parking for all vehicle types. Don't like gas? No problem, just plug in to one of our electric vehicle charging stations , - Just off the main entrance, the Grand Library beckons you to come in--go ahead, stay a while. Literary classics and modern-day best sellers line floor-to-ceiling bookcases. Recline by the fire, work from the window seat in your own personal corner office, or sip and socialize in a comfortable conversation area , - Pets are popular roommates. Tails wag at the mere mention of the Rooftop Pet Walk. Your four-legged friend will appreciate patches of natural grass , - Green Globes Certification , - Cyclists enjoy a dedicated entrance to the private Resident Cycle Room with direct street access and a custom workshop and tools , Two pets are allowed per residence. They must equal #NUMBERpds or less. No breed restrictions dollasign#NUMBER refundable pet deposit. , By appointment only , #NUMBER Vine St, #HOOD , WA, #NUMBER,Equal Housing Opportunity , 
+
+Topic # 47  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 47, dtype: float64 
+ Topic 47: number, hood, century, ago, best, contact, email, offers, unsolicited, services, days, minute, deal, friend, location, g, housing, post, s, posted
+
+ Top 5 answers fitting topic 47 are: 
+ 
+
+Topic 47 Rank 1
+: 
+ Was  99.81 percent topic 47 :
+ Olympic #HOOD Apartments,#NUMBER Ne Fairgrounds Road, #HOOD , WA, #NUMBERInterested in more information? Visit link #URL Now:  , Welcome to Olympic #HOOD ApartmentsThis is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Olympic #HOOD is the perfect choice for luxury living on the peninsulaichi Renovated in #NUMBER to provide you with every convenience while you enjoy resort style amenities, you will find life at Olympic #HOOD going beyond your expectations ichi Call or email us today to reserve your new apartment homeichi Features,- Balcony ,- Dish Washer ,- Microwave ,- Refrigerator ,- Fireplace ,- Dryer ,- Washer ,- Carport Community Amenities,- Club House ,- Racquetball ,- Business Center ,- Outdoor Swimming Pool ,- Online Payments Available ,- Basketball Court ,- TV Lounge ,- Indoor Swimming Pool ,- Spa ,- Park ,- On Site Maintenance ,- Fitness Center Office Hours,M - F: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm,S - Su: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm Pet Policy,Dogs and cats welcome. #NUMBER per apartment allowed. #NUMBER pound weight limit. Breed restriction apply. Equal Housing Opportunity,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: #NUMBER minutes ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend  ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen 
+
+Topic 47 Rank 2
+: 
+ Was  99.8 percent topic 47 :
+ Olympic #HOOD Apartments,#NUMBER Ne Fairgrounds Road, #HOOD , WA, #NUMBERInterested in more information? Visit link #URL Now:  , Welcome to Olympic #HOOD ApartmentsThis is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Olympic #HOOD is the perfect choice for luxury living on the peninsulaichi Renovated in #NUMBER to provide you with every convenience while you enjoy resort style amenities, you will find life at Olympic #HOOD going beyond your expectations ichi Call or email us today to reserve your new apartment homeichi Features,- Balcony ,- Dish Washer ,- Microwave ,- Refrigerator ,- Fireplace ,- Dryer ,- Washer ,- Carport Community Amenities,- Club House ,- Racquetball ,- Business Center ,- Outdoor Swimming Pool ,- Online Payments Available ,- Basketball Court ,- TV Lounge ,- Indoor Swimming Pool ,- Spa ,- Park ,- On Site Maintenance ,- Fitness Center Office Hours,M - F: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm,S - Su: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm Pet Policy,Dogs and cats welcome. #NUMBER per apartment allowed. #NUMBER pound weight limit. Breed restriction apply. Equal Housing Opportunity,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: #NUMBER minutes ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend  ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen 
+
+Topic 47 Rank 3
+: 
+ Was  99.78 percent topic 47 :
+ Olympic #HOOD Apartments,#NUMBER Ne Fairgrounds Road, #HOOD , WA, #NUMBERInterested in more information? Visit link #URL Now:  , Welcome to Olympic #HOOD ApartmentsThis is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Olympic #HOOD is the perfect choice for luxury living on the peninsulaichi Renovated in #NUMBER to provide you with every convenience while you enjoy resort style amenities, you will find life at Olympic #HOOD going beyond your expectations ichi Call or email us today to reserve your new apartment homeichi Features,- Balcony ,- Dish Washer ,- Microwave ,- Refrigerator ,- Fireplace ,- Dryer ,- Washer ,- Carport Community Amenities,- Club House ,- Racquetball ,- Business Center ,- Outdoor Swimming Pool ,- Online Payments Available ,- Basketball Court ,- TV Lounge ,- Indoor Swimming Pool ,- Spa ,- Park ,- On Site Maintenance ,- Fitness Center Office Hours,M - F: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm,S - Su: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm Pet Policy,Dogs and cats welcome. #NUMBER per apartment allowed. #NUMBER pound weight limit. Breed restriction apply. Equal Housing Opportunity,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago updated: less than a minute ago email to friend  ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen 
+
+Topic 47 Rank 4
+: 
+ Was  99.76 percent topic 47 :
+ Olympic #HOOD Apartments,#NUMBER Ne Fairgrounds Road, #HOOD , WA, #NUMBERInterested in more information? Visit link #URL Now:  , Welcome to Olympic #HOOD ApartmentsThis is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Olympic #HOOD is the perfect choice for luxury living on the peninsulaichi Renovated in #NUMBER to provide you with every convenience while you enjoy resort style amenities, you will find life at Olympic #HOOD going beyond your expectations ichi Call or email us today to reserve your new apartment homeichi Features,- Balcony ,- Dish Washer ,- Microwave ,- Refrigerator ,- Fireplace ,- Dryer ,- Washer ,- Carport Community Amenities,- Club House ,- Racquetball ,- Business Center ,- Outdoor Swimming Pool ,- Online Payments Available ,- Basketball Court ,- TV Lounge ,- Indoor Swimming Pool ,- Spa ,- Park ,- On Site Maintenance ,- Fitness Center Office Hours,M - F: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm,S - Su: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm Pet Policy,Dogs and cats welcome. #NUMBER per apartment allowed. #NUMBER pound weight limit. Breed restriction apply. Equal Housing Opportunity,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: #NUMBER minutes ago email to friend  ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen 
+
+Topic 47 Rank 5
+: 
+ Was  99.76 percent topic 47 :
+ Olympic #HOOD Apartments,#NUMBER Ne Fairgrounds Road, #HOOD , WA, #NUMBERInterested in more information? Visit link #URL Now:  , Welcome to Olympic #HOOD ApartmentsThis is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Olympic #HOOD is the perfect choice for luxury living on the peninsulaichi Renovated in #NUMBER to provide you with every convenience while you enjoy resort style amenities, you will find life at Olympic #HOOD going beyond your expectations ichi Call or email us today to reserve your new apartment homeichi Features,- Balcony ,- Dish Washer ,- Microwave ,- Refrigerator ,- Fireplace ,- Dryer ,- Washer ,- Carport Community Amenities,- Club House ,- Racquetball ,- Business Center ,- Outdoor Swimming Pool ,- Online Payments Available ,- Basketball Court ,- TV Lounge ,- Indoor Swimming Pool ,- Spa ,- Park ,- On Site Maintenance ,- Fitness Center Office Hours,M - F: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm,S - Su: #NUMBER:#NUMBER am - #NUMBER:#NUMBER pm Pet Policy,Dogs and cats welcome. #NUMBER per apartment allowed. #NUMBER pound weight limit. Breed restriction apply. Equal Housing Opportunity,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id: #NUMBER posted: #NUMBER days ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen,do NOT contact me with unsolicited services or offers,post id:  , posted: #NUMBER days ago updated: less than a minute ago email to friend  ♥ best of [?],Please flag discriminatory housing ads,Avoid scams, deal locallyichi DO NOT wire funds (e.g. Western #HOOD ), or buy/rent sight unseen 
+
+Topic # 10  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 10, dtype: float64 
+ Topic 10: number, hood, community, bedroom, apartments, s, homes, center, pet, numberam, appliances, numberpm, stainless, sq, hour, ft, studio, wood, url, home
+
+ Top 5 answers fitting topic 10 are: 
+ 
+
+Topic 10 Rank 1
+: 
+ Was  99.62 percent topic 10 :
+ Call Now -  This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Nicknamed the Emerald City, the #HOOD metropolis is a picturesque scene of lush evergreen trees and towering skyscrapers. The thriving high technology industry and dominant food culture make #HOOD a perfect place to work, play and unwind. Tucked inside this eco-friendly city is Alley#NUMBER, a community of studio, one and two bedrooms apartments, lofts and townhomes located in the heart of King County. Whether you are a cook at a #HOOD restaurant or a software engineer at #HOOD , you are sure to love these stylish and modern apartments in #HOOD .Enter these contemporary homes and you will find a lovely display of wall-to-wall wood-style flooring that leads into the expansive kitchen. Store all your kitchen essentials in the sleek wood cabinetry that complements the modern, fully equipped Stainless Steel appliance package. Bedrooms have ample-sized closets and expansive windows that draw in plenty of natural light. Outside, residents can mingle by the pool table in the community room, break a sweat in the fitness room or enjoy a cold beverage on the rooftop deck while taking in views of the #HOOD skyline. In addition to the on-site offerings at Alley#NUMBER, this prime location puts you in the center of all the best restaurants, boutique shops and neighborhood attractions.Stop by the leasing office today and discover Alley#NUMBER, a radiant community of lofts, townhomes, and apartments in King County. Features:,Stainless Steel Kitchen Appliances, Concrete Floors in Lofts & Townhomes*, Crushed-Quartz Counter tops, #HOOD , #HOOD & Space Needle Views*, Garbage Disposal, LEED Certified, Tile Backsplashes, Washer & Dryer, Expansive Windows in Many Homes, Decks or Private Patios*, Historic Brick* ,*In Select HomesCommunity Amenities:,Conference Room, Two Roof Decks with Gas Grills, Bike Storage, Controlled-Entry Access, Online Maintenance Requests, Fitness Room, Pet Friendly, Community Room: Equipped with Kitchenette, Dining Area, Free Wi-Fi & a Pool Table, Media Room, Package & Dry Cleaning Notification Via Text or Email Pet Policy:,#NUMBER Pets per Apartment,Cats and Dogs Allowed,(dog breed restrictions apply) More unit details #URL do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity #NUMBERSxpWlCjcM#NUMBERg 
+
+Topic 10 Rank 2
+: 
+ Was  99.62 percent topic 10 :
+ Call Now -  This is a #NUMBER Bedroom, #NUMBER.#NUMBER Bath, approximately #NUMBER Sq. Ft. Nicknamed the Emerald City, the #HOOD metropolis is a picturesque scene of lush evergreen trees and towering skyscrapers. The thriving high technology industry and dominant food culture make #HOOD a perfect place to work, play and unwind. Tucked inside this eco-friendly city is Alley#NUMBER, a community of studio, one and two bedrooms apartments, lofts and townhomes located in the heart of King County. Whether you are a cook at a #HOOD restaurant or a software engineer at #HOOD , you are sure to love these stylish and modern apartments in #HOOD .Enter these contemporary homes and you will find a lovely display of wall-to-wall wood-style flooring that leads into the expansive kitchen. Store all your kitchen essentials in the sleek wood cabinetry that complements the modern, fully equipped Stainless Steel appliance package. Bedrooms have ample-sized closets and expansive windows that draw in plenty of natural light. Outside, residents can mingle by the pool table in the community room, break a sweat in the fitness room or enjoy a cold beverage on the rooftop deck while taking in views of the #HOOD skyline. In addition to the on-site offerings at Alley#NUMBER, this prime location puts you in the center of all the best restaurants, boutique shops and neighborhood attractions.Stop by the leasing office today and discover Alley#NUMBER, a radiant community of lofts, townhomes, and apartments in King County. Features:,Concrete Floors in Lofts & Townhomes*, Washer & Dryer, Stainless Steel Kitchen Appliances, Tile Backsplashes, #HOOD , #HOOD & Space Needle Views*, Garbage Disposal, Historic Brick*, Crushed-Quartz Counter tops, Expansive Windows in Many Homes, Decks or Private Patios*, LEED Certified ,*In Select HomesCommunity Amenities:,Package & Dry Cleaning Notification Via Text or Email, Bike Storage, Two Roof Decks with Gas Grills, Fitness Room, Controlled-Entry Access, Pet Friendly, Media Room, Conference Room, Online Maintenance Requests, Community Room: Equipped with Kitchenette, Dining Area, Free Wi-Fi & a Pool Table Pet Policy:,#NUMBER Pets per Apartment,Cats and Dogs Allowed,(dog breed restrictions apply) Visit This Website to See #URL do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER.Equal Housing Opportunity #NUMBERXUobjiKzz 
+
+Topic 10 Rank 3
+: 
+ Was  99.61 percent topic 10 :
+ Stay Warm in Your New Homeichi Your New Basecamp for Adventure Call Now: show contact info Tivalli Apartments #NUMBER Ash Way, #HOOD , WA, #NUMBER Interested in more information? Visit link below: #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Welcome home to the Tivalli Apartments in #HOOD , WA. Here you will find a wide selection of newly renovated luxury apartments that are defined by their spacious floor plans, extravagant amenities, and convenient location. The Tivalli Apartments offer a selection of spacious studio, one, two, and three bedroom apartments. Our upscale #HOOD apartments feature designer kitchens, stainless finish appliances, internet access, and much more. Not only will you experience luxury inside your beautifully designed apartment home, but also all through the community which encompasses a #NUMBER sq. ft. lodge with sparkling pool, barbecue grills, basketball court, yoga studio, and a state of the art fitness center. Tivalli apartment community is positioned, just less than #NUMBER miles from #HOOD #HOOD , #HOOD #HOOD , #HOOD , and #HOOD , near some of the best local attractions and entertainment. We offer varying lease terms as well as furnished home optionsichi Give us a call today and schedule a private tour so you can discover your new apartment home at the Tivalli apartments in #HOOD , WAichi Features - Open Floor Plans - Quality finishes - Pre-wired for high speed internet and cable - USB Chargers throughout rooms - Laminate Flooring - Indoor bike parking - Modern studio, #NUMBER, #NUMBER & #NUMBER-Bedroom residences - Lots of windows and light - Stainless Steel Appliances - Designer kitchens - Wired for Internet - Front loading washer & dryer Community Amenities - Conference Table - Walkable campus of brand new buildings - Package Lockers - Barbecue grills - Outdoor TV & lounge area with fireplace - Sky Lounge - WiFi cafÃ© - Basketball court - Sparkling pool - Yoga studio - Concierge & resident services - State of the art fitness center - Outdoor Heaters and Fire Pits - Resident Events - #NUMBER sq. ft. lodge Pet Policy Your furry friends are welcome Office Hours Monday-Friday #NUMBERam-#NUMBERpm Saturday: #NUMBERam-#NUMBERpm Sunday: #NUMBERam-#NUMBERpm We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW #NUMBER.#NUMBER. Equal Housing Opportunity b#NUMBERg#NUMBERW#NUMBERZK#NUMBER 
+
+Topic 10 Rank 4
+: 
+ Was  99.61 percent topic 10 :
+ Call Now - show contact info This is a #NUMBER Bedroom, #NUMBER.#NUMBER Bath, approximately #NUMBER Sq. Ft. Nicknamed the Emerald City, the #HOOD metropolis is a picturesque scene of lush evergreen trees and towering skyscrapers. The thriving high technology industry and dominant food culture make #HOOD a perfect place to work, play and unwind. Tucked inside this eco-friendly city is Alley#NUMBER, a community of studio, one and two bedrooms apartments, lofts and townhomes located in the heart of King County. Whether you are a cook at a #HOOD restaurant or a software engineer at #HOOD , you are sure to love these stylish and modern apartments in #HOOD . Enter these contemporary homes and you will find a lovely display of wall-to-wall wood-style flooring that leads into the expansive kitchen. Store all your kitchen essentials in the sleek wood cabinetry that complements the modern, fully equipped Stainless Steel appliance package. Bedrooms have ample-sized closets and expansive windows that draw in plenty of natural light. Outside, residents can mingle by the pool table in the community room, break a sweat in the fitness room or enjoy a cold beverage on the rooftop deck while taking in views of the #HOOD skyline. In addition to the on-site offerings at Alley#NUMBER, this prime location puts you in the center of all the best restaurants, boutique shops and neighborhood attractions. Stop by the leasing office today and discover Alley#NUMBER, a radiant community of lofts, townhomes, and apartments in King County. Features: Stainless Steel Kitchen Appliances, Concrete Floors in Lofts & Townhomes*, Historic Brick*, Washer & Dryer, Expansive Windows in Many Homes, Garbage Disposal, Decks or Private Patios*, Crushed-Quartz Counter tops, LEED Certified, Tile Backsplashes, #HOOD , #HOOD & Space Needle Views* *In Select Homes Community Amenities: Two Roof Decks with Gas Grills, Fitness Room, Online Maintenance Requests, Conference Room, Bike Storage, Package & Dry Cleaning Notification Via Text or Email, Controlled-Entry Access, Community Room: Equipped with Kitchenette, Dining Area, Free Wi-Fi & a Pool Table, Pet Friendly, Media Room Pet Policy: #NUMBER Pets per Apartment Cats and Dogs Allowed (dog breed restrictions apply) Want more information on this unit? See link (below): #URL Equal Housing Opportunity #NUMBERpngDReReNW 
+
+Topic 10 Rank 5
+: 
+ Was  99.59 percent topic 10 :
+ Work Out without Leaving Homeichi Your New Basecamp for Adventure Call Now: show contact info Tivalli Apartments #NUMBER Ash Way, #HOOD , WA, #NUMBER Interested In This Unit? Use this link for more details: #URL This is a #NUMBER Bedroom, #NUMBER Bath, approximately #NUMBER Sq. Ft. Welcome home to the Tivalli Apartments in #HOOD , WA. Here you will find a wide selection of newly renovated luxury apartments that are defined by their spacious floor plans, extravagant amenities, and convenient location. The Tivalli Apartments offer a selection of spacious studio, one, two, and three bedroom apartments. Our upscale #HOOD apartments feature designer kitchens, stainless finish appliances, internet access, and much more. Not only will you experience luxury inside your beautifully designed apartment home, but also all through the community which encompasses a #NUMBER sq. ft. lodge with sparkling pool, barbecue grills, basketball court, yoga studio, and a state of the art fitness center. Tivalli apartment community is positioned, just less than #NUMBER miles from #HOOD #HOOD , #HOOD #HOOD , #HOOD , and #HOOD , near some of the best local attractions and entertainment. We offer varying lease terms as well as furnished home optionsichi Give us a call today and schedule a private tour so you can discover your new apartment home at the Tivalli apartments in #HOOD , WAichi Features - USB Chargers throughout rooms - Designer kitchens - Front loading washer & dryer - Indoor bike parking - Pre-wired for high speed internet and cable - Wired for Internet - Open Floor Plans - Laminate Flooring - Modern studio, #NUMBER, #NUMBER & #NUMBER-Bedroom residences - Stainless Steel Appliances - Quality finishes - Lots of windows and light Community Amenities - Sparkling pool - WiFi cafÃ© - Outdoor Heaters and Fire Pits - Package Lockers - Basketball court - Conference Table - State of the art fitness center - Yoga studio - Outdoor TV & lounge area with fireplace - Sky Lounge - Concierge & resident services - Walkable campus of brand new buildings - Resident Events - Barbecue grills - #NUMBER sq. ft. lodge Pet Policy Your furry friends are welcome Office Hours Monday-Friday #NUMBERam-#NUMBERpm Saturday: #NUMBERam-#NUMBERpm Sunday: #NUMBERam-#NUMBERpm Equal Housing Opportunity bU#NUMBERx#NUMBERlg 
+
+Topic # 36  occurred in 
+ all_r         0.0
+high_white    0.0
+low_white     0.0
+difference    0.0
+prop          2.0
+Name: 36, dtype: float64 
+ Topic 36: number, hood, pet, deposit, monthly, opportunity, bed, flat, plan, housing, building, equal, single, belmont, fee, storage, time, price, availability
+
+ Top 5 answers fitting topic 36 are: 
+ 
+
+Topic 36 Rank 1
+: 
+ Was  97.35 percent topic 36 :
+ #NUMBER Belmont Ave E, #HOOD , WA #NUMBER "E", #NUMBER bed/#NUMBER bath, #NUMBER sqft, Flat/Single LevelThe monthly rental price stated on Craigslist is accurate at the time of post.,Please call to verify all pricing and availability as it may be subject to change daily.Stream Belmont / Equal Housing Opportunity,.-: :-. ...--:-....:-----:..:-.. .----:-.-.:-----:.----:..... ...-:---.. 
+
+Topic 36 Rank 2
+: 
+ Was  93.79 percent topic 36 :
+ View More Photos and Floor Plan Graphic / Vacancy Detailsichi See information below. #URL Stream Belmont Call Now: show contact info #NUMBER Belmont Ave E, #HOOD , WA #NUMBER "D", #NUMBER bed/#NUMBER bath, #NUMBER sqft, Flat/Single Level Interior Features Colossal Views of the City and Olympic mountains High ceilings and huge windows with abundant natural light Expansive private balconies Zero Net Carbon Footprint Constructed Lower Utility costs Hard surfaces and modern finishes Energy Star stainless appliances Water saving fixtures LEEDÂ®-H Certified Community Amenities Nearby Car#NUMBERgoÂ® and ZipCarÂ® Locations Close to Transportation Minutes from #HOOD Connector Metro bus Pet Friendly, we love animalsichi #HOOD & Tash #HOOD park W #HOOD ng #HOOD ance to Volunteer Park, The Conservatory, When you need something, we are here. Even to accept deliveries. Rooftop deck to entertain guests or meet up with neighbors Secure parking & locked bike storage Controlled Access W #HOOD ng #HOOD ance to Beautiful Parks Onsite Management The monthly rental price stated on Craigslist is accurate at the time of post. Please call to verify all pricing and availability as it may be subject to change daily. Stream Belmont is an Equal Housing Opportunity Provider -:. .:- ---::.:----.:::::.--.:-- -::::.:---.-:.----:.----: ---:.:::-- 
+
+Topic 36 Rank 3
+: 
+ Was  92.84 percent topic 36 :
+ ﻿Stream Belmont#NUMBER Belmont Ave E, #HOOD , WA #NUMBER *See information #URL Plan Details*,"C", #NUMBER bed/#NUMBER bath, #NUMBER sqft, Flat/Single Level*Features* • Colossal Views of the City and Olympic mountains, • High ceilings and huge windows with abundant natural light, • Expansive private balconies, • Zero Net Carbon Footprint Constructed, • Lower Utility costs, • Hard surfaces and modern finishes, • Energy Star stainless appliances, • Water saving fixtures, • LEED®-H Certified*Amenities* • Nearby Car#NUMBERgo® and ZipCar® Locations, • Close to Transportation, • Minutes from #HOOD Connector, • Metro bus, • Pet Friendly, we love animalsichi, • #HOOD & Tash #HOOD park, • W #HOOD ng #HOOD ance to Volunteer Park, The Conservatory • When you need something, we are here. Even to accept deliveries., • Rooftop deck to entertain guests or meet up with neighbors, • Secure parking & locked bike storage, • Controlled Access, • W #HOOD ng #HOOD ance to Beautiful Parks, • Onsite ManagementThe monthly rental price stated on Craigslist is accurate at the time of post.,Please call to verify all pricing and availability as it may be subject to change daily.Stream Belmont - An Equal Housing Opportunity,:-. .-: :::--.-::::.-----.::.-:: :----.-:::.::-:.-::::.-:: :::-.---:: 
+
+Topic 36 Rank 4
+: 
+ Was  92.09 percent topic 36 :
+ Call Now - show contact info This is a Studio, #NUMBER Bath, approximately #NUMBER Sq. Ft. The brand new Angeline Apartments is the ideal place for you to live out your idealsichi Every day you live in #HOOD is an opportunity for a new stamp in your passport: Cuisine from all over the world, music played to the beat of a fresh new drummer, original creations by local and #HOOD artisans. Join the neighborhood effort to keep our world vital and vibrant: Eat organically, recycle robustly, create dynamic relationships in your community, and put your energy into making a difference in your part of the world. Features: Smoke Free, Stainless Steel Appliances (Energy Star), Spacious Closets, Custom Cabinetry, Private Balconies, Luxury Vinyl Plank Flooring, Washer & Dryers, Condo Quality Fixtures, Amazing Views, Quartz Countertops Community Amenities: Package Notification, Herb Garden, On-site Parking, Neighbor to Public Library, Rooftop Deck, W #HOOD ng #HOOD ance to Light Rail, Cinema, PCC Grocery, Pedal Club with Bike Storage, Pet Washing Station, Fitness Center, Steps away from #HOOD Park Want more information on this unit? See link (below): #URL Equal Housing Opportunity ktvcDnL#NUMBEReo 
+
+Topic 36 Rank 5
+: 
+ Was  91.88 percent topic 36 :
+ Call Now -  This is a Studio, #NUMBER Bath, approximately #NUMBER Sq. Ft. The brand new Angeline Apartments is the ideal place for you to live out your idealsichi Every day you live in #HOOD is an opportunity for a new stamp in your passport: cuisine from all over the world, music played to the beat of a fresh new drummer, original creations by local and #HOOD artisans. Join the neighborhood effort to keep our world vital and vibrant: eat organically, recycle robustly, create dynamic relationships in your community, and put your energy into making a difference in your part of the world. Features:,Condo Quality Fixtures, Quartz Countertops, Private Balconies, Spacious Closets, Custom Cabinetry, Amazing Views, Luxury Vinyl Plank Flooring, Smoke Free, Stainless Steel Appliances (Energy Star), Washer & Dryers Community Amenities:,Herb Garden, Pedal Club with Bike Storage, W #HOOD ng #HOOD ance to Light Rail, Fitness Center, PCC Grocery, Neighbor to Public Library, On-site Parking, Pet Washing Station, Package Notification, Cinema, Steps away from #HOOD Park, Rooftop Deck Follow This Link for More #URL Housing Opportunity t#NUMBERnVlQU 
+
