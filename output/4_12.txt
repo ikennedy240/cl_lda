@@ -1,0 +1,678 @@
+Topic # 4  occurred in 
+ all           3988.0
+high_white    2444.0
+low_white     1544.0
+difference     900.0
+Name: 4, dtype: float64 
+ Topic 4: room, kitchen, home, new, living, garage, bath, bedrooms, master, gas, space, yard, washer, dryer, bathroom, appliances, fireplace, dining, car, floors
+Topic # 30  occurred in 
+ all           3777.0
+high_white    2279.0
+low_white     1498.0
+difference     781.0
+Name: 30, dtype: float64 
+ Topic 30: deposit, fee, apartment, application, lease, refundable, building, security, new, utilities, non, located, sewer, garbage, restaurants, included, pets, laundry, space, just
+Topic # 38  occurred in 
+ all           3074.0
+high_white    1325.0
+low_white     1749.0
+difference     424.0
+Name: 38, dtype: float64 
+ Topic 38: pool, home, apartment, washer, dryer, fireplace, patio, fitness, balcony, dishwasher, disposal, closets, maintenance, spa, clubhouse, features, new, amenities, lease, pm
+Topic # 22  occurred in 
+ all           2062.0
+high_white    1074.0
+low_white      988.0
+difference      86.0
+Name: 22, dtype: float64 
+ Topic 22: pm, home, com, apartment, www, http, contact, enjoy, info, appliances, living, just, offer, stainless, photos, screening, located, equityapartments, ilsid, flooring
+Topic # 41  occurred in 
+ all           1666.0
+high_white     773.0
+low_white      893.0
+difference     120.0
+Name: 41, dtype: float64 
+ Topic 41: pm, thegreystar, com, accept, pets, reusable, reports, comprehensive, screening, defined, rcw, pursuant, equal, home, housing, opportunity, bath, ft, restrictions, http
+Topic # 42  occurred in 
+ all           1827.0
+high_white    1040.0
+low_white      787.0
+difference     253.0
+Name: 42, dtype: float64 
+ Topic 42: pm, private, apartment, appliances, closet, dishwasher, dryer, washer, com, balcony, www, features, managed, refrigerator, stove, microwave, electric, website, patio, internet
+Topic # 5  occurred in 
+ all           1639.0
+high_white    1010.0
+low_white      629.0
+difference     381.0
+Name: 5, dtype: float64 
+ Topic 5: pm, views, select, units, rooftop, room, contact, kitchen, amenities, deck, garage, com, fitness, stainless, controlled, bike, features, http, private, fi
+Topic # 23  occurred in 
+ all           2190.0
+high_white    1321.0
+low_white      869.0
+difference     452.0
+Name: 23, dtype: float64 
+ Topic 23: contact, info, property, features, deposit, lease, cats, pets, room, dogs, sq, bath, terms, details, policy, bedrooms, year, laundry, new, description
+Topic # 28  occurred in 
+ all           1960.0
+high_white     962.0
+low_white      998.0
+difference      36.0
+Name: 28, dtype: float64 
+ Topic 28: pm, contact, com, availability, subject, info, change, lease, pricing, home, www, opportunity, equal, apartment, website, based, housing, x, prices, http
+Topic # 49  occurred in 
+ all           1128.0
+high_white     511.0
+low_white      617.0
+difference     106.0
+Name: 49, dtype: float64 
+ Topic 49: renovated, apply, newly, stainless, fees, pm, appliances, housing, bath, sq, internet, ft, additional, equal, opportunity, approximately, maintenance, leasing, fitness, prices
+Topic # 10  occurred in 
+ all           1446.0
+high_white     819.0
+low_white      627.0
+difference     192.0
+Name: 10, dtype: float64 
+ Topic 10: lounge, managed, features, pm, controlled, www, insurance, garage, kitchen, required, professionally, fitness, grill, outdoor, maintenance, website, http, acceptance, emergency, studio
+Topic # 43  occurred in 
+ all           1362.0
+high_white     724.0
+low_white      638.0
+difference      86.0
+Name: 43, dtype: float64 
+ Topic 43: pm, apartment, new, home, appliances, energy, fitness, opportunity, hour, http, bath, equal, housing, spacious, wood, private, ft, sq, approximately, ll
+Topic # 24  occurred in 
+ all           1239.0
+high_white     773.0
+low_white      466.0
+difference     307.0
+Name: 24, dtype: float64 
+ Topic 24: home, views, select, building, new, com, dog, living, housing, controlled, ft, garage, opportunity, sq, equal, http, style, courtyard, located, approximately
+Topic # 7  occurred in 
+ all           796.0
+high_white    390.0
+low_white     406.0
+difference     16.0
+Name: 7, dtype: float64 
+ Topic 7: mi, turn, pm, com, http, parks, shopping, home, lease, restrictions, spacious, fitness, living, housing, opportunity, equal, apply, closed, space, washer
+Topic # 6  occurred in 
+ all           1381.0
+high_white     739.0
+low_white      642.0
+difference      97.0
+Name: 6, dtype: float64 
+ Topic 6: blocks, away, pm, apartment, views, appliances, new, score, opportunity, metro, stainless, public, perfect, building, roof, offer, com, equal, housing, walking
+Topic # 25  occurred in 
+ all           1252.0
+high_white     737.0
+low_white      515.0
+difference     222.0
+Name: 25, dtype: float64 
+ Topic 25: rooftop, modern, home, deck, pm, appliances, quartz, stainless, flooring, energy, bike, countertops, fitness, efficient, com, cabinetry, bath, housing, studio, equal
+Topic # 27  occurred in 
+ all           1272.0
+high_white     676.0
+low_white      596.0
+difference      80.0
+Name: 27, dtype: float64 
+ Topic 27: room, apartment, vintage, home, amenities, pm, spacious, ll, housing, fitness, living, welcome, opportunity, com, equal, sq, bath, ft, http, dishwasher
+Topic # 21  occurred in 
+ all           1160.0
+high_white     556.0
+low_white      604.0
+difference      48.0
+Name: 21, dtype: float64 
+ Topic 21: home, closets, turn, pm, pets, fitness, housing, approximately, sq, washer, ft, equal, http, opportunity, com, bath, room, apartment, ample, policy
+Topic # 44  occurred in 
+ all           912.0
+high_white    372.0
+low_white     540.0
+difference    168.0
+Name: 44, dtype: float64 
+ Topic 44: apartment, home, pm, restrictions, pool, breed, fitness, living, dog, private, deposit, outdoor, year, http, com, monday, school, entertainment, welcome, located
+Topic # 34  occurred in 
+ all           1034.0
+high_white     393.0
+low_white      641.0
+difference     248.0
+Name: 34, dtype: float64 
+ Topic 34: pm, home, fitness, pool, edge, internet, apply, apartment, bath, housing, waters, equal, http, opportunity, sq, ft, features, new, fabulous, plenty
+Topic # 2  occurred in 
+ all           1214.0
+high_white     527.0
+low_white      687.0
+difference     160.0
+Name: 2, dtype: float64 
+ Topic 2: apartment, home, amenities, just, pool, pm, outdoor, live, day, fitness, nearby, offer, selection, living, entertainment, sq, ft, residents, feature, studio
+Topic # 33  occurred in 
+ all           1230.0
+high_white     637.0
+low_white      593.0
+difference      44.0
+Name: 33, dtype: float64 
+ Topic 33: pm, outdoor, home, fitness, room, apartment, pool, pets, washer, bath, select, living, ft, closets, wood, com, indoor, http, opportunity, hot
+Topic # 36  occurred in 
+ all           921.0
+high_white    553.0
+low_white     368.0
+difference    185.0
+Name: 36, dtype: float64 
+ Topic 36: pm, griffis, living, home, fitness, pool, com, apartment, hour, income, views, http, modern, size, lifestyle, apply, private, saturday, monday, offer
+Topic # 35  occurred in 
+ all           996.0
+high_white    594.0
+low_white     402.0
+difference    192.0
+Name: 35, dtype: float64 
+ Topic 35: pm, apartment, home, fitness, ft, sq, com, housing, dryer, equal, washer, opportunity, wood, approximately, features, high, bath, pool, http, allowed
+Topic # 20  occurred in 
+ all           1370.0
+high_white     715.0
+low_white      655.0
+difference      60.0
+Name: 20, dtype: float64 
+ Topic 20: dogs, leasing, online, lb, book, views, amenities, notes, schedule, oven, cats, range, details, contact, housing, availability, rooftop, small, com, pets
+Topic # 13  occurred in 
+ all           1105.0
+high_white     618.0
+low_white      487.0
+difference     131.0
+Name: 13, dtype: float64 
+ Topic 13: private, home, just, pm, indoor, fireplaces, maintenance, management, outdoor, pool, lease, washer, dryer, housing, award, opportunity, outside, com, http, equal
+Topic # 14  occurred in 
+ all           1102.0
+high_white     624.0
+low_white      478.0
+difference     146.0
+Name: 14, dtype: float64 
+ Topic 14: views, home, enjoy, new, private, patio, high, living, appliances, restrictions, fireplace, offer, lounge, fully, balcony, washer, equal, dryer, com, indoor
+Topic # 18  occurred in 
+ all           945.0
+high_white    470.0
+low_white     475.0
+difference      5.0
+Name: 18, dtype: float64 
+ Topic 18: pm, home, details, ft, com, sq, new, bath, approximately, http, townhomes, opportunity, housing, equal, located, row, contact, fireplace, welcome, private
+Topic # 1  occurred in 
+ all           1118.0
+high_white     594.0
+low_white      524.0
+difference      70.0
+Name: 1, dtype: float64 
+ Topic 1: pm, style, home, pool, housing, private, fitness, new, wood, clubhouse, outdoor, equal, opportunity, sq, com, bath, http, ft, restrictions, burning
+Topic # 45  occurred in 
+ all           978.0
+high_white    546.0
+low_white     432.0
+difference    114.0
+Name: 45, dtype: float64 
+ Topic 45: river, townhomes, hidden, fitness, dog, home, appliances, pool, com, contact, pm, bath, kitchens, canterbury, convenient, bike, garage, ft, sq, allowed
+Topic # 46  occurred in 
+ all           1091.0
+high_white     655.0
+low_white      436.0
+difference     219.0
+Name: 46, dtype: float64 
+ Topic 46: apartment, living, appliances, residents, want, kitchen, smart, space, restaurants, use, welcome, energy, make, spacious, amenities, gardens, bedrooms, skyview, recycling, business
+Topic # 9  occurred in 
+ all           959.0
+high_white    569.0
+low_white     390.0
+difference    179.0
+Name: 9, dtype: float64 
+ Topic 9: home, appliances, spacious, com, amenities, steps, apartment, washer, just, dryer, maintenance, shopping, new, dining, ft, sq, ceiling, deck, allowed, living
+Topic # 47  occurred in 
+ all           952.0
+high_white    498.0
+low_white     454.0
+difference     44.0
+Name: 47, dtype: float64 
+ Topic 47: â, amenities, apartment, allowed, info, contact, building, deposit, washer, pm, dryer, animals, home, management, size, small, units, adult, com, indoor
+Topic # 3  occurred in 
+ all           1238.0
+high_white     754.0
+low_white      484.0
+difference     270.0
+Name: 3, dtype: float64 
+ Topic 3: property, case, contact, home, o, room, agent, showing, non, deposit, screening, listing, management, pets, lease, information, fee, bath, security, smoking
+Topic # 40  occurred in 
+ all           875.0
+high_white    386.0
+low_white     489.0
+difference    103.0
+Name: 40, dtype: float64 
+ Topic 40: home, pm, com, dog, fitness, closets, http, bedrooms, pool, private, dryer, washer, just, shopping, housing, opportunity, equal, pets, lounge, new
+Topic # 37  occurred in 
+ all           997.0
+high_white    616.0
+low_white     381.0
+difference    235.0
+Name: 37, dtype: float64 
+ Topic 37: income, people, real, home, estate, purchase, buy, option, program, household, years, affordable, lease, requirements, just, qualify, new, ll, history, steps
+Topic # 26  occurred in 
+ all           704.0
+high_white    367.0
+low_white     337.0
+difference     30.0
+Name: 26, dtype: float64 
+ Topic 26: room, pm, closets, home, fitness, apartment, pool, living, views, bravern, http, patio, equal, housing, opportunity, ft, sq, located, bath, washer
+Topic # 15  occurred in 
+ all           977.0
+high_white    507.0
+low_white     470.0
+difference     37.0
+Name: 15, dtype: float64 
+ Topic 15: property, home, new, information, apply, application, http, questions, net, appliances, www, applicant, qualifications, turn, applications, required, lighting, housing, washer, bath
+Topic # 16  occurred in 
+ all           913.0
+high_white    505.0
+low_white     408.0
+difference     97.0
+Name: 16, dtype: float64 
+ Topic 16: views, amenities, apartment, studio, laundry, allowed, home, offers, built, contact, shopping, plans, residents, deck, dining, located, nearby, private, appliances, high
+Topic # 31  occurred in 
+ all           909.0
+high_white    432.0
+low_white     477.0
+difference     45.0
+Name: 31, dtype: float64 
+ Topic 31: pm, apartment, enjoy, make, living, features, wildreed, amenities, need, live, home, style, lifestyle, high, ft, designed, washer, internet, loft, luxury
+Topic # 0  occurred in 
+ all           816.0
+high_white    425.0
+low_white     391.0
+difference     34.0
+Name: 0, dtype: float64 
+ Topic 0: lounge, living, home, views, pm, fitness, chelsea, room, com, amenities, opportunity, housing, bath, equal, http, restaurants, resident, dog, dryer, washer
+Topic # 19  occurred in 
+ all           549.0
+high_white    263.0
+low_white     286.0
+difference     23.0
+Name: 19, dtype: float64 
+ Topic 19: pets, pm, dogs, pool, additional, washer, fitness, views, policy, breed, cats, private, apartment, fee, dishwasher, management, terriers, miles, resident, bath
+Topic # 39  occurred in 
+ all           794.0
+high_white    436.0
+low_white     358.0
+difference     78.0
+Name: 39, dtype: float64 
+ Topic 39: pm, hour, new, home, eden, com, living, experience, property, amenities, fitness, http, treetops, modern, closets, housing, equal, turn, opportunity, room
+Topic # 11  occurred in 
+ all           833.0
+high_white    464.0
+low_white     369.0
+difference     95.0
+Name: 11, dtype: float64 
+ Topic 11: pm, located, hours, away, high, opportunity, apartment, http, housing, equal, bath, pets, com, style, kitchen, private, policy, bike, sq, internet
+Topic # 17  occurred in 
+ all           797.0
+high_white    494.0
+low_white     303.0
+difference    191.0
+Name: 17, dtype: float64 
+ Topic 17: panorama, building, modern, apartment, home, buildings, residents, situated, views, original, historic, classic, best, vintage, pets, amenities, high, pm, charm, kitchen
+Topic # 48  occurred in 
+ all           733.0
+high_white    416.0
+low_white     317.0
+difference     99.0
+Name: 48, dtype: float64 
+ Topic 48: room, pm, living, kitchen, energy, com, pets, sound, kitchens, northwest, appliances, washer, dog, offer, http, bath, opportunity, stainless, fitness, equal
+Topic # 8  occurred in 
+ all           835.0
+high_white    444.0
+low_white     391.0
+difference     53.0
+Name: 8, dtype: float64 
+ Topic 8: golf, course, lounge, new, pool, outdoor, elements, resident, remodeled, llc, soon, com, fitness, washer, coming, dryer, http, table, room, pad
+Topic # 29  occurred in 
+ all           669.0
+high_white    424.0
+low_white     245.0
+difference    179.0
+Name: 29, dtype: float64 
+ Topic 29: deposit, fee, pm, ï, level, single, craigslist, opportunity, price, time, equal, housing, stated, daily, verify, accurate, flat, sqft, property
+Topic # 32  occurred in 
+ all           625.0
+high_white    333.0
+low_white     292.0
+difference     41.0
+Name: 32, dtype: float64 
+ Topic 32: miles, turn, equinox, home, located, just, pm, apartment, school, hospital, stainless, apex, building, range, stylish, finishes, amenities, private, car, tile
+Topic # 12  occurred in 
+ all           638.0
+high_white    360.0
+low_white     278.0
+difference     82.0
+Name: 12, dtype: float64 
+ Topic 12: eco, new, roundabout, pm, living, just, space, bath, kitchens, closed, art, areté, century, com, fitness, built, residential, dogs, flat, washer
+
+ ------- Sample Documents ------- 
+
+
+Topic # 30  occurred in 
+ all           3777.0
+high_white    2279.0
+low_white     1498.0
+difference     781.0
+Name: 30, dtype: float64 
+ Topic 30: deposit, fee, apartment, application, lease, refundable, building, security, new, utilities, non, located, sewer, garbage, restaurants, included, pets, laundry, space, just
+
+ Top 5 answers fitting topic 30 are: 
+ 
+
+Topic 30 Rank 1 ID 25580
+: 
+ Was  96.5 percent topic 30 :
+ LOOKING FOR A GREAT NEW HOME? HILLCREST APARTMENTS IS THE PLACE TO LIVE! X BEDROOMS AVAILABLE., SMALL X $, LARGER X $., Deposit: $. ($ refundable, $ non-refundable), Pets Deposit: $ ($ refundable, $, non-refundable), Third-Party Billing: Water, Sewer, Garbage, Application fee: $ per person,  
+
+Topic 30 Rank 2 ID 7598
+: 
+ Was  96.5 percent topic 30 :
+ bedroom, bathroom newer Condominium on the top floor of the building with territory view, granite kitchen counter with a bar, washer and dryer in the unit, secure entrance and garage. Basic rent is $ with $ utility copay per tenant (we provider the hot water so you don't need to pay for heating water). Close to free way. minutes to UW and minutes to downtown. The bus stops are in front of the building. We offer $ monthly credit to exchange some management and other light work. 
+
+Topic 30 Rank 3 ID 26322
+: 
+ Was  96.5 percent topic 30 :
+ Looking to move closer to school?! This cozy bedroom apartment is a mere minute walk from the UW campus! Move in anytime between now and February!!, , Rent is $, a month ($ each) plus utilities (about $) a month. Garage parking is available for an additional $ a month. Unit is cable ready., , Located on th Ave NE and nd St., the building is walking distance from Trader Joe's, University Ave., bars, restaurants and the Burke Gilman Trail., , Please text or email me for more information and to schedule a viewing!  
+
+Topic 30 Rank 4 ID 22229
+: 
+ Was  96.37 percent topic 30 :
+ NEED A GREAT NEW HOME? COME FIND IT AT HILLCREST APARTMENTS - THIS IS THE PLACE TO LIVE! , X BEDROOM AVAILABLE AROUND THE ND WEEK OF FEBRUARY., SMALL X $., Deposit: $. ($ refundable, $ non-refundable), Pets Deposit: $ ($ refundable, $, non-refundable), Third-Party Billing: Water, Sewer, Garbage, Application fee: $ per person  
+
+Topic 30 Rank 5 ID 18131
+: 
+ Was  96.23 percent topic 30 :
+ Spacious bedroom, bath , huge balcony with territorial view, located within minutes from downtown Seattle and South Seattle Community College. One assigned parking space. , NO PETS, NO SMOKING, NO DRUGS, Applicant/s subject to background screening, Must have verifiable proof of income, Application fee is $ per adult applicant, Rent is $, per month, , Please call , to set up an appointment for viewing. , ,  
+
+Topic # 38  occurred in 
+ all           3074.0
+high_white    1325.0
+low_white     1749.0
+difference     424.0
+Name: 38, dtype: float64 
+ Topic 38: pool, home, apartment, washer, dryer, fireplace, patio, fitness, balcony, dishwasher, disposal, closets, maintenance, spa, clubhouse, features, new, amenities, lease, pm
+
+ Top 5 answers fitting topic 38 are: 
+ 
+
+Topic 38 Rank 1 ID 1428
+: 
+ Was  99.38 percent topic 38 :
+ Welcome to Silver Shadow! You've found your new home. At our community, we offer comfort, convenience, value, and service, and they're all here for you at Silver Shadow. Choose from a variety of floor plans, , & bedroom homes, with living spaces designed to please. You'll love the convenience of your own washer/dryer and large walk-in closets. How's relaxing out in front a cozy fireplace, with your trusty pet at your side, sound good? Yes, small dogs and cats are Welcome here. Like working out? There's a gym, pool, spa and sauna (good for loungers, too), with your name on it. Well, maybe not your actual name, but I think you get the point. This is the place to live. Come see for yourself. Stop by, give us a call, or send in our online guest card, to get more info and to schedule and appointment for your private tour. Our super service-oriented staff is waiting to welcome you to your new home. Call Now: show contact info See our property details here: http://lease.conam.com/Lshr This is a Bedroom, Bath, approximately Sq. Ft. Features - Balcony / Patio - Additional Storage - Window Coverings - Large Closets - Pets Allowed With Restrictions - Heat - Disposal - Courtyard - Washer and Dryer - Fireplace - Range - Carport - Refrigerator - Dishwasher Community Amenities - Media/ Learning center - Fitness Center - TV Lounge - Dry Sauna - Free Weights - Package Receiving - Playground - Pool and Spa - Computer internet station - Storage Space - Covered Parking - Clubhouse Pet Policy Pets Accepted. Limit pets per apartment. Weight & breed restrictions apply. Office Hours Monday - Saturday am to pm Silver Shadow Pacific Highway S., Federal Way, WA, Disclaimer: Please be aware of scams on Craigslist. It is our practice never to require someone to complete a credit application or provide personal credit information before touring an apartment home. Rent is based on lease term selected. Please contact office for more details. Prices subject to change. Equal Housing Opportunity BIdlEfiNyS 
+
+Topic 38 Rank 2 ID 7968
+: 
+ Was  99.35 percent topic 38 :
+ Bryson Square PL SE, Kent, WA, Use this link for more information: http://lease.conam.com/mte Call Now: show contact info x OR Text to show contact info to contact a leasing agent. Premium Hilltop Location in Kent! This is a Bedroom, Bath, approximately Sq. Ft. Just minutes from everything, major bus line,including major shopping centers, restaurants, banking and business centers. All with in walking distance from our community. The apartments at Bryson Square are comfortable, quality homes and just right for you in mind with linen closet in bathrooms, hall closet for coats, large storage off the patio and full size side by side washer and dryer, and covered carport parking at no charge.. Contemporary and stylish, and fully equipped with worry-free appliances, green- energy saving upgrades, wood-burning fireplace with beautiful mantel and ceiling fan in dinning room. Our community also offers a large pool and spa, fitness center, tanning and resident lounge. We are located in the renowned Kent School District! What's not to like? Come by, email, or call us today. Our friendly staff would love to assist you in finding the perfect new home. Become our Fan on Facebook for exclusive incentives! Search "Bryson Square" on Facebook.com, become a fan, and go to the "Bryson Square Fans Only Page" to learn more! Features - Large Closets - Window Coverings - Disposal - Fireplace - Dishwasher - Refrigerator Community Amenities - Package Receiving - On-site Management - Night Patrol - High Speed Internet - Spa - Fitness Center - On-site Maintenance - Sauna - Playground - Pool - Storage Space - Available Transportation Disclaimer: Please be aware of scams on Craigslist. It is our practice never to require someone to complete a credit application or provide personal credit information before touring an apartment home. Rent is based on lease term selected. Please contact office for more details. Prices subject to change. Equal Housing Opportunity BdTUjbCH 
+
+Topic 38 Rank 3 ID 6873
+: 
+ Was  99.35 percent topic 38 :
+ Call Now - show contact info This is a Bedroom, Bath, approximately Sq. Ft. You've found your new home. At our community, we offer comfort, convenience, value, and service, and they're all here for you at Silver Shadow. Choose from a variety of floor plans, , & bedroom homes, with living spaces designed to please. You'll love the convenience of your own washer/dryer and large walk-in closets. How's relaxing out in front a cozy fireplace, with your trusty pet at your side, sound good? Yes, small dogs and cats are Welcome here. Like working out? There's a gym, pool, spa and sauna (good for loungers, too), with your name on it. Well, maybe not your actual name, but I think you get the point. This is the place to live. Come see for yourself. Stop by, give us a call, or send in our online guest card, to get more info and to schedule and appointment for your private tour. Our super service-oriented staff is waiting to welcome you to your new home. Features: Refrigerator, Additional Storage, Window Coverings, Disposal, Pets Allowed With Restrictions, Courtyard, Range, Heat, Washer and Dryer, Fireplace, Dishwasher, Balcony / Patio, Carport, Large Closets Community Amenities: Clubhouse, Dry Sauna, TV Lounge, Package Receiving, Media/ Learning center, Free Weights, Storage Space, Computer internet station, Playground, Fitness Center, Pool and Spa, Covered Parking Pet Policy: Pets Accepted. Limit pets per apartment. Weight & breed restrictions apply. Interested in more information? See link below: http://lease.conam.com/q Disclaimer: Please be aware of scams on Craigslist. It is our practice never to require someone to complete a credit application or provide personal credit information before touring an apartment home. Rent is based on lease term selected. Please contact office for more details. Prices subject to change. Equal Housing Opportunity TMMmxhuK 
+
+Topic 38 Rank 4 ID 9952
+: 
+ Was  99.33 percent topic 38 :
+ Open House This Week! Premium Hilltop Location in Kent! Call Now: show contact info Bryson Square PL SE, Kent, WA, Interested In This Unit? Use this link for more details: http://lease.conam.com/w This is a Bedroom, Bath, approximately Sq. Ft. Just minutes from everything, major bus line,including major shopping centers, restaurants, banking and business centers. All with in walking distance from our community. The apartments at Bryson Square are comfortable, quality homes and just right for you in mind with linen closet in bathrooms, hall closet for coats, large storage off the patio and full size side by side washer and dryer, and covered carport parking at no charge.. Contemporary and stylish, and fully equipped with worry-free appliances, green- energy saving upgrades, wood-burning fireplace with beautiful mantel and ceiling fan in dinning room. Our community also offers a large pool and spa, fitness center, tanning and resident lounge. We are located in the renowned Kent School District! What's not to like? Come by, email, or call us today. Our friendly staff would love to assist you in finding the perfect new home. Become our Fan on Facebook for exclusive incentives! Search "Bryson Square" on Facebook.com, become a fan, and go to the "Bryson Square Fans Only Page" to learn more! Features - Dishwasher - Disposal - Window Coverings - Fireplace - Refrigerator - Large Closets Community Amenities - Sauna - High Speed Internet - Package Receiving - Available Transportation - Pool - On-site Management - Playground - On-site Maintenance - Fitness Center - Spa - Night Patrol - Storage Space Disclaimer: Please be aware of scams on Craigslist. It is our practice never to require someone to complete a credit application or provide personal credit information before touring an apartment home. Rent is based on lease term selected. Please contact office for more details. Prices subject to change. Equal Housing Opportunity XkbvR 
+
+Topic 38 Rank 5 ID 4409
+: 
+ Was  99.32 percent topic 38 :
+ We're Pet Friendly! Premium Hilltop Location in Kent! Call Now: show contact info Bryson Square PL SE, Kent, WA, More unit details at: http://lease.conam.com/Lek This is a Bedroom, Bath, approximately Sq. Ft. Just minutes from everything, major bus line,including major shopping centers, restaurants, banking and business centers. All with in walking distance from our community. The apartments at Bryson Square are comfortable, quality homes and just right for you in mind with linen closet in bathrooms, hall closet for coats, large storage off the patio and full size side by side washer and dryer, and covered carport parking at no charge.. Contemporary and stylish, and fully equipped with worry-free appliances, green- energy saving upgrades, wood-burning fireplace with beautiful mantel and ceiling fan in dinning room. Our community also offers a large pool and spa, fitness center, tanning and resident lounge. We are located in the renowned Kent School District! What's not to like? Come by, email, or call us today. Our friendly staff would love to assist you in finding the perfect new home. Become our Fan on Facebook for exclusive incentives! Search "Bryson Square" on Facebook.com, become a fan, and go to the "Bryson Square Fans Only Page" to learn more! Features - Large Closets - Fireplace - Window Coverings - Refrigerator - Disposal - Dishwasher Community Amenities - High Speed Internet - Night Patrol - Available Transportation - Playground - Fitness Center - On-site Maintenance - Package Receiving - On-site Management - Pool - Storage Space - Sauna - Spa Disclaimer: Please be aware of scams on Craigslist. It is our practice never to require someone to complete a credit application or provide personal credit information before touring an apartment home. Rent is based on lease term selected. Please contact office for more details. Prices subject to change. Equal Housing Opportunity XJComCqMI 
+
+Topic # 22  occurred in 
+ all           2062.0
+high_white    1074.0
+low_white      988.0
+difference      86.0
+Name: 22, dtype: float64 
+ Topic 22: pm, home, com, apartment, www, http, contact, enjoy, info, appliances, living, just, offer, stainless, photos, screening, located, equityapartments, ilsid, flooring
+
+ Top 5 answers fitting topic 22 are: 
+ 
+
+Topic 22 Rank 1 ID 12369
+: 
+ Was  99.22 percent topic 22 :
+ Reserve your all new apartment at Fox & Finch!, , This two bedroom two bathroom apartment has tons of natural light and more!, , View Our Rental Criteria:, http://indigorealestate.com/screening-criteria/, , For Fox sake... nest here. Located in the heart of South Lake Union, Fox and Finch is a walker's paradise. Just a few steps from the Amazon campus, restaurants, bars, coffee shops, and multiple transit hubs, Fox and Finch makes urban living easy. Our community features boutique luxury homes that will appeal to the most discerning of tastes and provide a special oasis even in the middle of the bustling urban core. We offer stylish finishes and edgy amenities including hardwood-style contemporary flooring, Energy Star stainless steel appliances, luxe quartz countertops, tile backsplash, floor-to-ceiling energy efficient windows, and more! Chill in our subterranean, sultry, speak-easy style Fox's Lair and reserve it for your next football party! Enjoy the -hour state of the art fitness center for your daily workout routine, and relax and enjoy the view of Lake Union from the Finch's Perch - our marvelous rooftop deck, complete with a pet lounge and barbecue corner. , , VIEW OUR WEBSITE:, , http://www.foxandfinch.com, , Fox & Finch, managed by Indigo Real Estage Services, Boren Avenue North, Seattle, WA , , , , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :am - :pm, , [#],  
+
+Topic 22 Rank 2 ID 12373
+: 
+ Was  99.21 percent topic 22 :
+ Fox & Finch, managed by Indigo Real Estage Services, Boren Avenue North, Seattle, WA , , , , Call for leasing details! Be the first to live here now!, , You will love this two bed two bathroom apartment., , View Our Rental Criteria:, http://indigorealestate.com/screening-criteria/, , For Fox sake... nest here. Located in the heart of South Lake Union, Fox and Finch is a walker's paradise. Just a few steps from the Amazon campus, restaurants, bars, coffee shops, and multiple transit hubs, Fox and Finch makes urban living easy. Our community features boutique luxury homes that will appeal to the most discerning of tastes and provide a special oasis even in the middle of the bustling urban core. We offer stylish finishes and edgy amenities including hardwood-style contemporary flooring, Energy Star stainless steel appliances, luxe quartz countertops, tile backsplash, floor-to-ceiling energy efficient windows, and more! Chill in our subterranean, sultry, speak-easy style Fox's Lair and reserve it for your next football party! Enjoy the -hour state of the art fitness center for your daily workout routine, and relax and enjoy the view of Lake Union from the Finch's Perch - our marvelous rooftop deck, complete with a pet lounge and barbecue corner. , , VIEW OUR WEBSITE:, , http://www.foxandfinch.com, , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :am - :pm, , [#],  
+
+Topic 22 Rank 3 ID 12372
+: 
+ Was  99.13 percent topic 22 :
+ Walk to everything from the all new Fox & Finch Boutique Apartment Community!, , Spacious one bedroom apartment with quartz countertops and more!, , , View Our Rental Criteria:, http://indigorealestate.com/screening-criteria/, , For Fox sake... nest here. Located in the heart of South Lake Union, Fox and Finch is a walker's paradise. Just a few steps from the Amazon campus, restaurants, bars, coffee shops, and multiple transit hubs, Fox and Finch makes urban living easy. Our community features boutique luxury homes that will appeal to the most discerning of tastes and provide a special oasis even in the middle of the bustling urban core. We offer stylish finishes and edgy amenities including hardwood-style contemporary flooring, Energy Star stainless steel appliances, luxe quartz countertops, tile backsplash, floor-to-ceiling energy efficient windows, and more! Chill in our subterranean, sultry, speak-easy style Fox's Lair and reserve it for your next football party! Enjoy the -hour state of the art fitness center for your daily workout routine, and relax and enjoy the view of Lake Union from the Finch's Perch - our marvelous rooftop deck, complete with a pet lounge and barbecue corner. , , VIEW OUR WEBSITE:, , http://www.foxandfinch.com, , Fox & Finch, managed by Indigo Real Estage Services, Boren Avenue North, Seattle, WA , , , , [#],  
+
+Topic 22 Rank 4 ID 13665
+: 
+ Was  99.12 percent topic 22 :
+ VIEW OUR WEBSITE:, , http://www.foxandfinch.com, , Fox & Finch, managed by Indigo Real Estage Services, Boren Avenue North, Seattle, WA , , , , Be the first to live at Fox & Finch! Lease today!, , Spacious one bedroom apartment with floor to ceiling windows and large closet., , View Our Rental Criteria:, http://indigorealestate.com/screening-criteria/, , For Fox sake... nest here. Located in the heart of South Lake Union, Fox and Finch is a walker's paradise. Just a few steps from the Amazon campus, restaurants, bars, coffee shops, and multiple transit hubs, Fox and Finch makes urban living easy. Our community features boutique luxury homes that will appeal to the most discerning of tastes and provide a special oasis even in the middle of the bustling urban core. We offer stylish finishes and edgy amenities including hardwood-style contemporary flooring, Energy Star stainless steel appliances, luxe quartz countertops, tile backsplash, floor-to-ceiling energy efficient windows, and more! Chill in our subterranean, sultry, speak-easy style Fox's Lair and reserve it for your next football party! Enjoy the -hour state of the art fitness center for your daily workout routine, and relax and enjoy the view of Lake Union from the Finch's Perch - our marvelous rooftop deck, complete with a pet lounge and barbecue corner. , , [#],  
+
+Topic 22 Rank 5 ID 19598
+: 
+ Was  99.12 percent topic 22 :
+ Be the first to live at Fox & Finch! Lease today!, , You will love this one bed, one bathroom apartment., , View Our Rental Criteria:, http://indigorealestate.com/screening-criteria/, , For Fox sake... nest here. Located in the heart of South Lake Union, Fox and Finch is a walker's paradise. Just a few steps from the Amazon campus, restaurants, bars, coffee shops, and multiple transit hubs, Fox and Finch makes urban living easy. Our community features boutique luxury homes that will appeal to the most discerning of tastes and provide a special oasis even in the middle of the bustling urban core. We offer stylish finishes and edgy amenities including hardwood-style contemporary flooring, Energy Star stainless steel appliances, luxe quartz countertops, tile backsplash, floor-to-ceiling energy efficient windows, and more! Chill in our subterranean, sultry, speak-easy style Fox's Lair and reserve it for your next football party! Enjoy the -hour state of the art fitness center for your daily workout routine, and relax and enjoy the view of Lake Union from the Finch's Perch - our marvelous rooftop deck, complete with a pet lounge and barbecue corner. , , Fox & Finch, managed by Indigo Real Estage Services, Boren Avenue North, Seattle, WA , , , , VIEW OUR WEBSITE:, , http://www.foxandfinch.com, , [#],  
+
+Topic # 41  occurred in 
+ all           1666.0
+high_white     773.0
+low_white      893.0
+difference     120.0
+Name: 41, dtype: float64 
+ Topic 41: pm, thegreystar, com, accept, pets, reusable, reports, comprehensive, screening, defined, rcw, pursuant, equal, home, housing, opportunity, bath, ft, restrictions, http
+
+ Top 5 answers fitting topic 41 are: 
+ 
+
+Topic 41 Rank 1 ID 4280
+: 
+ Was  99.35 percent topic 41 :
+ With Best-in-Class Amenities, Quiet Park-like Community Citizen and Oake is located in the vibrant city of Lakewood, WA. Our community is surrounded by natural wetland, which makes for a very quiet and serene setting. We are just minutes away from the Lakewood Town Center, restaurants, The Oakbrook and Meadow Park Golf courses, theaters, the Lakewood YMCA, freeways, a dog park, and much more. Conveniently located near Joint Base Lewis-McChord, we are proud to offer special discounts and savings to active-duty military personnel and their families. Call Now: show contact info Use the link below for more details: http://thegreystar.com/mhz This is a Bedroom, Bath, approximately Sq. Ft. Features - Full Size Washer and Dryer - Covered Carports (additional fee) - Dishwashers - Extra Storage on Patio/Balcony - Refrigerators with ice maker - Garage with remotes (additional fee) - Wood Burning Fireplaces (select homes) Community Amenities - Outdoor Seasonal Hot tub (Under Renovation) - Country Club Style Landscaping - Gated Off Leash Dog Park - Fitness Center (under renovation) - Valet Trash Service - Playground - Package Acceptance - Club House (under renovation) - Outdoor Seasonal Heated Pool (Under Renovation) - Racquetball Court (under renovation) Pet Policy PETS WELCOME. Breed restrictions, additional deposits and pet rents may apply. Contact the property for details. Weight limit up to lbs Deposit and non refundable and monthly pet rent applies. Call for details Income Requirements: .x the monthly rent Credit and background check required for applicants and older. Office Hours Monday - Friday : AM-: PM Saturday :am-:pm Sunday :pm-:pm Citizen and Oake nd Street SW, Lakewood, WA, We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW .. Equal Housing Opportunity uGlFlJOG 
+
+Topic 41 Rank 2 ID 30317
+: 
+ Was  99.29 percent topic 41 :
+ Imagine Yourself Living Here! , Call Now: , nd Street SW, Lakewood, WA, ,Use the link below for more details:,http://thegreystar.com/i, This is a Bedroom, Bath, approximately Sq. Ft. , Citizen and Oake is located in the vibrant city of Lakewood, WA. Our community is surrounded by natural wetland, which makes for a very quiet and serene setting. We are just minutes away from the Lakewood Town Center, restaurants, The Oakbrook and Meadow Park Golf courses, theaters, the Lakewood YMCA, freeways, a dog park, and much more. Conveniently located near Joint Base Lewis-McChord, we are proud to offer special discounts and savings to active-duty military personnel and their families. , - Extra Storage on Patio/Balcony , - Covered Carports (additional fee) , - Refrigerators with ice maker , - Wood Burning Fireplaces (select homes) , - Full Size Washer and Dryer , - Garage with remotes (additional fee) , - Dishwashers , - Outdoor Seasonal Hot tub (Under Renovation) , - Playground , - Fitness Center (under renovation) , - Outdoor Seasonal Heated Pool (Under Renovation) , - Valet Trash Service , - Package Acceptance , - Racquetball Court (under renovation) , - Club House (under renovation) , - Country Club Style Landscaping , - Gated Off Leash Dog Park , PETS WELCOME. Breed restrictions, additional deposits and pet rents may apply. Contact the property for details. Weight limit up to lbs ,Deposit and non refundable and monthly pet rent applies. Call for details , .x the monthly rent,Credit and background check required for applicants and older. , Monday - Friday : AM-: PM,Saturday :am-:pm,Sunday :pm-:pm , We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW ..,Price is Subject to Change,Equal Housing Opportunity ,  
+
+Topic 41 Rank 3 ID 14367
+: 
+ Was  99.28 percent topic 41 :
+ Citizen and Oake is located in the vibrant city of Lakewood, WA. Our community is surrounded by natural wetland, which makes for a very quiet and serene setting. We are just minutes away from the Lakewood Town Center, restaurants, The Oakbrook and Meadow Park Golf courses, theaters, the Lakewood YMCA, freeways, a dog park, and much more. Conveniently located near Joint Base Lewis-McChord, we are proud to offer special discounts and savings to active-duty military personnel and their families. , Call Now: ,Interested In This Unit? Use this link for more details:,http://thegreystar.com/x, This is a Bedroom, Bath, approximately Sq. Ft. , - Extra Storage on Patio/Balcony , - Wood Burning Fireplaces (select homes) , - Refrigerators with ice maker , - Dishwashers , - Garage with remotes (additional fee) , - Full Size Washer and Dryer , - Covered Carports (additional fee) , - Gated Off Leash Dog Park , - Club House (under renovation) , - Valet Trash Service , - Package Acceptance , - Fitness Center (under renovation) , - Country Club Style Landscaping , - Racquetball Court (under renovation) , - Playground , - Outdoor Seasonal Hot tub (Under Renovation) , - Outdoor Seasonal Heated Pool (Under Renovation) , PETS WELCOME. Breed restrictions, additional deposits and pet rents may apply. Contact the property for details. Weight limit up to lbs ,Deposit and non refundable and monthly pet rent applies. Call for details , .x the monthly rent,Credit and background check required for applicants and older. , Monday - Friday : AM-: PM,Saturday :am-:pm,Sunday :pm-:pm , nd Street SW, Lakewood, WA, , We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW ..,Equal Housing Opportunity ,  
+
+Topic 41 Rank 4 ID 29839
+: 
+ Was  99.27 percent topic 41 :
+ The Shelby, th Ave , Seattle, WA, , , Need more information? Copy this link:, http://thegreystar.com/L, , Call Now: , , , , Welcome Home to the Shelby, , This is a Studio, Bath, approximately Sq. Ft. , , When you live at The Shelby, there is no limit to the things to do, places to eat, or experiences to enjoy. The Shelby enjoys a premier location in vibrant Belltown near Seattle's contemporary scenes. We score a % at www.walkscore.com and have great reviews at yelp.com! Shopping, jogging, galleries, museums, movies, Mariner's games, Seahawk's games, Sounders, and Storm games, world-class dining, charming bistros, The Shelby connects you with everything you like to do in the city and beyond. , , , Don't miss out on this gem! *Get on our wait list now!* Enjoy city life here at The Shelby, where you are less than minutes walk from everything!! Come check us out today!! , , Features, - -Dishwasher , - -Washer/Dryer , - -Huge Windows , - -Microwave , - -Bathroom Vanity Space , - -Plush Carpet , - -Granite Breakfast Bar , , Community Amenities, - Resident Lounge with Complimentary WI-FI , - Controlled Access , - Pet Friendly (no weight restrictions) , - Package Receiving , - Online Payments Available , - Reservable Clubhouse with Fully Equipped Kitchen , - Bike Storage , - On Site Parking (additional fee) , - -Hour Fitness Studio , - BBQ Grill , - Conference Center with Complimentary WI-FI , - Two Outdoor Patios , , , Office Hours, Monday : am - : pm, Tuesday : am - : pm, Wednesday : am - : pm, Thursday : am - : pm, Friday : am - : pm, Saturday : am - : pm, Sunday : am - : pm , , Pet Policy, Pet Friendly (no weight restrictions) , We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW .., , Equal Housing Opportunity , , , ZoOhZPdd  
+
+Topic 41 Rank 5 ID 28571
+: 
+ Was  99.27 percent topic 41 :
+ The Shelby, th Ave , Seattle, WA, , , Use this link for more information:, http://thegreystar.com/oc, , Call Now: , , , , Welcome Home to the Shelby, , This is a Bedroom + Den, Bath, approximately Sq. Ft. , , When you live at The Shelby, there is no limit to the things to do, places to eat, or experiences to enjoy. The Shelby enjoys a premier location in vibrant Belltown near Seattle's contemporary scenes. We score a % at www.walkscore.com and have great reviews at yelp.com! Shopping, jogging, galleries, museums, movies, Mariner's games, Seahawk's games, Sounders, and Storm games, world-class dining, charming bistros, The Shelby connects you with everything you like to do in the city and beyond. , , , Don't miss out on this gem! *Get on our wait list now!* Enjoy city life here at The Shelby, where you are less than minutes walk from everything!! Come check us out today!! , , Features, - -Huge Windows , - -Dishwasher , - -Bathroom Vanity Space , - -Washer/Dryer , - -Granite Breakfast Bar , - -Plush Carpet , - -Microwave , , Community Amenities, - Resident Lounge with Complimentary WI-FI , - BBQ Grill , - Package Receiving , - Bike Storage , - Conference Center with Complimentary WI-FI , - -Hour Fitness Studio , - On Site Parking (additional fee) , - Controlled Access , - Reservable Clubhouse with Fully Equipped Kitchen , - Online Payments Available , - Pet Friendly (no weight restrictions) , - Two Outdoor Patios , , , Office Hours, Monday : am - : pm, Tuesday : am - : pm, Wednesday : am - : pm, Thursday : am - : pm, Friday : am - : pm, Saturday : am - : pm, Sunday : am - : pm , , Pet Policy, Pet Friendly (no weight restrictions) , We do not accept Comprehensive Reusable Tenant Screening Reports as defined by and pursuant to RCW .., , Equal Housing Opportunity , , , oRnfgHmEaq  
+
+Topic # 42  occurred in 
+ all           1827.0
+high_white    1040.0
+low_white      787.0
+difference     253.0
+Name: 42, dtype: float64 
+ Topic 42: pm, private, apartment, appliances, closet, dishwasher, dryer, washer, com, balcony, www, features, managed, refrigerator, stove, microwave, electric, website, patio, internet
+
+ Top 5 answers fitting topic 42 are: 
+ 
+
+Topic 42 Rank 1 ID 24295
+: 
+ Was  99.52 percent topic 42 :
+ VIEW OUR WEBSITE:, , http://www.echoridgeapartmenthomes.com, , Echo Ridge, managed by Berkshire Communities, SE Kinsey Street, Snoqualmie, WA , , , , VIEW OUR WEBSITE:, , http://www.echoridgeapartmenthomes.com, , Welcome home to Echo Ridge! A beautiful community in Snoqualmie, Washington where you will find a park on every corner, and plenty of open space to relax and enjoy., , Relax on the patio during the day and curl up by the cozy fireplace at night. , , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :pm - :pm, , Apartment Features, * Large Garage and Plenty of Parking, * Most apartments are corner homes, * Close to schools and shopping, * Linen Closet, * Window Coverings, * Private Patio or Private Balcony , * Electric Stove, * Refrigerator, * Furnished or Unfurnished, * Full Size Washer and Dryer in & bedroom apartment, * Dishwasher, * Walk-in Closet, * Ceiling Fan, * Pre-wired for internet and cable, * Stainless Steel Appliances (in select homes), * Disposal, * Vertical Blinds, * Microwave, * Washer and Dryer in unit, * Breakfast Bar, * Whirlpool Appliances, * Furnished Options Available, Call for Pricing, * Roommate Friendly Floor Plan, * Gas Fireplace, * Extra Storage, * Pantry, , , Echo Ridge, managed by Berkshire Communities, SE Kinsey Street, Snoqualmie, WA , , , , VIEW OUR WEBSITE:, , http://www.echoridgeapartmenthomes.com, , Welcome home to Echo Ridge! A beautiful community in Snoqualmie, Washington where you will find a park on every corner, and plenty of open space to relax and enjoy., , Relax on the patio during the day and curl up by the cozy fireplace at night. , , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :pm - :pm, , Apartment Features, * Large Garage and Plenty of Parking, * Most apartments are corner homes, * Close to schools and shopping, * Linen Closet, * Window Coverings, * Private Patio or Private Balcony , * Electric Stove, * Refrigerator, * Furnished or Unfurnished, * Full Size Washer and Dryer in & bedroom apartment, * Dishwasher, * Walk-in Closet, * Ceiling Fan, * Pre-wired for internet and cable, * Stainless Steel Appliances (in select homes), * Disposal, * Vertical Blinds, * Microwave, * Washer and Dryer in unit, * Breakfast Bar, * Whirlpool Appliances, * Furnished Options Available, Call for Pricing, * Roommate Friendly Floor Plan, * Gas Fireplace, * Extra Storage, * Pantry, This apartment requires a $ deposit., , Echo Ridge, managed by Berkshire Communities, SE Kinsey Street, Snoqualmie, WA , , , , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :pm - :pm, , [#],  
+
+Topic 42 Rank 2 ID 15174
+: 
+ Was  99.36 percent topic 42 :
+ VIEW OUR WEBSITE:, , http://www.coppinswell.com, , Tap into life at Coppins Well. Tap into a brand new living opportunity in one of Seattle's first residential neighborhoods. Tap into arts, culture, and of course, wellness, just steps from your front door. Tap into kitchens designed for cooking, jaw-dropping views and gracious service that will make you feel at home. , , Copy and Paste this link to view our screening criteria:, , https://www.on-site.com/apply/property//style/coppinswell, , This studio has everything that you need, including a washer and dryer!, , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :am - :pm, , Apartment Features, * Designer Track Lighting, * Wood-Like Floors, * Linen Closet, * Furnished Options Available, Call for Pricing, * Extra Storage, * Whirlpool Appliances, * Walk-in Closet, * Ceiling Fan, * Private Patio or Private Balcony (on select apartments), * High Efficiency Lighting Fixtures, * Pre-wired for internet and cable, * Direct Access to Apartment from Garage, * Refrigerator, Microwave, Dishwasher & Electric Stove, * Stainless Steel Appliances, * Full sized Washer and Dryer in unit , , Coppins Well, managed by Holland Residential, Minor Avenue, Seattle, WA , , , , Apartment Features, * Whirlpool Appliances, * High Efficiency Lighting Fixtures, * Stainless Steel Appliances, * Linen Closet, * Extra Storage, * Private Patio or Private Balcony (on select apartments), * Window Coverings, * Designer Track Lighting, * Disposal, * Walk-in Closet, * Refrigerator, Microwave, Dishwasher & Electric Stove, * Full sized Washer and Dryer in unit, * Wood-Like Floors, * Ceiling Fan, * Pre-wired for internet and cable, , [#],  
+
+Topic 42 Rank 3 ID 17311
+: 
+ Was  99.28 percent topic 42 :
+ Coppins Well, managed by Holland Residential, Minor Avenue, Seattle, WA , , , , VIEW OUR WEBSITE:, , http://www.coppinswell.com, , Enjoy unparalleled views of Lake Union, the Olympics, downtown Seattle, Mt. Rainier, and the Cascades from the sky deck terrace. Call Coppins Well for more details!, , Copy and Paste this link to view our screening criteria:, , https://www.on-site.com/apply/property//style/coppinswell, , Great apartment with a washer and dryer, extra closet, spacious and more., , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :am - :pm, , Apartment Features, * Designer Track Lighting, * Wood-Like Floors, * Linen Closet, * Furnished Options Available, Call for Pricing, * Extra Storage, * Whirlpool Appliances, * Walk-in Closet, * Ceiling Fan, * Private Patio or Private Balcony (on select apartments), * High Efficiency Lighting Fixtures, * Pre-wired for internet and cable, * Direct Access to Apartment from Garage, * Refrigerator, Microwave, Dishwasher & Electric Stove, * Stainless Steel Appliances, * Full sized Washer and Dryer in unit , , Apartment Features, * Walk-in Closet, * Designer Track Lighting, * Disposal, * Linen Closet, * Ceiling Fan, * Refrigerator, Microwave, Dishwasher & Electric Stove, * Stainless Steel Appliances, * High Efficiency Lighting Fixtures, * Wood-Like Floors, * Whirlpool Appliances, * Pre-wired for internet and cable, * Full sized Washer and Dryer in unit, * Window Coverings, * Private Patio or Private Balcony (on select apartments), * Extra Storage, , [#],  
+
+Topic 42 Rank 4 ID 26610
+: 
+ Was  99.27 percent topic 42 :
+ VIEW OUR WEBSITE:, , http://www.coppinswell.com, , Enjoy unparalleled views of Lake Union, the Olympics, downtown Seattle, Mt. Rainier, and the Cascades from the sky deck terrace. Call Coppins Well for more details!, , Copy and Paste this link to view our screening criteria:, , https://www.on-site.com/apply/property//style/coppinswell, , Apartment # is an amazing corner floor plan. Give Coppins Well a call today!, , Monday :am - :pm, Tuesday :am - :pm, Wednesday :am - :pm, Thursday :am - :pm, Friday :am - :pm, Saturday :am - :pm, Sunday :am - :pm, , Apartment Features, * Designer Track Lighting, * Wood-Like Floors, * Linen Closet, * Furnished Options Available, Call for Pricing, * Extra Storage, * Whirlpool Appliances, * Walk-in Closet, * Ceiling Fan, * Private Patio or Private Balcony (on select apartments), * High Efficiency Lighting Fixtures, * Pre-wired for internet and cable, * Direct Access to Apartment from Garage, * Refrigerator, Microwave, Dishwasher & Electric Stove, * Stainless Steel Appliances, * Full sized Washer and Dryer in unit , , Coppins Well, managed by Holland Residential, Minor Avenue, Seattle, WA , , , , Apartment Features, * Extra Storage, * Walk-in Closet, * Pre-wired for internet and cable, * Window Coverings, * High Efficiency Lighting Fixtures, * Whirlpool Appliances, * Wood-Like Floors, * Linen Closet, * Disposal, * Designer Track Lighting, * Private Patio or Private Balcony (on select apartments), * Refrigerator, Microwave, Dishwasher & Electric Stove, * Ceiling Fan, * Stainless Steel Appliances, * Full sized Washer and Dryer in unit, , [#],  
+
+Topic 42 Rank 5 ID 8476
+: 
+ Was  99.2 percent topic 42 :
+ Enjoy unparalleled views of Lake Union, the Olympics, downtown Seattle, Mt. Rainier, and the Cascades from the sky deck terrace. Tap into arts, culture, and of course, wellness, just steps from your front door. Tap into kitchens designed for cooking Tap into life at Coppins Well. Tap into a brand new living opportunity in one of Seattle's first residential, jaw-dropping views and gracious service that will make you feel at home. Call Coppins Well for more details! Copy and Paste this link to view our screening criteria: https://www.on-site.com/apply/property//style/coppinswell Great apartment with a washer and dryer, extra closet, spacious and more. Monday :am - :pm Tuesday :am - :pm Wednesday :am - :pm Thursday :am - :pm Friday :am - :pm Saturday :am - :pm Sunday :am - :pm Apartment Features * Designer Track Lighting * Wood-Like Floors * Linen Closet * Furnished Options Available, Call for Pricing * Extra Storage * Whirlpool Appliances * Walk-in Closet * Ceiling Fan * Private Patio or Private Balcony (on select apartments) * High Efficiency Lighting Fixtures * Pre-wired for internet and cable * Direct Access to Apartment from Garage * Refrigerator, Microwave, Dishwasher & Electric Stove * Stainless Steel Appliances * Full sized Washer and Dryer in unit VIEW OUR WEBSITE: http://www.coppinswell.com Coppins Well, managed by Holland Residential Minor Avenue Seattle, WA show contact info [#] 
+
+Topic # 5  occurred in 
+ all           1639.0
+high_white    1010.0
+low_white      629.0
+difference     381.0
+Name: 5, dtype: float64 
+ Topic 5: pm, views, select, units, rooftop, room, contact, kitchen, amenities, deck, garage, com, fitness, stainless, controlled, bike, features, http, private, fi
+
+ Top 5 answers fitting topic 5 are: 
+ 
+
+Topic 5 Rank 1 ID 27658
+: 
+ Was  99.21 percent topic 5 :
+ Come check out this great one-bedroom in the heart of Ballard! Private Balcony, breakfast bar, pantry in kitchen for extra storage as well as ample storage in the bathroom!, , Relax on our rooftop deck! Hang with your friends and neighbors around the fire pit! Get a work-out in at our Fully Equipped Fitness Center or recharge after a long day in our tranquil landscaped outdoor courtyard., , Special! $ app fees and $ security deposits with approved credit! , , Tours available all weekend! Call , to schedule., , Truly pet friendly, we welcome your animals like family. Located in between the Gilman Playground Park and the Ballard Market. , , Features, - Abundant Natural Light , - Hardwood flooring , - Spacious walk-in closets , - Granite Countertops , - Private balcony/patio in all our homes , - Luxurious Bathrooms , - Stackable washer & dryer , - Stainless Steel Appliances , - Island kitchens in select units , , Community Amenities, - Controlled access property , - Reserved, garage parking space for $ monthly , - WalkScore = , - Package delivery service , - Extra Storage starting at $ per month , - Bicycle Garage for $ monthly , - Smoke-free building , - Courtyard w/ fire pit , - Rooftop deck w/ views & Wi-Fi access , - Easy access to public transportation , - Walk to Ballard Farmers Market , - hour fitness center with State of the art cardio studio and Strength training equipment , - Clubhouse with Wi-Fi access , , Driving Directions, Location is King! KOI provides commuters with instant connectivity to the best of Seattle, and offers residents easy access to Interstate , Route and local shopping, restaurants and entertainment venues. , , Office Hours, Monday - Friday: : am - : pm, Saturday - Sunday: : am - : pm  
+
+Topic 5 Rank 2 ID 896
+: 
+ Was  99.2 percent topic 5 :
+ Origin http://origin.prospectportal.com/su/mg Origin strikes the perfect balance between the buzz of downtown Seattle and the communal spirit of Lake City. With cool, mid-century modern vibes and larger than life living spaces (perfect for spontaneous rendezvous), you've found a home where unconventionality rules. Live outside the box at Origin - where your story begins! Make this one bedroom your next home and get your first two weeks of rent free! Stainless steel appliances, spacious cabinet space, walk-in closet and balcony. Call us today to schedule a viewing of your next apartment! Community Amenities State-of-the-Art Fitness Center Lush Landscaping On-Site Parking Garage Comfortable Resident Lounge Community Entertainment Kitchen Close to Grocery, Retail and Shopping Locations Roof Top Deck with Meditation Space, Barbeque area with fireplace and outdoor living room overlooking incredible scenic views Central Courtyard with BBQs, Outdoor Kitchen, and expansive green space for recreation Outdoor Living Room featuring Fireplace and Comfortable Seating Contact Us Origin Address: nd Avenue NE, Seattle, WA Phone: show contact info Online: http://origin.prospectportal.com/su/mg Office Hours: Mon: :am - :pm Tue: :am - :pm Wed: :am - :pm Thu: :am - :pm Fri: :am - :pm Sat: :am - :pm Sun: :am - :pm EQUAL HOUSING OPPORTUNITY Dog, WA, Apartments to rent, Cat, Origin, Seattle 
+
+Topic 5 Rank 3 ID 9418
+: 
+ Was  99.16 percent topic 5 :
+ Origin http://origin.prospectportal.com/su/lyzw Community Amenities State-of-the-Art Fitness Center Lush Landscaping On-Site Parking Garage Comfortable Resident Lounge Community Entertainment Kitchen Close to Grocery, Retail and Shopping Locations Roof Top Deck with Meditation Space, Barbeque area with fireplace and outdoor living room overlooking incredible scenic views Central Courtyard with BBQs, Outdoor Kitchen, and expansive green space for recreation Outdoor Living Room featuring Fireplace and Comfortable Seating Contact Us Origin Address: nd Avenue NE, Seattle, WA Phone: show contact info Online:http://origin.prospectportal.com/su/lyzw Office Hours: Mon: :am - :pm Tue: :am - :pm Wed: :am - :pm Thu: :am - :pm Fri: :am - :pm Sat: :am - :pm Sun: :am - :pm EQUAL HOUSING OPPORTUNITY Roof Top Deck with Meditation Space, Barbeque area with fireplace and outdoor living room overlooking incredible scenic views, Lush Landscaping, Central Courtyard with BBQs, Outdoor Kitchen, and expansive green space for recreation, On-Site Parking Garage, Outdoor Living Room featuring Fireplace and Comfortable Seating, Origin, Dog, Cat, State-of-the-Art Fitness Center, For rent, Community Entertainment Kitchen 
+
+Topic 5 Rank 4 ID 28901
+: 
+ Was  99.15 percent topic 5 :
+ Relax on our rooftop deck! Hang with your friends and neighbors around the fire pit! Get a work-out in at our Fully Equipped Fitness Center or recharge after a long day in our tranquil landscaped outdoor courtyard., , Special! $ app fees and $ security deposits with approved credit! , , Tours available all weekend! Call , to schedule., , Truly pet friendly, we welcome your animals like family. Located in between the Gilman Playground Park and the Ballard Market. , , Features, - Abundant Natural Light , - Hardwood flooring , - Spacious walk-in closets , - Granite Countertops , - Private balcony/patio in all our homes , - Luxurious Bathrooms , - Stackable washer & dryer , - Stainless Steel Appliances , - Island kitchens in select units , , Community Amenities, - Controlled access property , - Reserved, garage parking space for $ monthly , - WalkScore = , - Package delivery service , - Extra Storage starting at $ per month , - Bicycle Garage for $ monthly , - Smoke-free building , - Courtyard w/ fire pit , - Rooftop deck w/ views & Wi-Fi access , - Easy access to public transportation , - Walk to Ballard Farmers Market , - hour fitness center with State of the art cardio studio and Strength training equipment , - Clubhouse with Wi-Fi access , , Driving Directions, Location is King! KOI provides commuters with instant connectivity to the best of Seattle, and offers residents easy access to Interstate , Route and local shopping, restaurants and entertainment venues. , , Office Hours, Monday - Friday: : am - : pm, Saturday - Sunday: : am - : pm  
+
+Topic 5 Rank 5 ID 9635
+: 
+ Was  99.03 percent topic 5 :
+ Skye at Belltown http://skyeatbelltownapts.prospectportal.com/su/mvg Floor Plan: One Bedroom ABC Sq Feet: Rent: $- $ Deposit: Bed/Bath: / Community Amenities Studio, one and two bedroom apartments Controlled access parking garage Barbeque grills Billiard and game room Fully equipped fitness center with cardio theatre equipment Private rooftop garden with amazing views and multiple social hang-out zones Nearby Zip Car locations % street smart WalkScoreÂ® Easy access to the I- Only minutes to light rail, public transportation and Seattle Streetcar On-site crepe restaurant Walk to Belltown's restaurants, bars, cafes and shopping minutes by foot to Amazon's campus State-of-the-art laundry facility Smoke-free Free Wi-Fi in social spaces On-site recycling program Club Room Kitchen Business center Elevator Contact Us Skye at Belltown Address: Wall Street, Seattle, WA Phone: show contact info Online: http://skyeatbelltownapts.prospectportal.com/su/mvg Office Hours: Mon: :am - :pm Tue: :am - :pm Wed: :am - :pm Thu: :am - :pm Fri: :am - :pm Sat: :am - :pm Sun: :am - :pm EQUAL HOUSING OPPORTUNITY WA, Dog, Skye at Belltown, Cat, Seattle, Apartment for rent 
+
+Topic # 23  occurred in 
+ all           2190.0
+high_white    1321.0
+low_white      869.0
+difference     452.0
+Name: 23, dtype: float64 
+ Topic 23: contact, info, property, features, deposit, lease, cats, pets, room, dogs, sq, bath, terms, details, policy, bedrooms, year, laundry, new, description
+
+ Top 5 answers fitting topic 23 are: 
+ 
+
+Topic 23 Rank 1 ID 2251
+: 
+ Was  99.3 percent topic 23 :
+ Bed Bath | $,/mo NE th St | Kirkland, WA Large, remodeled corner first floor bedroom bath apartment with luxury vinyl wood plank flooring throughout main living areas (new carpet in bedrooms only). Centrally located in Kirkland, just one block up from Lake Washington. Easy access to freeways, bus lines, shopping and all that Kirkland has to offer. This unit is available mid-November. Lease today & receive $ off your first month's rent!! Apartment home is approx. sq ft and has a washer/dryer in the unit. This unit has multiple window walls. Large covered deck perfect for BBQing. Kitchen has luxury vinyl wood plank flooring, white paneled cabinetry, new stainless steel appliances and new Quartz counter tops. Large master suite with walk-in closet and attached bathroom. One reserved uncovered parking space is included in the rental price. Cats are accepted with an additional deposit, however NO dogs. This is a non-smoking property. APARTMENT DETAILS Rent: $,. Security Deposit/Fee: $. Pet Policy: Cats ONLY DESCRIPTION Lush Landscaping * Luxury Vinyl Wood Plank Flooring * White Paneled Cabinetry * Quartz * Stainless Appliances * Reserved Parking * Large Deck * Spacious Walk-In Closet * Dishwasher and Disposal * Full-Size Washer and Dryer * Wired for Cable TV LEASE TERMS Garbage and one reserved, uncovered parking space are included in the rental price. Cats are accepted with an additional deposit, however NO dogs. This is a non-smoking property. This unit is available mid-November! Contact info: Leasing Office Waddell Properties, Inc. show contact info www.waddellpropertiesinc.com/property/the-monterey/ Photos may represent similar units. 
+
+Topic 23 Rank 2 ID 4127
+: 
+ Was  99.16 percent topic 23 :
+ FREE SQ FT Garage for months with an month lease!!! Close to Lakewood Sounder Train/Bus Station Contact info: Auza Apartments | Auza LLC | show contact info | Live in a convenient location th St SW #, Lakewood, WA $/mo KEY FEATURES Year Built: Sq Footage: sqft. Bedrooms: Beds Bathrooms: Bath Parking: + Garage | Guest parking Lease Duration: Year (See Details Below) Deposit: $ Pets Policy: Cats & Dogs OK Laundry: Shared Floor: Property Type: Apartment RENTAL FEATURES Living room Dining room Storage space Pantry Workshop Range / Oven Refrigerator Dishwasher Balcony, Deck, or Patio Yard Fenced yard Lawn Heat: baseboard, forced air Cable-ready High-speed internet Wired Tile floor COMMUNITY FEATURES Security system Near transportation Guest parking Off-street parking On-street parking Garage - Detached LEASE TERMS Non Refundable Screening Fee: $/ adult and over Pet fees: $ st pet $ second pet max pets lbs and under. Resident pays Utilities. Optional Garage :additional $./ month ADDITIONAL LINKS Website: http://guauza.wix.com/auza Virtual Tour: http://guauza.wix.com/auza Contact info: Auza Apartments Auza LLC show contact info 
+
+Topic 23 Rank 3 ID 4062
+: 
+ Was  99.12 percent topic 23 :
+ Bed Bath | $,/mo NE th St | Kirkland, WA APARTMENT DETAILS Bedrooms: Bathrooms: Rent: $, Location on Floor: Floors in Bldg: Square Footage: Security Deposit/Fee: $. Pet Policy: Cats only DESCRIPTION Large corner second floor bedroom bath apartment! Centrally located in Kirkland, just one block up from Lake Washington. Easy access to freeways, bus lines, shopping and all that Kirkland has to offer. This unit is available mid-April! Apartment home is approx. sq ft and has a washer/dryer in the unit. This unit has multiple window walls and ample light. Kitchen has white paneled cabinetry, stainless steel appliances and Quartz counter tops. Large master suite with walk-in closet and attached bathroom. Luxury vinyl wood plank flooring throughout main living areas (carpet in the bedrooms only). Garbage and one reserved uncovered parking space included in the rental price. Please email or call show contact info for further information and to set up a showing. Please note that this building will accept cats with an additional deposit, however NO dogs. This is a non-smoking property. LEASE TERMS Garbage is included in the rental price. Tenant is responsible for water/sewer and electric. Cats ONLY with additional deposit. This unit is available mid-April! Contact info: Leasing Office Waddell Properties, Inc. show contact info http://waddellpropertiesinc.com/property/monterey/ Photos may represent similar units. 
+
+Topic 23 Rank 4 ID 4243
+: 
+ Was  98.92 percent topic 23 :
+ Contact info: Ashlee Jackson | show contact info | show contact info BED+ NEW WALL COLOR+NEW CABINETS+NEW APPLIANCES+ NEW PLANK FLOORING!! Parker Rd E #A, Sumner, WA $,/mo KEY FEATURES Sq Footage: sqft. Bedrooms: Beds Bathrooms: Bath Parking: Off street | Guest parking Lease Duration: Months (See Details Below) Deposit: $ Pets Policy: Cats & Dogs OK Laundry: Shared Floor: Property Type: Apartment DESCRIPTION NEW Management! Onsite Maintenance! Ground Floor! Renovations on the way! Great Location! Come check it out TODAY! RENTAL FEATURES Living room Walk-in closet Range / Oven Refrigerator Dishwasher Fenced yard Heat: forced air Cable-ready Hardwood floor COMMUNITY FEATURES Guest parking LEASE TERMS New Management! Property Under NEW Renovations!!!! +Small Community +Leasing Bed & Bed Apartments +Shared Laundry Onsite +Pet Friendly Community + Space Reserve Parking +Online Rent Pay Contact info: Ashlee Jackson show contact info show contact info 
+
+Topic 23 Rank 5 ID 19671
+: 
+ Was  98.83 percent topic 23 :
+ Contact info: , Ashlee Jackson | , | , , , BED+ NEW WALL COLOR+NEW CABINETS+NEW APPLIANCES+ NEW PLANK FLOORING!!, , Parker Rd E #AA, Sumner, WA , , $/mo, , KEY FEATURES , Sq Footage: sqft., Bedrooms: Beds, Bathrooms: Bath, Parking: Off street | Guest parking, Lease Duration: Months (See Details Below), Deposit: $, Pets Policy: Cats & Dogs OK, Laundry: Shared, Floor: , Property Type: Apartment, , DESCRIPTION, , NEW Management! , Onsite Maintenance! Ground Floor! , Renovations on the way! Great Location!, Come check it out TODAY!, , RENTAL FEATURES, •Living room, •Walk-in closet, •Range / Oven, •Refrigerator, •Dishwasher, •Fenced yard, •Heat: forced air, •Cable-ready, •Hardwood floor, COMMUNITY FEATURES, •Guest parking, LEASE TERMS , New Management! Property Under NEW Renovations!!!!, , +Small Community, +Leasing Bed & Bed Apartments , +Shared Laundry Onsite, +Pet Friendly Community , +, Space Reserve Parking , +Online Rent Pay, , Contact info: , Ashlee Jackson , , , ,  
+
+Topic # 28  occurred in 
+ all           1960.0
+high_white     962.0
+low_white      998.0
+difference      36.0
+Name: 28, dtype: float64 
+ Topic 28: pm, contact, com, availability, subject, info, change, lease, pricing, home, www, opportunity, equal, apartment, website, based, housing, x, prices, http
+
+ Top 5 answers fitting topic 28 are: 
+ 
+
+Topic 28 Rank 1 ID 19207
+: 
+ Was  99.17 percent topic 28 :
+ Parkview Apartments, Briggs Drive S.E. , Olympia, WA, , , Want more info on this unit? See the link (below):, http://pinnaclefamily.aptdetails.com/zs, , Call Now: , , , , WELCOME TO PARKVIEW APARTMENTS, , This is a Bedroom, Bath, approximately Sq. Ft. , , The world is at your doorstep when you make your home at Parkview Apartments. Located in Olympia's exquisite Briggs Village community, life at Parkview blends the convenience of an urban village with the classic beauty of the natural surroundings. Stop by today for a tour. , , Features, - Microwave , - Gourmet Kitchens Enhanced with Beautiful Cabinetry & High End Appliances , - Patios and Decks for Outdoor Entertaining , - Light-Filled, Spacious Interiors with Foot Ceilings , - Walk-in closets , - Built Energy Efficient , - Breakfast bar , - Washer and Dryer In Each Apartment Home , - Chic, Sophisticated Interiors with Upscale Finishes , - Warm and Cozy Electric Fireplaces , , Community Amenities, - Surrounded Nature, Briggs Village Is Linked to Kettle Lakes & Miles of Walking Trails , - Easy Accessibility to Downtown and The State Capitol , - Updater Moving Partner , - Picnic and Play Areas , - Just Steps Away from The South Sound YCMA , - Bike Storage , - Private Carports , - Located Within The Exceptional, Highly-Ranked Olympia School District , , , Office Hours, Monday AM-:PM, Tuesday AM-:PM, Wednesday AM-:PM, Thursday AM-:PM, Friday AM-:PM, Closed: Saturday and Sunday , , Pet Policy, Parkview is pet friendly with no weight limits. Your four legged friends will enjoy our new dog run! , , Equal Housing Opportunity , , , JTFcTvwP  
+
+Topic 28 Rank 2 ID 25137
+: 
+ Was  99.12 percent topic 28 :
+ Live the Good Life , Call Now: , Briggs Drive S.E. , Olympia, WA, ,Want more info on this unit? See the link (below):,http://pinnaclefamily.aptdetails.com/ob, This is a Bedroom, Bath, approximately Sq. Ft. , The world is at your doorstep when you make your home at Parkview Apartments. Located in Olympia's exquisite Briggs Village community, life at Parkview blends the convenience of an urban village with the classic beauty of the natural surroundings. Stop by today for a tour. , - Chic, Sophisticated Interiors with Upscale Finishes , - Gourmet Kitchens Enhanced with Beautiful Cabinetry & High End Appliances , - Built Energy Efficient , - Breakfast bar , - Patios and Decks for Outdoor Entertaining , - Washer and Dryer In Each Apartment Home , - Walk-in closets , - Microwave , - Light-Filled, Spacious Interiors with Foot Ceilings , - Warm and Cozy Electric Fireplaces , - Updater Moving Partner , - Easy Accessibility to Downtown and The State Capitol , - Picnic and Play Areas , - Bike Storage , - Just Steps Away from The South Sound YCMA , - Surrounded Nature, Briggs Village Is Linked to Kettle Lakes & Miles of Walking Trails , - Private Carports , - Located Within The Exceptional, Highly-Ranked Olympia School District , Parkview is pet friendly with no weight limits. Your four legged friends will enjoy our new dog run! , Monday AM-:PM,Tuesday AM-:PM,Wednesday AM-:PM,Thursday AM-:PM,Friday AM-:PM,Closed: Saturday and Sunday ,Equal Housing Opportunity ,  
+
+Topic 28 Rank 3 ID 22652
+: 
+ Was  99.1 percent topic 28 :
+ The world is at your doorstep when you make your home at Parkview Apartments. Located in Olympia's exquisite Briggs Village community, life at Parkview blends the convenience of an urban village with the classic beauty of the natural surroundings. Stop by today for a tour. , Call Now: ,More unit details at:,http://pinnaclefamily.aptdetails.com/cwva, This is a Bedroom, Bath, approximately Sq. Ft. , - Patios and Decks for Outdoor Entertaining , - Breakfast bar , - Gourmet Kitchens Enhanced with Beautiful Cabinetry & High End Appliances , - Washer and Dryer In Each Apartment Home , - Microwave , - Built Energy Efficient , - Light-Filled, Spacious Interiors with Foot Ceilings , - Walk-in closets , - Warm and Cozy Electric Fireplaces , - Chic, Sophisticated Interiors with Upscale Finishes , - Private Carports , - Bike Storage , - Located Within The Exceptional, Highly-Ranked Olympia School District , - Surrounded Nature, Briggs Village Is Linked to Kettle Lakes & Miles of Walking Trails , - Updater Moving Partner , - Easy Accessibility to Downtown and The State Capitol , - Picnic and Play Areas , - Just Steps Away from The South Sound YCMA , Parkview is pet friendly with no weight limits. Your four legged friends will enjoy our new dog run! , Monday AM-:PM,Tuesday AM-:PM,Wednesday AM-:PM,Thursday AM-:PM,Friday AM-:PM,Closed: Saturday and Sunday , Briggs Drive S.E. , Olympia, WA, ,Equal Housing Opportunity ,  
+
+Topic 28 Rank 4 ID 787
+: 
+ Was  99.08 percent topic 28 :
+ Cliffside Aparments: Waterfront Apartments in Gig Harbor CALL: show contact info x $, - $, . Bed Bath . sq.ft * Unit - Available Now * Unit - Available Now * Unit - Available Now * Unit - Available Now * Unit - Available Now Cliffside Website: http://www.prometheusreg.com/seattle-properties/cliffside Address: Cliffside Ln Northwest Gig Harbor, WA Want more information? http://unit-availability.com/lead/tu/?extnId= DESCRIPTION Start your day with exclusive panorama of bald eagles, Harbor Bridge, majestic Mount Rainier and boats bobbing on the tide-all from your private patio at Cliffside waterfront apartments. After, head inside to a cracking wood-burning fireplace and plenty of windows to lighten up your life. Or, work it at the kinetic Fitness Center right on site. Adventure and opportunity are just outside your door, with Seattle to the north, Tacoma across the Narrows and Olympic National Park right in your backyard. For lovers of nature and luxury, Cliffside apartments in Gig Harbor is a mainstay of premium living. FLOORPLAN SPECIALS / month free on select apartments Online Leasing URL: https://prometheusapartments.com/seattle-apartments/seattle-tacoma/cliffside/lease OFFICEâ€‚ â€‚HOURS Monday :am to :pm Tuesday :am to :pm Wednesday :am to :pm Thursday :am to :pm Friday :am to :pm Saturday :am to :pm Sunday :am to :pm CALL US TODAY! show contact info x Equal Housing Opportunity DISCLAIMER: Call for details: pricing/availability subject to change at any time. 
+
+Topic 28 Rank 5 ID 4944
+: 
+ Was  98.68 percent topic 28 :
+ Explore and enjoy-at the limestone Apartments, the best of Bellevue is right outside your door. CALL: show contact info x $, . Bed Bath . sq.ft * Unit - Available Now Limestone Court : th Avenue Bellevue, WA Property Website: http://www.prometheusreg.com/seattle-properties/limestone Want more information? http://unit-availability.com/lead/f/?extnId= DESCRIPTION Limestone Court Apartments is currently leasing this one-bedroom, one-bathroom home with a den. The apartment has a fireplace, a chef's island, and a washer and dryer. This pet-friendly neighborhood even offers convenient access to the Bellevue Transit Center. Call now, as pricing and availability are subject to change. OFFICEÂ Â HOURS Tuesday :am to :pm Wednesday :pm to :pm Thursday :am to :pm Friday :pm to :pm Saturday :am to :pm CALL US TODAY! show contact info x Equal Housing Opportunity DISCLAIMER: Call for details: pricing/availability subject to change at any time. 
+
+Topic # 49  occurred in 
+ all           1128.0
+high_white     511.0
+low_white      617.0
+difference     106.0
+Name: 49, dtype: float64 
+ Topic 49: renovated, apply, newly, stainless, fees, pm, appliances, housing, bath, sq, internet, ft, additional, equal, opportunity, approximately, maintenance, leasing, fitness, prices
+
+ Top 5 answers fitting topic 49 are: 
+ 
+
+Topic 49 Rank 1 ID 627
+: 
+ Was  99.34 percent topic 49 :
+ Unpack in Your New Home Park South Apartments in Seattle, WA Call Now: show contact info Park South th AVE S , Seattle, WA, See our property details here: http://leasing.amcllc.net/ A: Bedroom, Bath Approx Sq. Ft. Park South Apartments in Seattle, Washington offers stylish living just minutes from the South Center Mall, or an easy commute to Downtown Seattle. For people looking for an active and balanced lifestyle, our community combines the convenience and choices of urban living with the comfort of a small town community. Our residents live, work, shop, as well as commute easily to the best jobs in the Pacific Northwest. All of our one and two bedroom apartments feature newly remodeled contemporary stainless steel appliances with white or dark brown cabinetry and brushed nickel finishes for a sleek, modern look. Just outside your door you'll find plenty of amenities: a beautiful clubhouse with sparkling seasonal pool, state of the art fitness center, racquetball court, a large picnic area, and close to lush natural walking trails and parks. Features - Sparkling Stainless Steel Appliances - Dishwasher & Garbage Disposal - High Ceilings - Refrigerator - High Speed Internet Available - Washer Dryer In Unit - Wood Burning Fireplaces - Patio or Balcony - Covered Parking - Assigned Parking - Electric Stove - Cable/Satelite Available - Newly Renovated Unit Interiors - Storage - Breakfast Bars & Pantries *Select units only Community Amenities - -hr Maintenance - Business Center - Covered Parking - Convenient Location - Resident BBQ Area - Trail, Bike, Hike, Jog - Easy Freeway Access - Racquetball Court - Clubhouse - Pets Welcome* - Sparkling Swimming Pool - Near Public Transit - Minutes From I- and Hwy - Fitness Center Office Hours Monday-Friday: AM-PM Saturday: AM-PM Sunday: Closed Prices are subject to change, based on availability and qualification of the applicant, additional fees may apply. Equal Housing Opportunity zegvYBR 
+
+Topic 49 Rank 2 ID 6516
+: 
+ Was  99.34 percent topic 49 :
+ Life is Better at the Beach! Park South Apartments in Seattle, WA Call Now: show contact info Park South th AVE S , Seattle, WA, Want more information? Follow this link: http://leasing.amcllc.net/em This is a Bedroom, Bath, approximately Sq. Ft. Park South Apartments in Seattle, Washington offers stylish living just minutes from the South Center Mall, or an easy commute to Downtown Seattle. For people looking for an active and balanced lifestyle, our community combines the convenience and choices of urban living with the comfort of a small town community. Our residents live, work, shop, as well as commute easily to the best jobs in the Pacific Northwest. All of our one and two bedroom apartments feature newly remodeled contemporary stainless steel appliances with white or dark brown cabinetry and brushed nickel finishes for a sleek, modern look. Just outside your door you'll find plenty of amenities: a beautiful clubhouse with sparkling seasonal pool, state of the art fitness center, racquetball court, a large picnic area, and close to lush natural walking trails and parks. Features - Cable/Satelite Available - Assigned Parking - Washer Dryer In Unit - Refrigerator - High Ceilings - Sparkling Stainless Steel Appliances - Covered Parking - Newly Renovated Unit Interiors - Dishwasher & Garbage Disposal - Electric Stove - High Speed Internet Available - Patio or Balcony - Storage - Breakfast Bars & Pantries - Wood Burning Fireplaces *Select units only Community Amenities - Trail, Bike, Hike, Jog - Clubhouse - Racquetball Court - Resident BBQ Area - Covered Parking - Business Center - Easy Freeway Access - Convenient Location - Sparkling Swimming Pool - Minutes From I- and Hwy - Near Public Transit - -hr Maintenance - Pets Welcome* - Fitness Center Office Hours Monday-Friday: AM-PM Saturday: AM-PM Sunday: Closed Prices are subject to change, based on availability and qualification of the applicant, additional fees may apply. Equal Housing Opportunity syaYGz 
+
+Topic 49 Rank 3 ID 4705
+: 
+ Was  99.33 percent topic 49 :
+ Park South Apartments in Seattle, WA Call Now: show contact info Park South th AVE S , Seattle, WA, Visit This Website to See More: http://leasing.amcllc.net/qdm This is a Bedroom, Bath, approximately Sq. Ft. Park South Apartments in Seattle, Washington offers stylish living just minutes from the South Center Mall, or an easy commute to Downtown Seattle. For people looking for an active and balanced lifestyle, our community combines the convenience and choices of urban living with the comfort of a small town community. Our residents live, work, shop, as well as commute easily to the best jobs in the Pacific Northwest. All of our one and two bedroom apartments feature newly remodeled contemporary stainless steel appliances with white or dark brown cabinetry and brushed nickel finishes for a sleek, modern look. Just outside your door you'll find plenty of amenities: a beautiful clubhouse with sparkling seasonal pool, state of the art fitness center, racquetball court, a large picnic area, and close to lush natural walking trails and parks. Features - Refrigerator - Patio or Balcony - Breakfast Bars & Pantries - Storage - High Ceilings - High Speed Internet Available - Assigned Parking - Electric Stove - Covered Parking - Sparkling Stainless Steel Appliances - Newly Renovated Unit Interiors - Cable/Satelite Available - Washer Dryer In Unit - Wood Burning Fireplaces - Dishwasher & Garbage Disposal *Select units only Community Amenities - Pets Welcome* - Sparkling Swimming Pool - Convenient Location - Trail, Bike, Hike, Jog - Fitness Center - Resident BBQ Area - Minutes From I- and Hwy - Covered Parking - Clubhouse - -hr Maintenance - Business Center - Racquetball Court - Easy Freeway Access - Near Public Transit Office Hours Monday-Friday: AM-PM Saturday: AM-PM Sunday: Closed Prices are subject to change, based on availability and qualification of the applicant, additional fees may apply. Equal Housing Opportunity HvZOVdy 
+
+Topic 49 Rank 4 ID 9337
+: 
+ Was  99.33 percent topic 49 :
+ Park South th AVE S , Seattle, WA, Visit This Website to See More: http://leasing.amcllc.net/pup Call Now: show contact info Park South Apartments in Seattle, WA This is a Bedroom, Bath, approximately Sq. Ft. Park South Apartments in Seattle, Washington offers stylish living just minutes from the South Center Mall, or an easy commute to Downtown Seattle. For people looking for an active and balanced lifestyle, our community combines the convenience and choices of urban living with the comfort of a small town community. Our residents live, work, shop, as well as commute easily to the best jobs in the Pacific Northwest. All of our one and two bedroom apartments feature newly remodeled contemporary stainless steel appliances with white or dark brown cabinetry and brushed nickel finishes for a sleek, modern look. Just outside your door you'll find plenty of amenities: a beautiful clubhouse with sparkling seasonal pool, state of the art fitness center, racquetball court, a large picnic area, and close to lush natural walking trails and parks. Features - Dishwasher & Garbage Disposal - Newly Renovated Unit Interiors - High Ceilings - Wood Burning Fireplaces - Cable/Satelite Available - Refrigerator - Covered Parking - Sparkling Stainless Steel Appliances - Assigned Parking - Storage - High Speed Internet Available - Breakfast Bars & Pantries - Washer Dryer In Unit - Patio or Balcony - Electric Stove *Select units only Community Amenities - -hr Maintenance - Near Public Transit - Resident BBQ Area - Minutes From I- and Hwy - Business Center - Clubhouse - Easy Freeway Access - Sparkling Swimming Pool - Racquetball Court - Pets Welcome* - Convenient Location - Covered Parking - Trail, Bike, Hike, Jog - Fitness Center Office Hours Monday-Friday: AM-PM Saturday: AM-PM Sunday: Closed Prices are subject to change, based on availability and qualification of the applicant, additional fees may apply. Equal Housing Opportunity COinIMAyp 
+
+Topic 49 Rank 5 ID 14816
+: 
+ Was  99.32 percent topic 49 :
+ Park South, th AVE S , Seattle, WA, , , Use this link for more info:, http://leasing.amcllc.net/uzmnv, , Call Now: , , , , Park South Apartments in Seattle, WA, , This is a Bedroom, Bath, approximately Sq. Ft. , , Park South Apartments in Seattle, Washington offers stylish living just minutes from the South Center Mall, or an easy commute to Downtown Seattle. For people looking for an active and balanced lifestyle, our community combines the convenience and choices of urban living with the comfort of a small town community. Our residents live, work, shop, as well as commute easily to the best jobs in the Pacific Northwest., , , , All of our one and two bedroom apartments feature newly remodeled contemporary stainless steel appliances with white or dark brown cabinetry and brushed nickel finishes for a sleek, modern look. Just outside your door you'll find plenty of amenities: a beautiful clubhouse with sparkling seasonal pool, state of the art fitness center, racquetball court, a large picnic area, and close to lush natural walking trails and parks. , , Features, - Covered Parking , - Electric Stove , - Patio or Balcony , - Breakfast Bars & Pantries , - Washer Dryer In Unit , - Dishwasher & Garbage Disposal , - High Speed Internet Available , - Sparkling Stainless Steel Appliances , - Refrigerator , - Storage , - Wood Burning Fireplaces , - Cable/Satelite Available , - High Ceilings , - Assigned Parking , - Newly Renovated Unit Interiors , *Select units only , , Community Amenities, - Easy Freeway Access , - Business Center , - Covered Parking , - Sparkling Swimming Pool , - Minutes From I- and Hwy , - Racquetball Court , - Resident BBQ Area , - -hr Maintenance , - Trail, Bike, Hike, Jog , - Pets Welcome* , - Convenient Location , - Fitness Center , - Clubhouse , - Near Public Transit , , , Office Hours, Monday-Friday: AM-PM, Saturday: AM-PM, Sunday: Closed , , Prices are subject to change, based on availability and qualification of the applicant, additional fees may apply., , Equal Housing Opportunity , , , lwnEQC  
+
