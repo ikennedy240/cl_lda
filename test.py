@@ -32,9 +32,6 @@ for name in sub_hoods:
 
 hoods = pd.read_csv('resources/hoods.txt')
 hoods = [str.strip(x) for x in hoods.columns]
-str.split(hoods)[0]
-name = 'amazon'
-hoods.index(name)
-hoods.index(name) % 100
+
 
 hoods

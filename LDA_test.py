@@ -22,7 +22,6 @@ with open('resources/stopwords.txt') as f:
 stopwords = stop_words.ENGLISH_STOP_WORDS
 
 
-
 #takes a list of documents and returns a corpus and dictionary
 def df_to_corpus(documents):
     #turns each tweet into a list of words
@@ -34,7 +33,8 @@ def df_to_corpus(documents):
     return(corpus, dictionary)
 
 #this is a bad filename for what is a large set of craigslist data
-df = pd.read_csv("data/cl_dropped.csv", index_col = 0).dropna()
+df = pd.read_csv("data/seattle_cleaned.csv",  index_col = 0, dtype = {'GEOID10':object,'blockid':object}).dropna()
+
 #clean up the text for readablility
 #df.body_text = df.body_text.str.replace('\n|\r',' ').str.replace(r'\s+',' ').str.replace(r'^\W+','').dropna()
 #drop texts with no word characters after cleaning, then resets the index, preserving the
@@ -53,7 +53,7 @@ df.body_text = df.body_text.str.replace('\$\$+','dollasigns').str.replace('\$', 
 df['body_text_clean'] = df.body_text.str.replace(r'\W',' ')
 #calls above funtion to make a corpus and dictionary, only passes word characters
 df.body_text_clean = df.body_text_clean.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$')
-df.to_csv('data/seattle_cleaned')
+df.to_csv('data/seattle_cleaned.csv')
 
 corpus, dictionary = df_to_corpus(df.body_text_clean.values)
 dictionary.save('models/cl_dictionary4_15.dict')
@@ -75,33 +75,42 @@ cl_lda = model[corpus]
 #make dense numpy array of the topic proportions for each document
 doc_topic_matrix = matutils.corpus2dense(cl_lda, num_terms=n_topics).transpose()
 #join topic proportions to the documents
-df = df.join(pd.DataFrame(doc_topic_matrix))
+df.columns
 
+df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 
+df.shape
 #save the mearged df so we don't have to run the model next time
-df.to_csv('data/cl_lda4_14.csv')
+df.to_csv('data/cl_lda4_15.csv')
 #use these lines to load saved data:
 #df= pd.read_csv('cl_lda4_12.csv', index_col=0)
 #df.rename(dict(zip(df.columns[3:],range(n_topics))),axis=1, inplace=True)
 
-
-
+df.high_white = np.where(df['percent_white']>=85, 1, 0)
+(df['percent_white']>=85).sum()
+pd.cut(df.percent_white,10).value_counts()
+df.columns
 #make a list of topics and clean it for readablility
 topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
 
 #Count the occurence of each topic by high_white
-no_text = df.drop(['body_text','id'], axis = 1).copy()
+no_text = df[list(range(n_topics))].join(df.high_white)
 no_text[no_text<.01] = 0
 no_text = np.sign(no_text)
 #I've run this with means too, but I'll eventually want to do a chi-squared test
 #so I think counts are better
-all = no_text.sum()
-high = no_text[no_text.high_white==1].sum()
-low = no_text[no_text.high_white==0].sum()
+all = no_text.mean()
+high = no_text[no_text.high_white==1].mean()
+low = no_text[no_text.high_white==0].mean()
+
 #make a df of that data
-mean_diff = pd.DataFrame(data=[all, high, low]).transpose().rename(columns = {0:'all', 1:'high_white', 2:'low_white'})
+mean_diff = pd.DataFrame(data=[all, high, low]).transpose().rename(columns = {0:'all_r', 1:'high_white', 2:'low_white'})
+topic_comparison = pd.DataFrame(data=[all.drop('high_white').sort_values(ascending=False).index, high.drop('high_white').sort_values(ascending=False).index, low.drop('high_white').sort_values(ascending=False).index]).transpose().rename(columns = {0:'all_r', 1:'high_white', 2:'low_white'})
 #calculate the absolute value of the difference between the two categories)
 mean_diff['difference']  = abs(mean_diff.high_white - mean_diff.low_white)
+mean_diff['prop'] = abs(mean_diff.high_white/mean_diff.low_white)
+mean_diff.sort_values(by='prop', ascending=False)
+topic_comparison
 
 #do a quick Random Forest Classification to see which topics are most useful for distinguishing
 #beetween high and low white neighborhoods
@@ -115,29 +124,31 @@ predictions = rf.predict_proba(X_test)[:,1]
 from sklearn.metrics import roc_auc_score
 roc_auc_score(y_test, predictions)
 sorted_import_index = rf.feature_importances_.argsort()
-sorted_import_index
+rf.score(X_test, y_test)
 #make a summary dataframe of the relative counts for the 10 most important topics
 #this one is orders them based off the RFC (ie these topics are good for sorting
 #based on their proportion in a document)
 sorted_rfc = mean_diff.loc[list(sorted_import_index)].iloc[::-1]
+sorted_rfc
 #this one based off the difference in occurence (ie these topics occur at
 #more than 1% in different numbers in the high_white and low_white samples)
-sorted_mean = mean_diff.sort_values('difference', ascending=False)[1:]
+sorted_mean = mean_diff.sort_values('prop', ascending=False)[1:]
 #pick which one to use for output
-sorted_topics = sorted_rfc
+sorted_topics = sorted_mean
 
 #looping to print top matches for the most imported topics for qual analysis
-text_output = 'output/4_12.txt'
+
+text_output = 'output/4_15.txt'
 sample_topics = 10
 sample_texts = 5
 with open(text_output, 'w', encoding='utf-8') as f:
     for j in sorted_topics.index:
-        print("Topic #", j,' occurred in \n', round(sorted_topics.loc[j]), '\n', topics[int(j)], file=f)
+        print("Topic #", j,' occurred in \n', round(sorted_topics.loc[j],2), '\n', topics[int(j)], file=f)
     print("\n ------- Sample Documents ------- \n\n", file=f)
     for j in sorted_topics.index[1:sample_topics]:
         print("Topic #", j,' occurred in \n', round(sorted_topics.loc[j]), '\n', topics[int(j)], file=f)
         print("\n Top 5 answers fitting topic", j, "are: \n \n", file=f)
         for i in range(sample_texts):
             tmp = df.sort_values(by=j, ascending=False).iloc[i]
-            print("Topic", j, "Rank", i+1, 'ID', tmp.id, file=f)
+            print("Topic", j, "Rank", i+1, file=f)
             print(": \n Was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp.body_text, '\n', file=f)

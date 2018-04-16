@@ -185,8 +185,10 @@ test = seattlefull.body_text
 test = test.str.replace("QR Code Link to This Post", '').str.replace(r'\n','').str.replace(r'\r',' ').str.strip()
 test = test.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*','#URL').str.replace(r'http\S*', '#URL').str.replace(r'\d+', '#NUMBER')
 test = test.str.replace(r'^,+','').str.replace(r',,+','')str.strip()
-
+df.body_text = df.body_text.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', 'ichi')
+df.body_text = df.body_text.str.replace('\$\$+','dollasigns').str.replace('\$', 'dollasign')
 df.body_text = test
+
 df.to_csv('seattlefull.csv')
 
 
