@@ -12,3 +12,4 @@
 *.ipynb_checkpoints
 *.log
 *.csv
+*.DS_Store
