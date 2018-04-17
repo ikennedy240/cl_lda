@@ -1,0 +1,14 @@
+*.pyc
+*.swp
+*.txt
+*.json
+*.Rhistory
+*.Rdata
+*.Rda
+*.Rds
+*.rda
+*.rdata
+*.rhistory
+*.ipynb_checkpoints
+*.log
+*.csv
