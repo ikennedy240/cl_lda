@@ -59,8 +59,8 @@ def clean_duplicates(cltext):
     cl_dropped.to_csv('data/cl_dropped.csv')
 
 # make a corpus and dictionary from a list of texts
-def df_to_corpus(documents, stopwords=NULL):
-    if stopwords!=NULL:
+def df_to_corpus(documents, stopwords=None):
+    if stopwords:
         from sklearn.feature_extraction import stop_words
         stopwords = stop_words.ENGLISH_STOP_WORDS
     #turns each tweet into a list of words
@@ -71,5 +71,43 @@ def df_to_corpus(documents, stopwords=NULL):
     corpus = [dictionary.doc2bow(text) for text in texts]
     return(corpus, dictionary)
 
+# make a corpus that doesn't hold everythin in memory
+class MyMemoryCorpus(object):
+    def __init__(self, text_file, dictionary=None, stopwords=None:
+        """
+        Checks if a dictionary has been given as a parameter.
+        If no dictionary has been given, it creates one and saves it in the disk.
+        """
+        self.file_name = text_file
+        if dictionary is None:
+            self.prepare_dictionary()
+        else:
+            self.dictionary = dictionary
+
+    def __iter__(self):
+        for line in open(self.file_name, encoding = 'utf-8'):
+            # assume there's one document per line, tokens separated by whitespace
+            yield self.dictionary.doc2bow(line.lower().split())
+
+    def prepare_dictionary(self):
+        stop_list =   # List of stop words which can also be loaded from a file.
+
+        # Creating a dictionary using stored the text file and the Dictionary class defined by Gensim.
+        self.dictionary = corpora.Dictionary(line.lower().split() for line in open(self.file_name, encoding = 'latin-1'))
+
+        # Collecting the id's of the tokens which exist in the stop-list
+        stop_ids = [self.dictionary.token2id[stop_word] for stop_word in stop_list if
+                    stop_word in self.dictionary.token2id]
+
+        # Collecting the id's of the token which appear only once
+        once_ids = [token_id for token_id, doc_freq in iteritems(self.dictionary.dfs) if doc_freq == 1]
+
+        # Removing the unwanted tokens using collected id's
+        self.dictionary.filter_tokens(stop_ids + once_ids)
+
+        # Saving dictionary in the disk for later use:
+        self.dictionary.save('dictionary.dict')
+
 
 if __name__ == "__main__":
+    df = pd.read_csv("data/immi_rated.csv")
