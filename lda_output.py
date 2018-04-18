@@ -3,15 +3,7 @@ This module includes some helper functions to produce useful output from
 lda models trained with gensim
 """
 
-# make a corpus and dictionary from a list of texts
-def df_to_corpus(documents):
-    #turns each tweet into a list of words
-    texts = [[word for word in document.lower().split() if word not in stopwords] for document in documents]
-    #makes a dictionary based on those texts (this is the full df) and saves it
-    dictionary = corpora.Dictionary(texts)
-    #applies a bag of words vectorization to make the texts into a sparse matrix
-    corpus = [dictionary.doc2bow(text) for text in texts]
-    return(corpus, dictionary)
+
 
 
 # makes a nicely formatted list of topics given an LDA model
