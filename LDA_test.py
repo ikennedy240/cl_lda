@@ -58,8 +58,8 @@ df.to_csv('data/seattle_cleaned.csv')
 corpus, dictionary = df_to_corpus(df.body_text_clean.values)
 dictionary.save('models/cl_dictionary4_15.dict')
 #Then fit an LDA model (or load model 4_12 below)
-n_topics = 50
-n_passes = 20
+n_topics = 10
+n_passes = 1
 #Run this if you have access to more than one core set workers=n_cores-1
 model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0, workers=3)
 #otherwise run this
