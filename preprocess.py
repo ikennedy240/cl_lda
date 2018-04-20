@@ -11,7 +11,6 @@ module_logger = logging.getLogger('cl_lda.preprocess')
 
 # given a folder of scraped CL data, returns a datafame of combined listings with duplicates
 
-
 #Get neighborhoods
 def make_neighborhood_list(hoodseries, save=True):
     #clean up some basic stuff in hoods
