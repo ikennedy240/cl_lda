@@ -40,6 +40,6 @@ df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 lda_output.rfc_distribution(df, n_topics, "sent")
 lda_output.compare_topics_distribution(df, n_topics, "sent")
 mean_diff = lda_output.summarize_on_stratifier(df, n_topics, "sent")
-"""Produces useful output of topics and example texts"""
 
+"""Produces useful output of topics and example texts"""
 lda_output.text_output(df, text_col='text', filepath='output/immi_4_20.txt', model=model, strat_col='sent')
