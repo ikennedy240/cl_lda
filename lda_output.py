@@ -3,13 +3,17 @@ This module includes some helper functions to produce useful output from
 lda models trained with gensim
 """
 
-
+from gensim import corpora, models, matutils
+import regex as re
 
 
 # makes a nicely formatted list of topics given an LDA model
-topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
-
-
+def get_formatted_topic_list(model, formatting, n_topics=10):
+    if formatting == "summary":
+        topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
+    if formatting == "keywords":
+        topics = ["Top keywords are: "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
+    return(topics)
 # given some stratifier, compare the topic distributions
 #Count the occurence of each topic by high_white
 no_text = df[list(range(n_topics))].join(df.high_white)
@@ -69,3 +73,7 @@ with open(text_output, 'w', encoding='utf-8') as f:
             tmp = df.sort_values(by=j, ascending=False).iloc[i]
             print("Topic", j, "Rank", i+1, file=f)
             print(": \n Was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp.body_text, '\n', file=f)
+
+
+if __name__ == "__main__":
+    model = models.LdaModel.load('models/4_12model')
