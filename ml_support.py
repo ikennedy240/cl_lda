@@ -58,23 +58,8 @@ if __name__ == "__main__":
     df.columns
     from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(df[[str(x) for x in list(range(50))]], df['high_white'], random_state=0)
-    """Random Forest Classifier"""
     from sklearn.ensemble import RandomForestClassifier
     rf = RandomForestClassifier(n_estimators = 10, n_jobs = 3).fit(X_train_vectorized,y_train)
-    if rf.jon:
-        print("exists")
-    else:
-        print('nope')
-    rf.model_coef
-    type(rf)
-    predictions = rf.predict(X_test)
-    confusion = confusion_matrix(y_test, predictions)
-    print("\t    P_no P_yes\nActual No:", confusion[0], "\nActual Yes", confusion[1])
-    predictions = rf.predict_proba(X_test)[:,1]
-    from sklearn.metrics import roc_auc_score
-    roc_auc_score(y_test, predictions)
-    sorted_import_index = rf.feature_importances_.argsort()
-    rf.score(X_test, y_test)
 
     from sklearn.feature_extraction.text import CountVectorizer
     # Fit the CountVectorizer to the training data
@@ -82,13 +67,11 @@ if __name__ == "__main__":
         stop_words = f.readlines()
 
     X_train, X_test, y_train, y_test = train_test_split(df['body_text'], df['high_white'], random_state=0)
-
     vect = CountVectorizer(stop_words=stop_words).fit(X_train)
     len(vect.get_feature_names())
     X_train_vectorized =  vect.transform(X_train)
-    """LogisticRegression"""
     from sklearn.linear_model import LogisticRegression
     model = LogisticRegression(penalty = 'l1',C=.1).fit(X_train_vectorized, y_train)
+
     score_report(model, vect.transform(X_test),y_test)
-    sorted_import_index = model.feature_importances_.argsort()
     top_features(rf, vect)
