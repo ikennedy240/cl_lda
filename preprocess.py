@@ -60,7 +60,7 @@ def clean_duplicates(text_df, text_col='body_text',method = 100):
 
 # make a corpus and dictionary from a list of texts
 def df_to_corpus(documents, stopwords=None):
-    if not(stopwords):
+    if stopwords is None:
         from sklearn.feature_extraction import stop_words
         stopwords = stop_words.ENGLISH_STOP_WORDS
     #turns each tweet into a list of words
@@ -75,12 +75,13 @@ def df_to_corpus(documents, stopwords=None):
 class MyMemoryCorpus(object):
     def __init__(self, text_file, dictionary=None, stopwords=None):
         self.file_name = text_file
+        #Checks if a dictionary has been given as a parameter.
+        #If no dictionary has been given, it creates one and saves it in the disk.
         if dictionary is None:
             self.prepare_dictionary()
         else:
             self.dictionary = dictionary
-        #Checks if a dictionary has been given as a parameter.
-        #If no dictionary has been given, it creates one and saves it in the disk.
+
     def __iter__(self):
         for line in open(self.file_name, encoding = 'utf-8'):
             # assume there's one document per line, tokens separated by whitespace
