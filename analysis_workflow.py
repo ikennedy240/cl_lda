@@ -12,11 +12,8 @@ from gensim import corpora, models, similarities, matutils
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 """Import text as DataFrame"""
-data_path = 'data/immi_rated.csv'
+data_path = 'data/narrow_immi_rated.csv'
 df = pd.read_csv(data_path)
-
-
-"""Make corpus and Dictionary"""
 corpus, dictionary = preprocess.df_to_corpus(df.text)
 
 """Run Lda Model"""
