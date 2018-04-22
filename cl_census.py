@@ -100,7 +100,7 @@ def import_scraped_data(path = 'data/new_data', archive = 'archive', save=True):
     files = [i for i in files if re.match('prepped',i)]
     for i in files:
         filepath = path+'/'+i
-        new_file = pd.read_csv(filepath)
+        new_file = pd.read_csv(filepath, index_col=0)
         new_file = new_file
         full_df = pd.concat([full_df,new_file])
         os.rename(filepath, archive+'/'+i)
@@ -120,7 +120,7 @@ def prep_scraped_data(path = 'data/new_data', archive = 'archive', import_all=Fa
         #take in new file, give it a date
         filepath = path+'/'+i
         month, day = re.search(r'(\d+)_(\d+)', i).group(1,2)
-        new_file = pd.read_csv(filepath).assign(scraped_month = month, scraped_day = day)
+        new_file = pd.read_csv(filepath, index_col=0, dtype = {'GEOID10':object,'blockid':object}).assign(scraped_month = month, scraped_day = day)
         module_logger.info("Imported "+i+", added date\n COMMENCING CENSUS GEOCODING")
         #run getCensusCode on it,
         # merge mergeCLandCensus
@@ -130,12 +130,12 @@ def prep_scraped_data(path = 'data/new_data', archive = 'archive', import_all=Fa
         os.rename(filepath, archive+'/'+i)
         module_logger.info("Merged with census and wrote "+i+" to prepped file")
     if import_all:
-        return import_scraped_data()
+        return import_scraped_data(path,archive)
 
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    seattle = pd.read_csv('data/seattlefull.csv')
+    seattle = pd.read_csv('data/seattlefull.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
     seattle_new = import_scraped_data()
     seattle_new.to_csv('data/seattle_new.csv')
     tmp = mergeCLandCensus(seattle_new)
@@ -153,5 +153,9 @@ if __name__ == '__main__':
     filtered = [i for i in files if not re.match('seattle',i)]
     prep_scraped_data()
     x = import_scraped_data()
-    datetime.now()
-    small.drop(['scraped_day','scraped_month'], axis=1).to_csv("data/new_data/test1_16.csv")
+    seattle = mergeCLandCensus(seattle)
+    seattle = seattle.drop([0], axis=0).drop(['Unnamed: 0.1', 'Unnamed: 0.1.1'], axis=1)
+    x.drop(['Unnamed: 0.1'], axis=1, inplace=True)
+    seattle_full = pd.concat([x,seattle])
+    seattle.to_csv('seattle_old_4_22.csv')
+    seattle_full.to_csv('seattle_full.csv')

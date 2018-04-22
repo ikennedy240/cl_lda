@@ -108,6 +108,12 @@ class MyMemoryCorpus(object):
         # Saving dictionary in the disk for later use:
         self.dictionary.save('dictionary.dict')
 
+#make a binary variable in a new column which breaks down based on a given threshold
+#defaults to > the median of strat_col
+def make_stratifier(strat_col, new_col, thresh=None):
+    if thresh is None:
+        thresh = cl_withtracts[strat_col].median()
+    cl_withtracts[new_col]=np.where(cl_withtracts[strat_col]>thresh, 1, 0)
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
