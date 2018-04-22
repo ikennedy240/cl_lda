@@ -2,58 +2,156 @@
 This module supports merging CL data with census data
 """
 
+import pandas as pd
+import numpy as np
+import os
+from census import Census
+from us import states
+import regex as re
+import logging
+import googlemaps
+from datetime import datetime
+import json
+
+gmaps = googlemaps.Client(key='Add Your Key here')
+
+module_logger = logging.getLogger('cl_lda.cl_census')
 # Get census codes given latitude and longitude
 
-def getCensusCode(CLdata):
+def getCensusCode(cldata):
+    import urllib.request
+    from urllib.parse import urlencode
     #Adds census 'blockid' and 'GEOID10' columns to CL Data
-    #CLdata must have columns called 'latitude' and 'longitude' as floats
-    with pd.option_context('mode.chained_assignment', None):
-        CLdata['blockid']=0
-        for x in range(CLdata.shape[0]):
-            row = CLdata.iloc[x]
-            url = 'https://geocoding.geo.census.gov/geocoder/geographies/coordinates?'+urlencode({'x':str(row.longitude), 'y':str(row.latitude), 'benchmark':'4', 'vintage':'4', 'format':'json'})
+    #cldata must have columns called 'latitude' and 'longitude' as floats
+    cldata['blockid']=0
+    for x in range(cldata.shape[0]):
+        row = cldata.iloc[x].copy()
+        url = 'https://geocoding.geo.census.gov/geocoder/geographies/coordinates?'+urlencode({'x':str(row.longitude), 'y':str(row.latitude), 'benchmark':'4', 'vintage':'4', 'format':'json'})
+        try:
+            tmp = urllib.request.urlopen(url, timeout=60).read()
+            cldata.loc[x,'blockid'] = json.loads(tmp)['result']['geographies']["2010 Census Blocks"][0]["GEOID"]
+            module_logger.info("First Try: "+str(x))
+        except:
             try:
                 tmp = urllib.request.urlopen(url, timeout=60).read()
-                CLdata.blockid.iloc[x] = json.loads(tmp)['result']['geographies']["2010 Census Blocks"][0]["GEOID"]
-                print("First Try: ", x)
+                cldata.loc[x,'blockid'] = json.loads(tmp)['result']['geographies']["2010 Census Blocks"][0]["GEOID"]
+                module_logger.info("Second Try: "+str(x))
             except:
-                try:
-                    tmp = urllib.request.urlopen(url, timeout=60).read()
-                    CLdata.blockid.iloc[x] = json.loads(tmp)['result']['geographies']["2010 Census Blocks"][0]["GEOID"]
-                    print("Second Try: ", x)
-                except:
-                    CLdata.blockid.iloc[x] =  np.nan
-                    print("Set to Nan: ", x)
-    CLdata['GEOID10'] = CLdata.blockid.str.slice(0,11)
-    return CLdata
+                cldata.loc[x,'blockid'] =  np.nan
+                module_logger.info("Set to Nan: "+str(x))
+    cldata['GEOID10'] = cldata.blockid.str.slice(0,11).copy()
+    return cldata
 
 
 # Get state tract data
 
 def StateTractData(st):
     try:
-        x = pd.read_csv("resources/"+st+"tracts.csv", dtype = {'GEOID10':object,'blockid':object})
-        print('read file')
+        tmp = pd.read_csv("resources/"+st+"tracts.csv", dtype = {'GEOID10':object,'blockid':object})
+        module_logger.info('read file')
     except:
         #Census API code
-        c = Census("a36d29f80d1e867eb35fba5f935294928c1320be")
+        with open('resources/censusapikey.txt', 'r') as f:
+            census_key = f.readlines()[0].strip()
+        c = Census(census_key)
+        help(c.acs)
         statefips = eval("states."+st+".fips")
-        x = pd.DataFrame(c.acs.get(['B02001_001E', 'B02001_002E','B02001_003E'], geo={'for': 'tract:*','in': 'state:{} county:*'.format(statefips)}))
+        c.acs.state(fields = ['B02001_001E', 'B02001_002E','B02001_003E'],state_fips=statefips)
+        tmp = pd.DataFrame(c.acs.get(['B02001_001E', 'B02001_002E','B02001_003E'], geo={'for': 'tract:*','in': 'state:{} county:*'.format(statefips)}))
         #construct column with tract code
-        x['GEOID10']= x.state+x.county+x.tract
+        tmp['GEOID10']= tmp.state+tmp.county+tmp.tract
         #give it understandable columns, and created percent white column
-        x.rename(columns={'B02001_001E': "total_pop", 'B02001_002E': 'white_pop','B02001_003E': 'black_pop'}, inplace=True)
-        x['percent_white'] = x.white_pop/x.total_pop*100
+        tmp.rename(columns={'B02001_001E': "total_pop", 'B02001_002E': 'white_pop','B02001_003E': 'black_pop'}, inplace=True)
+        tmp['percent_white'] = tmp.white_pop/tmp.total_pop*100
         #Write to CSV
-        x.to_csv(st+"tracts.csv")
-        print('gened file')
-    return x
+        tmp.to_csv("resources/"+st+"tracts.csv")
+        module_logger.info('gened file')
+    return tmp
 
 
 # merge state tracts with cl data by GEOID10
-def mergeCLandCensus(cldata,state,thresh=67):
+def mergeCLandCensus(cldata,state='WA',strat_col=None,thresh=None,geocode=False):
     #merge with state tract data
-    cl_withtracts = cldata.merge(StateTractData(state),how='left',on='GEOID10')
+    if geocode:
+        cldata = getCensusCode(cldata)
+    try:
+        cl_withtracts = cldata.merge(StateTractData(state),how='left',on='GEOID10')
+    except:
+        print("Looks like this data is missing a GEOID10 column.\n Should we create one?\n NOTICE: This could take some time~~")
+        if input("Continue? y/n") =='y':
+            cldata = getCensusCode(cldata)
+            cl_withtracts = cldata.merge(StateTractData(state),how='left',on='GEOID10')
+        else:
+            return cldata
     #create a dummy variable '1' for neighborhoods with white population over a certain percentage
-    cl_withtracts['high_white']=np.where(cl_withtracts['percent_white']>=thresh, 1, 0)
-    return cl_withtracts
+    if strat_col is None:
+        return cl_withtracts
+    else:
+        if thresh is None:
+            thresh = cl_withtracts[strat_col].median()
+        cl_withtracts[strat_col]=np.where(cl_withtracts[strat_col]>=thresh, 1, 0)
+        return cl_withtracts
+
+# import prepped data
+def import_scraped_data(path = 'data/new_data', archive = 'archive', save=True):
+    full_df = pd.DataFrame()
+    files = os.listdir(path)
+    files.remove('.DS_Store')
+    files = [i for i in files if re.match('prepped',i)]
+    for i in files:
+        filepath = path+'/'+i
+        new_file = pd.read_csv(filepath)
+        new_file = new_file
+        full_df = pd.concat([full_df,new_file])
+        os.rename(filepath, archive+'/'+i)
+        module_logger.info("Imported "+i)
+    if save:
+        now = datetime.now()
+        full_df.to_csv('data/import_'+str(now.month)+'_'+str(now.day)+'.csv')
+        module_logger.info("Completed input and wrote import_"+str(now.month)+'_'+str(now.day)+'.csv to file')
+    return full_df
+
+# prep newly scraped files by adding date, geoid, and census info
+def prep_scraped_data(path = 'data/new_data', archive = 'archive', import_all=False):
+    files = os.listdir(path)
+    files.remove('.DS_Store')
+    files = [i for i in files if not re.match('prepped',i)]
+    for i in files:
+        #take in new file, give it a date
+        filepath = path+'/'+i
+        month, day = re.search(r'(\d+)_(\d+)', i).group(1,2)
+        new_file = pd.read_csv(filepath).assign(scraped_month = month, scraped_day = day)
+        module_logger.info("Imported "+i+", added date\n COMMENCING CENSUS GEOCODING")
+        #run getCensusCode on it,
+        # merge mergeCLandCensus
+        new_file = mergeCLandCensus(new_file, geocode=True)
+        # rename file: prepped+file
+        new_file.to_csv(path+'/'+'prepped'+i)
+        os.rename(filepath, archive+'/'+i)
+        module_logger.info("Merged with census and wrote "+i+" to prepped file")
+    if import_all:
+        return import_scraped_data()
+
+
+if __name__ == '__main__':
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    seattle = pd.read_csv('data/seattlefull.csv')
+    seattle_new = import_scraped_data()
+    seattle_new.to_csv('data/seattle_new.csv')
+    tmp = mergeCLandCensus(seattle_new)
+    st = 'WA'
+    small = seattle_new.iloc[:10].copy()
+    small = getCensusCode(small[:10])
+    small = mergeCLandCensus(small.iloc[:10])
+    cldata = small.iloc[:10]
+    seattle_census = getCensusCode(seattle_new)
+    #take in new file, give it a date
+    #run getCensusCode on it,
+    # merge mergeCLandCensus
+    # rename file: prepped+file
+    files =  os.listdir('data')
+    filtered = [i for i in files if not re.match('seattle',i)]
+    prep_scraped_data()
+    x = import_scraped_data()
+    datetime.now()
+    small.drop(['scraped_day','scraped_month'], axis=1).to_csv("data/new_data/test1_16.csv")
