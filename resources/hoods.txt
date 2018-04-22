@@ -72,7 +72,6 @@ fairwood
 greenwood
 lake union
 eastside
-factoria
 south hill
 spanaway
 district
@@ -80,10 +79,12 @@ south king
 downtown bellevue
 jblm
 facebook
-auburn lakeland hills
+auburn
+lakeland hills
 downtown tacoma
 fircrest
 george town
+georgetown
 northgate mall
 mountlake terrace
 seattle children's
@@ -112,33 +113,32 @@ pioneer square
 east bremerton
 the junction
 uptown
-merrill creek pwwy
+merrill creek
 digipen
 east hill
 dash point
 dexter ave
-twin lakes area
+twin lakes
 white center
 lake city
 dupont
-puyallup south hill
-close to boeing
+puyallup 
+south hill
+boeing
 ferry terminal
 lake hills
 delridge
-twin lakes
-and expedia
+expedia
 lakeland hills
 south hill puyallup
 edgewood
-near microsoft
+microsoft
 snohomish
 beacon hill
 south seattle
 california av
 junction
 downtown redmond
-multiple locations
 lake stevens
 eastgate
 w. seattle
@@ -155,7 +155,6 @@ centralia
 near crossroads
 santa fe ridge
 expedia
-near boeing
 broadview
 north everett
 pine st
@@ -180,7 +179,6 @@ westlake
 interbay
 near lake washington
 woodinville wa
-tune
 west olympia
 the landing
 wedgewood
@@ -191,14 +189,15 @@ edcc
 bainb
 denny triangle
 lakemont
-downtown seattle!
+downtown seattle
 seattle ctr
 monroe
-snoqualmie issaquah
-dist
+snoqualmie
+issaquah
 phinney ridge
 kitsap
-kent east hill
+kent 
+east hill
 university of washington
 canyon park
 renton landing
@@ -232,14 +231,12 @@ broadway
 mapleleaf
 ravena
 hampton greens
-in at broadcast today!
-the denny triangle
+denny triangle
 university village
 east lake
 near downtown
 aurora ave
 west queen anne
-check us out today!!!!
 renton highlands
 vashon
 dexter
@@ -248,12 +245,9 @@ pine s
 downtown olympia
 calif. ave.
 martha lake
-village
 lipoma firs
-lakebay washington
 montlake
 s.everett
-bellevue wa
 sodo
 captiol hill
 u village
@@ -277,17 +271,14 @@ lk city
 laurelhurst
 clyde hill
 tanglewilde
-wait list
 union
 alki beach
 yesler neighborhood
-jblm  lakewood
 pierce
 normandy park
 google
 south of downtown
 madison park
-belltown!
 central district
 hillman city
 so. everett
@@ -296,9 +287,7 @@ uw campus
 north admiral
 maple valley
 downtown everett
-lo=ca=ti=on
-walk anywhere with ease!
-auburn wa
+auburn
 georgetown
 gold bar
 thurston
@@ -306,22 +295,21 @@ proctor
 sw olympia
 ruston
 shelton
-bellevue factoria
+factoria
 rainier beach
 enumclaw
 seabeck
 grand ave
 snohomish county
 lower
-se   at   tle
 aberdeen
-kitsap  poulsbo
+kitsap
+poulsbo
 conway
 international
 downtown sea
 camano island
 carbonado
-startup
 warm beach
 ne tacom
 klahanie
@@ -330,7 +318,7 @@ briggs
 seattle university
 the venue
 lakecity
-portage bay seattle
+portage bay
 pike place
 downtown renton
 enatai
@@ -368,8 +356,8 @@ sw seattle
 beltown
 north delridge
 paine field
-seattle capital hill
-gilman
+capital hill
+burke gilman
 meridian ave.
 uofw
 lake forest
@@ -440,7 +428,6 @@ quilcene
 everest
 bitter lake
 kirkand
-walk to factoria mall
 near lake sammamish
 and beacon hill
 mccleary
@@ -468,3 +455,4 @@ ferndale
 kelsey creek farm
 wa near renton
 s. whidbey is.
+golden gardens

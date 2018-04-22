@@ -47,7 +47,7 @@ def getCensusCode(cldata):
 
 def StateTractData(st):
     try:
-        tmp = pd.read_csv("resources/"+st+"tracts.csv", dtype = {'GEOID10':object,'blockid':object})
+        tmp = pd.read_csv("resources/"+st+"tracts.csv", index_col=0, dtype = {'GEOID10':object,'blockid':object})
         module_logger.info('read file')
     except:
         #Census API code
@@ -100,7 +100,7 @@ def import_scraped_data(path = 'data/new_data', archive = 'archive', save=True):
     files = [i for i in files if re.match('prepped',i)]
     for i in files:
         filepath = path+'/'+i
-        new_file = pd.read_csv(filepath, index_col=0)
+        new_file = pd.read_csv(filepath, index_col=0, dtype = {'GEOID10':object,'blockid':object})
         new_file = new_file
         full_df = pd.concat([full_df,new_file])
         os.rename(filepath, archive+'/'+i)

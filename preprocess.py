@@ -35,19 +35,27 @@ def make_neighborhood_list(hoodseries, save=True):
 #Clean body text
 def cl_prep_for_lda(text_series, neighborhoods=None):
     if neighborhoods is None:
+        module_logger.info("No neighborhoods provided, using 'resources/hoods.txt'")
         with open('resources/hoods.txt', 'r') as f:
             neighborhoods= f.read().splitlines()
+    module_logger.info("Cleaning urls and multiple commas")
     clean_text = cl_clean_text(text_series)
+    module_logger.info("Cleaning neighborhoods")
     clean_text = clean_neighborhoods(clean_text, neighborhoods)
-    return clean_text.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$')
+    module_logger.info("Success: returning cleaned text")
+    return clean_text
 
 #remove unwanted signs
-def cl_clean_text(text_series):
+def cl_clean_text(text_series, clean_punct=True):
     text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t','')
     text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' #NUMBER ')
     text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','').str.strip()
-    text_series = text_series.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', ' ichi ')
-    text_series = text_series.str.replace('\$\$+',' dollasigns ').str.replace('\$', ' dollasign ').str.strip()
+    if clean_punct:
+        module_logger.info("Cleaning punctuation, but retaining exclamations and dollarsigns")
+        text_series = text_series.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', ' ichi ')
+        text_series = text_series.str.replace(r'\$\$+',' dollasigns ').str.replace(r'\$', ' dollasign ').str.strip()
+        text_series = text_series.str.replace(r'\W+',' ').str.replace(r' +',' ')
+        text_series = text_series.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$').str.strip()
     return text_series
 
 #take out neighborhood Names
@@ -56,15 +64,16 @@ def clean_neighborhoods(text_series, neighborhoods):
         text_series = text_series.str.replace(r' ?'+name+' ?', " #HOOD ", case=False)
         if neighborhoods.index(name) % 100 == 0:
             module_logger.info("Replaced "+str(neighborhoods.index(name))+" neighborhoods")
+    return text_series
 
 #Deal with duplicates
-def clean_duplicates(text_df, text_col='body_text',method = 100):
+def clean_duplicates(text_df, text_col='body_text_clean',method = 100):
     if method == 'latlon':
         #must have 'latitude', 'longitude','price' colums to use this method
         text_df = text_df.drop_duplicates(['latitude','longitude','price'])
     if type(method)==int:
         text_df['body_100']=text_df[text_col].str.slice(stop=method).copy()
-        text_df = text_df.body_100.unique()
+        text_df = text_df.drop_duplicates(subset = 'body_100').drop('body_100', axis = 1)
     return text_df
 
 # make a corpus and dictionary from a list of texts
@@ -126,20 +135,4 @@ def make_stratifier(strat_col, new_col, thresh=None):
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    df = pd.read_csv("data/immi_rated.csv")
-    seattle = pd.read_csv('data/seattle_cleaned')
-    df = df.iloc[0:20000]
-    df.text = df.text.str.replace('\n','')
-    df['text'].to_csv('data/immi_text.txt', sep=' ', index=False, header=False)
-    #test df_to_corpus
-    df_to_corpus(list(df.text))
-    #test clean_duplicates
-    seattle.shape
-    clean_duplicates(seattle, text_col='body_text', method = 1000).shape
-    clean_neighborhoods(seattle, ["ballard", "sand point"])
-    cl_prep_for_lda(df.text)
-    seattle.body_text.sample(10)
-    seattle.columns
-    make_neighborhood_list(seat.neighborhood)
-    seat = pd.read_csv('data/seattle4_14.csv')
-    seat.neighborhood
+    new_df = pd.read_csv('data/seattle_4_22.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
