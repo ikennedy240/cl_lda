@@ -1,7 +1,7 @@
 import pandas as pd
 import logging
 import cl_census
-import datetime as datetime
+from datetime import datetime
 #start logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 

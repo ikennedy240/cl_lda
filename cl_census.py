@@ -13,7 +13,7 @@ import googlemaps
 from datetime import datetime
 import json
 
-gmaps = googlemaps.Client(key='Add Your Key here')
+#gmaps = googlemaps.Client(key='Add Your Key here')
 
 module_logger = logging.getLogger('cl_lda.cl_census')
 # Get census codes given latitude and longitude

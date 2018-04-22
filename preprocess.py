@@ -27,13 +27,22 @@ def make_neighborhood_list(hoodseries, save=True):
     #writes to file
     if save:
         with open('resources/hoods.txt', 'w') as f:
-            [f.write(x+', ') for x in hoods]
+            f.write('\n'.join(hoods))
     #returns list of neighborhood names with counts
     return hoods
 
 
 #Clean body text
-def cl_prep_for_lda(text_series):
+def cl_prep_for_lda(text_series, neighborhoods=None):
+    if neighborhoods is None:
+        with open('resources/hoods.txt', 'r') as f:
+            neighborhoods= f.read().splitlines()
+    clean_text = cl_clean_text(text_series)
+    clean_text = clean_neighborhoods(clean_text, neighborhoods)
+    return clean_text.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$')
+
+#remove unwanted signs
+def cl_clean_text(text_series):
     text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t','')
     text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' #NUMBER ')
     text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','').str.strip()
@@ -42,9 +51,9 @@ def cl_prep_for_lda(text_series):
     return text_series
 
 #take out neighborhood Names
-def clean_neighborhoods(text_df, neighborhoods, text_col='body_text'):
+def clean_neighborhoods(text_series, neighborhoods):
     for name in neighborhoods:
-        text_df[text_col] = text_df[text_col].str.replace(r' ?'+name+' ?', " #HOOD ", case=False)
+        text_series = text_series.str.replace(r' ?'+name+' ?', " #HOOD ", case=False)
         if neighborhoods.index(name) % 100 == 0:
             module_logger.info("Replaced "+str(neighborhoods.index(name))+" neighborhoods")
 
