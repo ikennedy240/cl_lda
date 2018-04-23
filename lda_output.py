@@ -121,10 +121,10 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             sorted_topics = mean_diff.sort_values('proportion', ascending=False)[1:].proportion
     with open(filepath, 'w', encoding='utf-8') as f:
         for j in sorted_topics.index:
-            print("Topic #", j,' occurred in \n', round(sorted_topics.loc[j],2), '\n', topics[int(j)], file=f)
+            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
         print("\n ------- Sample Documents ------- \n\n", file=f)
         for j in sorted_topics.index[1:sample_topics]:
-            print("Topic #", j,' occurred in \n', round(sorted_topics.loc[j]), '\n', topics[int(j)], file=f)
+            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
             print("\n Top 5 answers fitting topic", j, "are: \n \n", file=f)
             for i in range(sample_texts):
                 tmp = df.sort_values(by=j, ascending=False).iloc[i]

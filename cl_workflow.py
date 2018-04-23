@@ -3,6 +3,7 @@ This Workflow takes in cleaned text labeled with one or more stratifiers
 that the researcher is interested in using to break up text Analysis
 """
 import preprocess
+from datetime import datetime
 import lda_output
 import pandas as pd
 import logging
@@ -24,7 +25,7 @@ new_df = pd.read_csv(new_data_path, index_col=0, dtype = {'GEOID10':object,'bloc
 """preprocess"""
 new_df['body_text_clean'] = preprocess.cl_prep_for_lda(new_df.body)
 df = pd.concat([df,new_df[df.columns]]).reset_index(drop=True)
-reload(preprocess)
+reload(lda_output)
 df.shape
 df_300 = df
 df_300 = preprocess.clean_duplicates(df.reset_index(drop=True), method=300)
@@ -42,13 +43,18 @@ merge['body_text_clean'] = preprocess.cl_prep_for_lda(merge.body_text)
 df.to_csv('data/seatle_complete4_22.csv')
 df.body_text_clean.dropna(inplace=True)
 df_300.shape
-df_300.body_text_clean.dropna(inplace=True)
+df_300.dropna(subset=['body_text_clean'],axis=0, inplace=True)
 df_300 = df_300.reset_index(drop=True)
 
+"""Make Stratifying Column"""
+df_300 = preprocess.make_stratifier(df_300, 'percent_white', 'high_white', thresh=None)
+df_300.high_white.mean()
+df_300.body_text_clean.sort_values().iloc[1100:1200].str.strip().values
 
 """Make Corpus and Dictionary"""
 corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df_300.body_text_clean])
-
+df_300.body_text_clean
+df_dropped[df_dropped.body_text_clean.isna()]
 """Run Lda Model"""
 n_topics = 50
 n_passes = 20
@@ -57,20 +63,25 @@ model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topic
 #otherwise run this
 #model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
 #save the model for future use
-model.save('models/4_20_immi')
+now = datetime.now()
+model.save('models/model'+str(now.month)+'_'+str(now.day))
 
 """Merge LDA output and DF"""
 #Make LDA corpus of our Data
 lda_corpus = model[corpus]
 #make dense numpy array of the topic proportions for each document
 doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpose()
-df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
-
+df_300 = df_300.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
+doc_topic_matrix
+len(lda_corpus.corpus)
+df_300 = df_300.drop(range(50),axis=1)
+len(corpus)
 """Use stratifier to create various comparisions of topic distributions"""
-strat_col = 'sent'
-lda_output.rfc_distribution(df, n_topics, strat_col)
-lda_output.compare_topics_distribution(df, n_topics, strat_col)
-mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
-
+strat_col = 'high_white'
+lda_output.rfc_distribution(df_300, n_topics, strat_col)
+lda_output.compare_topics_distribution(df_300, n_topics, strat_col)
+mean_diff = lda_output.summarize_on_stratifier(df_300, n_topics, strat_col)
+mean_diff = mean_diff.sort_values('difference', ascending=False)
 """Produces useful output of topics and example texts"""
-lda_output.text_output(df, text_col='text', filepath='output/immi_4_20.txt', model=model, strat_col='sent')
+reload(lda_output)
+lda_output.text_output(df_300, text_col='body_text_clean', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff)

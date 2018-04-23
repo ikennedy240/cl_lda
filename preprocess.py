@@ -46,7 +46,10 @@ def cl_prep_for_lda(text_series, neighborhoods=None):
     return clean_text
 
 #remove unwanted signs
-def cl_clean_text(text_series, clean_punct=True):
+def cl_clean_text(text_series, clean_punct=True, body_mode=False):
+    if body_mode:
+        text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t',' ').str.replace(r',,+',',').str.replace(r'^,+','').str.replace(r' +',' ').str.strip()
+        return text_series
     text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t','')
     text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' #NUMBER ')
     text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','').str.strip()
@@ -54,8 +57,9 @@ def cl_clean_text(text_series, clean_punct=True):
         module_logger.info("Cleaning punctuation, but retaining exclamations and dollarsigns")
         text_series = text_series.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', ' ichi ')
         text_series = text_series.str.replace(r'\$\$+',' dollasigns ').str.replace(r'\$', ' dollasign ').str.strip()
-        text_series = text_series.str.replace(r'\W+',' ').str.replace(r' +',' ')
+        text_series = text_series.str.replace(r'\W+',' ')
         text_series = text_series.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$').str.strip()
+    text_series = text_series.str.replace(r' +',' ').str.strip()
     return text_series
 
 #take out neighborhood Names
@@ -74,6 +78,8 @@ def clean_duplicates(text_df, text_col='body_text_clean',method = 100):
     if type(method)==int:
         text_df['body_100']=text_df[text_col].str.slice(stop=method).copy()
         text_df = text_df.drop_duplicates(subset = 'body_100').drop('body_100', axis = 1)
+    #if type(method)==float:
+
     return text_df
 
 # make a corpus and dictionary from a list of texts
@@ -128,10 +134,12 @@ class MyMemoryCorpus(object):
 
 #make a binary variable in a new column which breaks down based on a given threshold
 #defaults to > the median of strat_col
-def make_stratifier(strat_col, new_col, thresh=None):
+def make_stratifier(df, strat_col, new_col, thresh=None):
+    import numpy as np
     if thresh is None:
-        thresh = cl_withtracts[strat_col].median()
-    cl_withtracts[new_col]=np.where(cl_withtracts[strat_col]>thresh, 1, 0)
+        thresh = df[strat_col].median()
+    df[new_col]=np.where(df[strat_col]>thresh, 1, 0)
+    return df
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
