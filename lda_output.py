@@ -123,12 +123,13 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
         for j in sorted_topics.index:
             print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
         print("\n ------- Sample Documents ------- \n\n", file=f)
-        for j in sorted_topics.index[1:sample_topics]:
+        for j in sorted_topics.index[0:sample_topics]:
             print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
             print("\n Top 5 answers fitting topic", j, "are: \n \n", file=f)
+            tmp_top = df.sort_values(by=j, ascending=False).iloc[:sample_texts*10].sample(sample_texts)
             for i in range(sample_texts):
-                tmp = df.sort_values(by=j, ascending=False).iloc[i]
-                print("Topic", j, "Rank", i+1, file=f)
+                tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
+                print("Topic", j, "Example #", i+1, file=f)
                 print(": \n Was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
     module_logger.info("Saved output to "+filepath)
 
@@ -145,11 +146,13 @@ if __name__ == "__main__":
     mean_diff= mean_diff.iloc[x]
     mean_diff['rfc'] = range(1,51)
     mean_diff
-
+    df=df_merged
     text_output = 'output/4_15.txt'
     sample_topics = 10
     sample_texts = 5
     sorted_topics = x.all_r
-
+    i=1
+    j='1'
+    tmp_top['1']
     x.columns
     text_output(df_merged, 'output/test.txt', sample_topics=10, sample_texts=5, sorted_topics=x.all_r, topics=None, model=model)

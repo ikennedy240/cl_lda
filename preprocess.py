@@ -51,19 +51,22 @@ def cl_clean_text(text_series, clean_punct=True, body_mode=False):
         text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t',' ').str.replace(r',,+',',').str.replace(r'^,+','').str.replace(r' +',' ').str.strip()
         return text_series
     text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t','')
-    text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' #NUMBER ')
-    text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','').str.strip()
+    text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' ')
+    text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','')
     if clean_punct:
         module_logger.info("Cleaning punctuation, but retaining exclamations and dollarsigns")
         text_series = text_series.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', ' ichi ')
         text_series = text_series.str.replace(r'\$\$+',' dollasigns ').str.replace(r'\$', ' dollasign ').str.strip()
-        text_series = text_series.str.replace(r'\W+',' ')
+        text_series = text_series.str.replace(r'[^\w\s]+','')
         text_series = text_series.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$').str.strip()
     text_series = text_series.str.replace(r' +',' ').str.strip()
     return text_series
 
 #take out neighborhood Names
-def clean_neighborhoods(text_series, neighborhoods):
+def clean_neighborhoods(text_series, neighborhoods=None):
+    if neighborhoods is none:
+        with open('resources/hoods.txt') as f:
+            neighborhoods = f.read().splitlines()
     for name in neighborhoods:
         text_series = text_series.str.replace(r' ?'+name+' ?', " #HOOD ", case=False)
         if neighborhoods.index(name) % 100 == 0:
@@ -71,7 +74,7 @@ def clean_neighborhoods(text_series, neighborhoods):
     return text_series
 
 #Deal with duplicates
-def clean_duplicates(text_df, text_col='body_text_clean',method = 100):
+def clean_duplicates(text_df, text_col='body_text',method = 100):
     if method == 'latlon':
         #must have 'latitude', 'longitude','price' colums to use this method
         text_df = text_df.drop_duplicates(['latitude','longitude','price'])
@@ -135,9 +138,21 @@ class MyMemoryCorpus(object):
 #make a binary variable in a new column which breaks down based on a given threshold
 #defaults to > the median of strat_col
 def make_stratifier(df, strat_col, new_col, thresh=None):
+    df = df.copy()
     import numpy as np
+    #check if we got lists for both columns
+    if type(strat_col) is list and type(new_col) is list:
+        #throw an error if lenghts don't match
+        if len(strat_col)!=len(new_col):
+            raise ValueError("strat_col and new_col must be the same size")
+        #loop through list of cols and run the function for each pair
+        else:
+            for i in range(len(strat_col)):
+                make_stratifier(df, strat_col[i], new_col[i], thresh)
+    # if no threshold is given, use the median of strat_col
     if thresh is None:
         thresh = df[strat_col].median()
+    #make a new binary column that's one above a threshold of the old column and zero below it
     df[new_col]=np.where(df[strat_col]>thresh, 1, 0)
     return df
 

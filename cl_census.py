@@ -45,45 +45,47 @@ def getCensusCode(cldata):
 
 # Get state tract data
 
-def StateTractData(st):
-    try:
-        tmp = pd.read_csv("resources/"+st+"tracts.csv", index_col=0, dtype = {'GEOID10':object,'blockid':object})
-        module_logger.info('read file')
-    except:
+def StateTractData(st, var_dict=None, save=False):
+    if var_dict is none:
+        try:
+            tmp = pd.read_csv("resources/"+st+"tracts.csv", index_col=0, dtype = {'GEOID10':object,'blockid':object})
+            module_logger.info('read file')
+            return tmp
+        except:
+            var_dict = {'B03002_001E': 'total_RE','B03002_003E': 'white', 'B03002_004E': 'black', 'B03002_005E': 'aindian', 'B03002_006E': 'asian', 'B03002_007E': 'pacisland', 'B03002_009E': 'other', 'B03002_012E': 'latinx', 'B17001_001E': 'total_poverty', 'B17001_002E': 'under_poverty', 'B19013_001E': 'income'}
         #Census API code
-        with open('resources/censusapikey.txt', 'r') as f:
-            census_key = f.readlines()[0].strip()
-        c = Census(census_key)
-        help(c.acs)
-        statefips = eval("states."+st+".fips")
-        c.acs.state(fields = ['B02001_001E', 'B02001_002E','B02001_003E'],state_fips=statefips)
-        tmp = pd.DataFrame(c.acs.get(['B02001_001E', 'B02001_002E','B02001_003E'], geo={'for': 'tract:*','in': 'state:{} county:*'.format(statefips)}))
-        #construct column with tract code
-        tmp['GEOID10']= tmp.state+tmp.county+tmp.tract
-        #give it understandable columns, and created percent white column
-        tmp.rename(columns={'B02001_001E': "total_pop", 'B02001_002E': 'white_pop','B02001_003E': 'black_pop'}, inplace=True)
-        tmp['percent_white'] = tmp.white_pop/tmp.total_pop*100
-        #Write to CSV
+    with open('resources/censusapikey.txt', 'r') as f:
+        census_key = f.readlines()[0].strip()
+    c = Census(census_key)
+    statefips = eval("states."+st+".fips")
+    tmp = pd.DataFrame(c.acs.state_county_tract(fields = list(var_dict.values()),state_fips=statefips, county_fips="*", tract="*"))
+    #construct column with tract code
+    tmp['GEOID10']= tmp.state+tmp.county+tmp.tract
+    #give it understandable columns, and created percent white column
+    tmp.rename(columns=inv_map, inplace=True)
+    #Write to CSV
+    if save:
         tmp.to_csv("resources/"+st+"tracts.csv")
-        module_logger.info('gened file')
+        module_logger.info('saved '+st+'census data to resources/'+st+"tracts.csv")
+    module_logger.info('gened file')
     return tmp
 
 
 # merge state tracts with cl data by GEOID10
-def mergeCLandCensus(cldata,state='WA',strat_col=None,thresh=None,geocode=False):
+def mergeCLandCensus(cldata,state='WA',strat_col=None,thresh=None, var_dict= None, geocode=False):
     #merge with state tract data
     if geocode:
         cldata = getCensusCode(cldata)
     try:
-        cl_withtracts = cldata.merge(StateTractData(state),how='left',on='GEOID10')
+        cl_withtracts = cldata.merge(StateTractData(state, var_dict),how='left',on='GEOID10')
     except:
         print("Looks like this data is missing a GEOID10 column.\n Should we create one?\n NOTICE: This could take some time~~")
         if input("Continue? y/n") =='y':
             cldata = getCensusCode(cldata)
-            cl_withtracts = cldata.merge(StateTractData(state),how='left',on='GEOID10')
+            cl_withtracts = cldata.merge(StateTractData(state, var_dict),how='left',on='GEOID10')
         else:
             return cldata
-    #create a dummy variable '1' for neighborhoods with white population over a certain percentage
+    #create a dummy variable '1' for neighborhoods with strat_col over a margin
     if strat_col is None:
         return cl_withtracts
     else:

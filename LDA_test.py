@@ -15,7 +15,8 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 # these stopwords include neighborhood names and some other domain specific terms
 with open('resources/hoods.txt') as f:
-    hoods = f.read()
+    hoods = f.read().splitlines()
+hoods
 stopwords = hoods + " ".join(list(stop_words.ENGLISH_STOP_WORDS))
 with open('resources/stopwords.txt') as f:
     f.write(stopwords)
