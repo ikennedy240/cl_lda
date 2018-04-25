@@ -148,7 +148,8 @@ def make_stratifier(df, strat_col, new_col, thresh=None):
         #loop through list of cols and run the function for each pair
         else:
             for i in range(len(strat_col)):
-                make_stratifier(df, strat_col[i], new_col[i], thresh)
+                df = make_stratifier(df, strat_col[i], new_col[i], thresh)
+            return df
     # if no threshold is given, use the median of strat_col
     if thresh is None:
         thresh = df[strat_col].median()

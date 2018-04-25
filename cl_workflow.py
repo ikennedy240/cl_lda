@@ -21,25 +21,25 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 data_path = 'data/processed4_22.csv'
 df = pd.read_csv(data_path, index_col=0,dtype = {'GEOID10':object,'blockid':object})
 
-"""Import New Data if Needed"""
-new_data_path = "data/chcl.csv"
-new_df = pd.read_csv(new_data_path, index_col=0, dtype = {'GEOID10':object,'blockid':object})
-
-"""Preprocess Raw Data"""
-# remove duplicates
-df.shape
-df = df.drop_duplicates(subset='body_text')
-df = preprocess.clean_duplicates(df)
-# add census info
-df = cl_census.mergeCLandCensus(df)
-# clean text
-df['clean_text'] = preprocess.cl_clean_text(df.body_text)
-df.body_text = preprocess.cl_clean_text(df.body_text, body_mode=True)
-
-# remove empty text
-df = df[~df.clean_text.str.len().isna()]
-df = df[df.clean_text.str.len()>100]
-df = df.reset_index(drop=True)
+# """Import New Data if Needed"""
+# new_data_path = "data/chcl.csv"
+# new_df = pd.read_csv(new_data_path, index_col=0, dtype = {'GEOID10':object,'blockid':object})
+#
+# """Preprocess Raw Data"""
+# # remove duplicates
+# df.shape
+# df = df.drop_duplicates(subset='body_text')
+# df = preprocess.clean_duplicates(df)
+# # add census info
+# df = cl_census.mergeCLandCensus(df)
+# # clean text
+# df['clean_text'] = preprocess.cl_clean_text(df.body_text)
+# df.body_text = preprocess.cl_clean_text(df.body_text, body_mode=True)
+#
+# # remove empty text
+# df = df[~df.clean_text.str.len().isna()]
+# df = df[df.clean_text.str.len()>100]
+# df = df.reset_index(drop=True)
 
 #matching colnames with chris
 # colnames = ['GEOID10', 'address', 'blockid', 'body_text', 'latitude', 'longitude','postid', 'price','scraped_month','scraped_day']
@@ -60,16 +60,17 @@ df['poverty_proportion'] = df.under_poverty/df.total_poverty
 for proportion in prop_list:
     df[proportion+'_proportion'] = df[proportion]/df.total_RE
 
-"""Make Stratifying Column"""
-df.columns
-
+"""Make Stratifying Columns"""
 strat_list = []
 new_col_list = []
 for proportion in prop_list:
     strat_list.append(proportion+'_proportion')
-    new_col_list.append('high'+proportion)
+    new_col_list.append('high_'+proportion)
 
-preprocess.make_stratifier(x, 'income', 'high_income')
+"""Make Categorical Race_Income Variable"""
+df = preprocess.make_stratifier(df, 'income', 'high_income')
+df = preprocess.make_stratifier(df, strat_list, new_col_list)
+
 df['race_income'] = df.highwhite
 df = df.assign(race_income =  np.where(df.high_income==1, df.race_income+2, df.race_income))
 
@@ -104,6 +105,16 @@ lda_corpus = model[corpus]
 doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpose()
 df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 
+""""Look at the distributions of the different topics""""
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.hist(df[[26]].sort_values(by=26, ascending=False).head(400).values)
+plt.hist(df.groupby('GEOID10').mean()[[4]].dropna().values)
+df.columns
+df.groupby('race_income_label').mean()[26]
+plt.hist(df[df.race_income==0][41].values)
+plt.axis([.1, 1, 0, 500])
+weights = df[list(range(50))].mean()
 
 
 """Use stratifier to create various comparisions of topic distributions"""
@@ -115,17 +126,41 @@ mean_diff = mean_diff.sort_values('difference', ascending=False)
 
 """Try a Multinomial LogisticRegression"""
 from sklearn.linear_model import LogisticRegression
-X = df[list(range(50))]
-y = df.race_income_label
+
+X = df.dropna()[list(range(50))]
+y = df.dropna().race_income_label
 LR = LogisticRegression()
 LR.fit(X,y)
+high_white_LR = LR.fit(X,df.highwhite)
+high_white_LR.score(X,df.highwhite)
 highwhite_coefs = pd.DataFrame(LR.coef_).rename(labels).transpose()
-
-lr_coefs.sort_values("low income low white")
+lr_coefs = pd.DataFrame(LR.coef_).rename(labels).transpose()
 lr_coefs['summed_diff'] = abs((lr_coefs['low income low white']-lr_coefs['low income high white']) + (lr_coefs['high income low white']-lr_coefs['high income and high white']))
 mean_diff = lr_coefs.sort_values('summed_diff', ascending=False)
-lda_output.get_formatted_topic_list(model)
+
+
+
+
+"""Make Predictions at the means"""
+fill=.15/49
+
+test = np.full((50,50), .25)
+for i in range(50):
+    test[i,] = test[i,]*weights
+    test[i,i] = .75 + test[i,i]*weights[i]
+
+predicted_proba = pd.DataFrame(LR.predict_proba(test)).rename(dict(zip(range(4),LR.classes_)), axis = 1)
+predicted_proba
+LR.classes_
+predictions =  pd.DataFrame(LR.predict(test))
+predictions
+predicted_proba['summed_diff'] = abs((predicted_proba['low income low white']-predicted_proba['low income high white']) + (predicted_proba['high income low white']-predicted_proba['high income and high white']))
+mean_diff = predicted_proba.sort_values('summed_diff', ascending=False).head(10)
+
+
+
 
 """Produces useful output of topics and example texts"""
 reload(lda_output)
-lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff)
+mean_diff
+lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff, strat_col='race_income_label', cl=True)

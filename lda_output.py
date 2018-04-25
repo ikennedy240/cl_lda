@@ -103,7 +103,7 @@ def rfc_distribution(df_merged, n_topics, strat_col, topic_cols=None, thresh = 0
 # helper function to print topics and example texts
 # sorted topics must have the
 #need to make some changes here
-def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted_topics=None, strat_col=None, topics=None, model=None, print_it = False):
+def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted_topics=None, strat_col=None, topics=None, model=None, print_it = False, cl = False):
     if topics is None:
         if model is None:
             return "You must provide either model or topics"
@@ -119,20 +119,41 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             module_logger.info("Using default paramaters to produce topics sorted by stratifier")
             mean_diff = summarize_on_stratifier(df, n_topics, strat_col)
             sorted_topics = mean_diff.sort_values('proportion', ascending=False)[1:].proportion
-    with open(filepath, 'w', encoding='utf-8') as f:
+    if print_it:
         for j in sorted_topics.index:
-            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
-        print("\n ------- Sample Documents ------- \n\n", file=f)
+            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)])
+        print("\n ------- Sample Documents ------- \n\n")
         for j in sorted_topics.index[0:sample_topics]:
-            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
-            print("\n Top 5 answers fitting topic", j, "are: \n \n", file=f)
+            print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)])
+            print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n")
             tmp_top = df.sort_values(by=j, ascending=False).iloc[:sample_texts*10].sample(sample_texts)
             for i in range(sample_texts):
                 tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
-                print("Topic", j, "Example #", i+1, file=f)
-                print(": \n Was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
-    module_logger.info("Saved output to "+filepath)
-
+                print("Topic", j, "Example #", i+1, ':\n')
+                if strat_col:
+                    print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n')
+                if cl:
+                    print("This text was connected to a listing in tract #", tmp.GEOID10, '\n')
+                print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n')
+    else:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            for j in sorted_topics.index:
+                print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
+            print("\n ------- Sample Documents ------- \n\n", file=f)
+            for j in sorted_topics.index[0:sample_topics]:
+                print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
+                print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n", file=f)
+                tmp_top = df.sort_values(by=j, ascending=False).iloc[:sample_texts*10].sample(sample_texts)
+                for i in range(sample_texts):
+                    tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
+                    print("Topic", j, "Example #", i+1, ':\n', file=f)
+                    if strat_col:
+                        print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n', file=f)
+                    if cl:
+                        print("This text was connected to a listing in tract #", tmp.GEOID10, '\n', file=f)
+                    print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
+        module_logger.info("Saved output to "+filepath)
+    module_logger.info("Completed Output")
 if __name__ == "__main__":
     model = models.LdaModel.load('models/4_12model')
     get_formatted_topic_list(model, formatting='summary')
