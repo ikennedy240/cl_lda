@@ -63,11 +63,14 @@ def compare_topics_distribution(df_merged, n_topics, strat_col, topic_cols=None,
     topic_comparison = pd.DataFrame(data=[mean_diff[columns[0]].sort_values(ascending=False).index, mean_diff[columns[1]].sort_values(ascending=False).index, mean_diff[columns[2]].sort_values(ascending=False).index]).transpose().rename(columns = columns)
     return topic_comparison
 
-def rfc_distribution(df_merged, n_topics, strat_col, topic_cols=None, thresh = 0.01, method="mean", return_model = False):
+def rfc_distribution(df_merged, strat_col, n_topics=None, topic_cols=None, thresh = 0.01, method="mean", return_model = False):
 
         # given some stratifier, fit an RFC model to identify topic importance
-        if not(topic_cols):
-            topic_cols = list(range(n_topics))
+        if topic_cols is None:
+            try:
+                topic_cols = list(range(n_topics))
+            except:
+                raise ValueError("You must supply either topic_cols or n_topics")
         #do a quick Random Forest Classification to see which topics are most useful for distinguishing
         #beetween high and low white neighborhoods
         #SKIP DOWN AND USE top_ten_mean TO AVOID SKLEARN

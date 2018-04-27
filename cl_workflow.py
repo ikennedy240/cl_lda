@@ -11,7 +11,7 @@ import logging
 import cl_census
 from gensim import corpora, models, similarities, matutils
 from importlib import reload
-reload(preprocess)
+reload(lda_output)
 
 """Start Logging"""
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -69,17 +69,19 @@ for proportion in prop_list:
 
 """Make Categorical Race_Income Variable"""
 df = preprocess.make_stratifier(df, 'income', 'high_income')
+df = preprocess.make_stratifier(df, 'poverty_proportion', 'high_poverty')
 df = preprocess.make_stratifier(df, strat_list, new_col_list)
 
-df['race_income'] = df.highwhite
+df['race_income'] = df.high_white
+
 df = df.assign(race_income =  np.where(df.high_income==1, df.race_income+2, df.race_income))
 
 labels = {3:"high income and high white", 2:"high income low white", 1:"low income high white", 0:"low income low white"}
 df['race_income_label'] = [labels[x] for x in df.race_income]
 df[['race_income', 'race_income_label']]
-pd.crosstab(df.race_income_label, [df.high_income, df.highwhite])
+pd.crosstab(df.race_income_label, [df.high_income, df.high_white])
 
-df.to_csv('data/processed4_22.csv')
+#df.to_csv('data/processed4_22.csv')
 """Make Corpus and Dictionary"""
 with open('resources/hoods.txt') as f:
     neighborhoods = f.read().splitlines()
@@ -97,7 +99,7 @@ model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topic
 #save the model for future use
 now = datetime.now()
 model.save('models/model'+str(now.month)+'_'+str(now.day))
-
+model = models.LdaModel.load('models/model4_23')
 """Merge LDA output and DF"""
 #Make LDA corpus of our Data
 lda_corpus = model[corpus]
@@ -105,7 +107,7 @@ lda_corpus = model[corpus]
 doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpose()
 df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 
-""""Look at the distributions of the different topics""""
+"""Look at the distributions of the different topics"""
 import matplotlib.pyplot as plt
 %matplotlib inline
 plt.hist(df[[26]].sort_values(by=26, ascending=False).head(400).values)
@@ -114,12 +116,12 @@ df.columns
 df.groupby('race_income_label').mean()[26]
 plt.hist(df[df.race_income==0][41].values)
 plt.axis([.1, 1, 0, 500])
-weights = df[list(range(50))].mean()
+
 
 
 """Use stratifier to create various comparisions of topic distributions"""
-strat_col = 'total_poverty'
-lda_output.rfc_distribution(df, n_topics, strat_col)
+strat_col = 'high_poverty'
+lda_output.rfc_distribution(df, topic_cols = strat_col, strat_col = list(range(50)))
 lda_output.compare_topics_distribution(df, n_topics, strat_col)
 mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
 mean_diff = mean_diff.sort_values('difference', ascending=False)
@@ -130,7 +132,7 @@ from sklearn.linear_model import LogisticRegression
 X = df.dropna()[list(range(50))]
 y = df.dropna().race_income_label
 LR = LogisticRegression()
-LR.fit(X,y)
+LR.fit(y,X)
 high_white_LR = LR.fit(X,df.highwhite)
 high_white_LR.score(X,df.highwhite)
 highwhite_coefs = pd.DataFrame(LR.coef_).rename(labels).transpose()
@@ -143,7 +145,7 @@ mean_diff = lr_coefs.sort_values('summed_diff', ascending=False)
 
 """Make Predictions at the means"""
 fill=.15/49
-
+weights = df[list(range(50))].mean()
 test = np.full((50,50), .25)
 for i in range(50):
     test[i,] = test[i,]*weights
