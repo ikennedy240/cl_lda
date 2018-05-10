@@ -91,9 +91,10 @@ def df_to_corpus(documents, stopwords=None):
     if stopwords is None:
         from sklearn.feature_extraction import stop_words
         stopwords = stop_words.ENGLISH_STOP_WORDS
-    #turns each tweet into a list of words
+    #compiles a regex of the stopwords (this is to include mulit-word stopwords)
     pattern = re.compile(r'\b(' + r'|'.join(stopwords) + r')\b\s*')
-    texts = [[word for word in pattern.sub('', document.lower()).split()] for document in documents]
+    # cleans stopwords and drops words with fewer than three characters
+    texts = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in documents]
     #makes a dictionary based on those texts (this is the full df) and saves it
     dictionary = corpora.Dictionary(texts)
     #applies a bag of words vectorization to make the texts into a sparse matrix
@@ -167,6 +168,7 @@ if __name__ == "__main__":
         neighborhoods = f.read().splitlines()
     from sklearn.feature_extraction import stop_words
     hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
-    corpus, dictionary = df_to_corpus(documents[10], stopwords=hood_stopwords)
+    corpus, dictionary = df_to_corpus(documents[20:23], stopwords=hood_stopwords)
+    print([dictionary[i] for i in range(121)])
     documents = [str(x) for x in new_df.clean_text]
     documents[20]
