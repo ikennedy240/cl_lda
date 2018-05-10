@@ -6,6 +6,7 @@ import pandas as pd
 import logging
 from gensim import corpora, models
 from six import iteritems
+import regex as re
 
 module_logger = logging.getLogger('cl_lda.preprocess')
 
@@ -91,7 +92,8 @@ def df_to_corpus(documents, stopwords=None):
         from sklearn.feature_extraction import stop_words
         stopwords = stop_words.ENGLISH_STOP_WORDS
     #turns each tweet into a list of words
-    texts = [[word for word in document.lower().split() if word not in stopwords] for document in documents]
+    pattern = re.compile(r'\b(' + r'|'.join(stopwords) + r')\b\s*')
+    texts = [[word for word in pattern.sub('', document).lower().split()] for document in documents]
     #makes a dictionary based on those texts (this is the full df) and saves it
     dictionary = corpora.Dictionary(texts)
     #applies a bag of words vectorization to make the texts into a sparse matrix
@@ -160,3 +162,11 @@ def make_stratifier(df, strat_col, new_col, thresh=None):
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     new_df = pd.read_csv('data/seattle_4_22.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
+    new_df['clean_text'] = cl_clean_text(new_df.body_text, clean_punct=True, body_mode=False)
+    with open('resources/hoods.txt') as f:
+        neighborhoods = f.read().splitlines()
+    from sklearn.feature_extraction import stop_words
+    hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
+    corpus, dictionary = df_to_corpus_regex([str(x) for x in new_df.clean_text], stopwords=hood_stopwords)
+    documents = [str(x) for x in new_df.clean_text]
+    documents
