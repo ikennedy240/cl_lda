@@ -12,11 +12,13 @@ import logging
 module_logger = logging.getLogger('cl_lda.lda_output')
 
 # makes a nicely formatted list of topics given an LDA model
-def get_formatted_topic_list(model, formatting="summary", n_topics=-1):
+def get_formatted_topic_list(model, formatting="summary", n_topics=-1, n_terms=20):
     if formatting == "summary":
-        topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
+        topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
     if formatting == "keywords":
-        topics = ["Top keywords are: "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,20)]
+        topics = ["Top keywords are: "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
+    if formatting == "blank":
+        topics = [re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
     return(topics)
 
 #this function takes a df that has the texts, the toipc distributions, and a binary stratifieer

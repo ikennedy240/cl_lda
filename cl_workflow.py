@@ -1,6 +1,9 @@
 """
 This Workflow takes in cleaned text labeled with one or more stratifiers
 that the researcher is interested in using to break up text Analysis
+
+### What if we collected ACS rent estimates and looked at places where the difference
+between average rents in the sample were most different
 """
 import preprocess
 from datetime import datetime
@@ -20,6 +23,14 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 """Import text as DataFrame"""
 data_path = 'data/processed4_22.csv'
 df = pd.read_csv(data_path, index_col=0,dtype = {'GEOID10':object,'blockid':object})
+
+df.shape
+df = df.dropna().reset_index(drop=True)
+df.join(kct, on=['GEOID10', 'GEOID'])
+pd.merge(df,kct,how='outer', on='GEOID10')
+df.shape
+
+
 
 # """Import New Data if Needed"""
 # new_data_path = "data/chcl.csv"
@@ -88,7 +99,7 @@ with open('resources/hoods.txt') as f:
 from sklearn.feature_extraction import stop_words
 hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
 corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df.clean_text], stopwords=hood_stopwords)
-
+model.log_perplexity(corpus)
 """Run Lda Model"""
 n_topics = 50
 n_passes = 50
@@ -116,32 +127,67 @@ df.columns
 df.groupby('race_income_label').mean()[26]
 plt.hist(df[df.race_income==0][41].values)
 plt.axis([.1, 1, 0, 500])
-
+plt.hist(df.groupby('GEOID10').mean()[['income']].dropna().values)
 
 
 """Use stratifier to create various comparisions of topic distributions"""
-strat_col = 'high_poverty'
-lda_output.rfc_distribution(df, topic_cols = strat_col, strat_col = list(range(50)))
+strat_col = 'high_white'
 lda_output.compare_topics_distribution(df, n_topics, strat_col)
 mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
 mean_diff = mean_diff.sort_values('difference', ascending=False)
+mean_diff
 
 """Try a Multinomial LogisticRegression"""
 from sklearn.linear_model import LogisticRegression
+from statsmodels.discrete.discrete_model import MNLogit
 
-X = df.dropna()[list(range(50))]
-y = df.dropna().race_income_label
+
+X = df.dropna()[["black_proportion","asian_proportion","latinx_proportion","log_income","log_price"]]
+y = df.dropna().top_topic
 LR = LogisticRegression()
-LR.fit(y,X)
-high_white_LR = LR.fit(X,df.highwhite)
-high_white_LR.score(X,df.highwhite)
-highwhite_coefs = pd.DataFrame(LR.coef_).rename(labels).transpose()
-lr_coefs = pd.DataFrame(LR.coef_).rename(labels).transpose()
+
+
+df['top_topic'] = df[list(range(50))].idxmax(1)
+df['log_income'] = np.log(df.income)
+df['log_price'] = np.log(df.clean_price)
+LR.fit(X,y)
+lr_coefs = pd.DataFrame(LR.coef_).rename({0:"black_proportion",1:"asian_proportion",2:"latinx_proportion",3:"log_income",4:"log_price"}, axis=1)
+lr_coefs_black = pd.DataFrame(LR.coef_).rename({0:"high_black",1:"high_income"}, axis=1).sort_values('high_black')
+lr_coefs_white = pd.DataFrame(LR.coef_).rename({0:"white_proportion",1:"log_income",2:"log_price"}, axis=1)
+
+lr_coefs
+lr_coefs = lr_coefs.assign(abs_black = abs(lr_coefs.black_proportion)).sort_values("abs_black", ascending=False)
+mean_diff = lr_coefs.merge(lda_output.summarize_on_stratifier(df, n_topics, strat_col), left_index=True, right_index=True)
+mean_diff.drop(['abs_black','difference', 'proportion'], axis=1, inplace=True)
+mean_diff
+from sklearn.preprocessing import scale
+df.assign(scaled_w_prop = scale(df.white_proportion), scaled_income = scale(df.income), scaled_rent = scale(df.rent))
+lr_coefs_white = lr_coefs_white.assign(abs_white = abs(lr_coefs_white.white_proportion)).sort_values("abs_white", ascending=False)
+mean_diff = lr_coefs_white.merge(lda_output.summarize_on_stratifier(df, n_topics, strat_col), left_index=True, right_index=True)
+mean_diff.drop(['abs_white','difference', 'proportion'], axis=1, inplace=True)
+
+
+lr_coefs_black.merge(lr_coefs_white, left_index=True, right_index=True)
+df['clean_price'] = pd.to_numeric(df.price.str.replace(r'\D',''))
+df.clean_price[df.clean_price>10000] = np.nan
+plt.hist(df.clean_price.dropna().values)
+mean_diff = lr_coefs_white
 lr_coefs['summed_diff'] = abs((lr_coefs['low income low white']-lr_coefs['low income high white']) + (lr_coefs['high income low white']-lr_coefs['high income and high white']))
 mean_diff = lr_coefs.sort_values('summed_diff', ascending=False)
 
+round(mean_diff.head(10),3)
 
+"""Compute Standard Errors"""
+from statsmodels.discrete.discrete_model import Logit, MNLogit
 
+top_topics = mean_diff.topic.values
+tmp = y.copy()
+for i in range(50):
+    y_31 = pd.Series(np.where(tmp==top_topics[i],1,0))
+    sm_logit = Logit(endog=y_31, exog=X.reset_index(drop=True))
+    print(top_topics[i], '\n', sm_logit.fit().summary())
+MN_logit = MNLogit(endog=y.astype(str), exog=X)
+MN_logit.fit(method='nm',maxiter=5000, maxfun=5000).summary()
 
 """Make Predictions at the means"""
 fill=.15/49
@@ -159,10 +205,20 @@ predictions
 predicted_proba['summed_diff'] = abs((predicted_proba['low income low white']-predicted_proba['low income high white']) + (predicted_proba['high income low white']-predicted_proba['high income and high white']))
 mean_diff = predicted_proba.sort_values('summed_diff', ascending=False).head(10)
 
-
+df.to_csv('data/4_30_all_vars.csv')
 
 
 """Produces useful output of topics and example texts"""
 reload(lda_output)
 mean_diff
-lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff, strat_col='race_income_label', cl=True)
+now = datetime.now()
+lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff, strat_col='race_income_label', cl=True, print_it=True)
+
+x = lda_output.get_formatted_topic_list(model, formatting="blank", n_terms=10)
+
+mean_diff['terms']=[x[i] for i in mean_diff.index[:50]]
+mean_diff[["black_proportion","terms"]]
+len(mean_diff.index[:50])
+len(x)
+
+mean_diff.index
