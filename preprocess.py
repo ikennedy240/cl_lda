@@ -56,10 +56,12 @@ def cl_clean_text(text_series, clean_punct=True, body_mode=False):
     text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','')
     if clean_punct:
         module_logger.info("Cleaning punctuation, but retaining exclamations and dollarsigns")
+        # We want to clean all non-word characters, but we think certain punctuation might be important, so this retains combinations of $ and !
         text_series = text_series.str.replace(r'!!!!+',' shii ').str.replace(r'!!!', ' mitsu ').str.replace(r'!!', ' nii ').str.replace(r'!', ' ichi ')
         text_series = text_series.str.replace(r'\$\$+',' dollasigns ').str.replace(r'\$', ' dollasign ').str.strip()
         text_series = text_series.str.replace(r'[^\w\s]+','')
-        text_series = text_series.str.replace('shii', '!!!!').str.replace('mitsu', '!!!').str.replace('nii', '!!').str.replace('ichi', '!').str.replace('dollasigns', '$$').str.replace('dollasign', '$').str.strip()
+        # later on we'll drop all tokens with less than 4 characters, so this makes the interesting punctuation have more
+        text_series = text_series.str.replace('shii', '!!!!_').str.replace('mitsu', '!!!_').str.replace('nii', '!!__').str.replace('ichi', '!___').str.replace('dollasigns', '$$__').str.replace('dollasign', '$___').str.strip()
     text_series = text_series.str.replace(r' +',' ').str.strip()
     return text_series
 
@@ -168,7 +170,7 @@ if __name__ == "__main__":
         neighborhoods = f.read().splitlines()
     from sklearn.feature_extraction import stop_words
     hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
-    corpus, dictionary = df_to_corpus(documents[20:23], stopwords=hood_stopwords)
+    corpus, dictionary = df_to_corpus(["11111 !!!!!! ????? words things alphabets"], stopwords=hood_stopwords)
     print([dictionary[i] for i in range(121)])
     documents = [str(x) for x in new_df.clean_text]
     documents[20]

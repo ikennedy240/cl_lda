@@ -14,11 +14,11 @@ module_logger = logging.getLogger('cl_lda.lda_output')
 # makes a nicely formatted list of topics given an LDA model
 def get_formatted_topic_list(model, formatting="summary", n_topics=-1, n_terms=20):
     if formatting == "summary":
-        topics = ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
+        topics = ["Topic "+str(x[0])+": "+re.sub(r'" \+ \d.\d+\*"|\d.\d+\*"',', ',x[1])[2:-1] for x in model.print_topics(n_topics,n_terms)]
     if formatting == "keywords":
-        topics = ["Top keywords are: "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
+        topics = ["Top keywords are: "+re.sub(r'" \+ \d.\d+\*"|\d.\d+\*"',', ',x[1])[2:-1] for x in model.print_topics(n_topics,n_terms)]
     if formatting == "blank":
-        topics = [re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in model.print_topics(n_topics,n_terms)]
+        topics = [re.sub(r'" \+ \d.\d+\*"|\d.\d+\*"',', ',x[1])[2:-1] for x in model.print_topics(n_topics,n_terms)]
     return(topics)
 
 #this function takes a df that has the texts, the toipc distributions, and a binary stratifieer
@@ -148,7 +148,7 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             for j in sorted_topics.index[0:sample_topics]:
                 print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
                 print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n", file=f)
-                tmp_top = df.sort_values(by=j, ascending=False).iloc[:sample_texts*10].sample(sample_texts)
+                tmp_top = df[df.top_topic==j].sample(sample_texts)
                 for i in range(sample_texts):
                     tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
                     print("Topic", j, "Example #", i+1, ':\n', file=f)
@@ -159,6 +159,9 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
                     print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
         module_logger.info("Saved output to "+filepath)
     module_logger.info("Completed Output")
+
+
+
 if __name__ == "__main__":
     model = models.LdaModel.load('models/4_12model')
     get_formatted_topic_list(model, formatting='summary')
@@ -182,3 +185,5 @@ if __name__ == "__main__":
     tmp_top['1']
     x.columns
     text_output(df_merged, 'output/test.txt', sample_topics=10, sample_texts=5, sorted_topics=x.all_r, topics=None, model=model)
+    model.print_topics(10,10)
+    ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in test]
