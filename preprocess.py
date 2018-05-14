@@ -142,7 +142,7 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
             minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
             similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
         # reduce to only jaccards above .9 and check which pair is older
-        drop_list = [max(pair[0],pair[1]) for pair in similarities if pair[2]>=.9]
+        drop_list = [min(pair[0],pair[1]) for pair in similarities if pair[2]>=.9]
         if reset:
             text_df = text_df.drop(set(drop_list)).set_index("index")
         else:
