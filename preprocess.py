@@ -7,6 +7,7 @@ import logging
 from gensim import corpora, models
 from six import iteritems
 import regex as re
+import numpy as np
 import itertools
 from lsh import cache, minhash
 module_logger = logging.getLogger('cl_lda.preprocess')
@@ -115,12 +116,19 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
         text_df = text_df.drop_duplicates(subset = 'body_100').drop('body_100', axis = 1)
     #use LSH minhash to clean dupes requires LSH and minhash3 to run!!!
     if method=='lsh':
-        # first we get candidate pairs
+        try:
+            text_df=text_df.sort_values(['scraped_year','scraped_month','scraped_day']).reset_index()
+            reset = True
+        except:
+            module_logger.info('text_df has insufficient date information, dropping by index')
+        # first get candidate_pairs
         candidate_pairs = candidate_duplicates(text_df, char_ngram)
         # then we make sure jaccard similarity is above .9
         lines = text_df[text_col].values
+        hasher = minhash.MinHasher(seeds=100, char_ngram=5, hashbytes=4)
+        lshcache = cache.Cache(bands=10, hasher=hasher)
         similarities = []
-        for ((line_a, docid_a), (line_b, docid_b)) in candidate_pairs:
+        for (line_a, line_b) in candidate_pairs:
             doc_a, doc_b = lines[line_a], lines[line_b]
             shingles_a = shingles(lines[line_a])
             shingles_b = shingles(lines[line_b])
@@ -128,9 +136,13 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
             fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
             fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
             minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
-            similarities.append((docid_a, docid_b, jaccard_sim, minhash_sim))
-        # then drop the older member of each pair
-
+            similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
+        # reduce to only jaccards above .9 and check which pair is older
+        drop_list = [max(pair[0],pair[1]) for pair in similarities if pair[2]>=.9]
+        if reset:
+            text_df = text_df.drop(set(drop_list)).set_index("index")
+        else:
+            text_df = text_df.drop(set(drop_list))
     return text_df
 
 
@@ -222,34 +234,9 @@ if __name__ == "__main__":
     documents[20]
     char_ngram = 5
     text_col='clean_text'
-    text_df = pd.read_csv('data/5_10_all_vars.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
-    candidate_pairs = candidate_duplicates(text_df, char_ngram)
-    # then we make sure jaccard similarity is above .9
-    lines = text_df[text_col].values
-    hasher = minhash.MinHasher(seeds=100, char_ngram=5, hashbytes=4)
-    lshcache = cache.Cache(bands=10, hasher=hasher)
-    similarities = []
-    for (line_a, line_b) in candidate_pairs:
-        doc_a, doc_b = lines[line_a], lines[line_b]
-        shingles_a = shingles(lines[line_a])
-        shingles_b = shingles(lines[line_b])
-        jaccard_sim = jaccard(shingles_a, shingles_b)
-        fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
-        fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
-        minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
-        similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
-    # reduce to only jaccards above .9
-    high_sim = [pair for pair in similarities if pair[2]>=.9]
-    len(similarities)
-    len(high_sim)
-    #make a datafame
-    sims = pd.DataFrame(high_sim, columns=["index_a", "index_b", "jaccard_sim", "minhash_sim"])
-    sims.median()
-    #check which of the pairs is older
-    sims = sims.assign(drops= sims[['index_a','index_b']].max(1))
-    drop_list = sims.drops.drop_duplicates().reset_index(drop=True)
-    i=10
-    text_df.clean_text.iloc[sims.index_a[i]]
-    text_df.clean_text.iloc[sims.index_b[i]]
+    text_df2 = pd.read_csv('data/5_13_all_vars.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
+    len(text_df2)-len(set(drop_list))
 
-    text_df.shape
+    test = clean_duplicates(text_df2, text_col='clean_text', method='lsh')
+    test.shape
+    
