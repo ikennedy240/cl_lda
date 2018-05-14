@@ -7,7 +7,8 @@ import logging
 from gensim import corpora, models
 from six import iteritems
 import regex as re
-
+import itertools
+from lsh import cache, minhash
 module_logger = logging.getLogger('cl_lda.preprocess')
 
 # given a folder of scraped CL data, returns a datafame of combined listings with duplicates
@@ -76,17 +77,62 @@ def clean_neighborhoods(text_series, neighborhoods=None):
             module_logger.info("Replaced "+str(neighborhoods.index(name))+" neighborhoods")
     return text_series
 
+# helper function to make shingles from a text
+def shingles(text, char_ngram=5):
+    return set(text[head:head + char_ngram] for head in range(0, len(text) - char_ngram))
+
+# calculate jaccard similarity between two lists of shingles
+def jaccard(set_a, set_b):
+    intersection = set_a & set_b
+    union = set_a | set_b
+    return len(intersection) / len(union)
+
+# make a list of possible duplicates
+def candidate_duplicates(text_df, char_ngram=5, seeds=100, bands=5, hashbytes=4):
+    hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
+    if seeds % bands != 0:
+        raise ValueError('Seeds has to be a multiple of bands. {} % {} != 0'.format(seeds, bands))
+    lshcache = cache.Cache(num_bands=bands, hasher=hasher)
+
+    for i in range(len(text_df)):
+        line = text_df.iloc[i].body_text
+        lshcache.add_fingerprint(hasher.fingerprint(line),doc_id = i)
+    candidate_pairs = set()
+    for b in lshcache.bins:
+        for bucket_id in b:
+            if len(b[bucket_id]) > 1:
+                pairs_ = set(itertools.combinations(b[bucket_id], r=2))
+                candidate_pairs.update(pairs_)
+    return candidate_pairs
+
 #Deal with duplicates
-def clean_duplicates(text_df, text_col='body_text',method = 100):
+def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
     if method == 'latlon':
         #must have 'latitude', 'longitude','price' colums to use this method
         text_df = text_df.drop_duplicates(['latitude','longitude','price'])
     if type(method)==int:
         text_df['body_100']=text_df[text_col].str.slice(stop=method).copy()
         text_df = text_df.drop_duplicates(subset = 'body_100').drop('body_100', axis = 1)
-    #if type(method)==float:
+    #use LSH minhash to clean dupes requires LSH and minhash3 to run!!!
+    if method=='lsh':
+        # first we get candidate pairs
+        candidate_pairs = candidate_duplicates(text_df, char_ngram)
+        # then we make sure jaccard similarity is above .9
+        lines = text_df[text_col].values
+        similarities = []
+        for ((line_a, docid_a), (line_b, docid_b)) in candidate_pairs:
+            doc_a, doc_b = lines[line_a], lines[line_b]
+            shingles_a = shingles(lines[line_a])
+            shingles_b = shingles(lines[line_b])
+            jaccard_sim = jaccard(shingles_a, shingles_b)
+            fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
+            fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
+            minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
+            similarities.append((docid_a, docid_b, jaccard_sim, minhash_sim))
+        # then drop the older member of each pair
 
     return text_df
+
 
 # make a corpus and dictionary from a list of texts
 def df_to_corpus(documents, stopwords=None):
@@ -174,3 +220,36 @@ if __name__ == "__main__":
     print([dictionary[i] for i in range(121)])
     documents = [str(x) for x in new_df.clean_text]
     documents[20]
+    char_ngram = 5
+    text_col='clean_text'
+    text_df = pd.read_csv('data/5_10_all_vars.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
+    candidate_pairs = candidate_duplicates(text_df, char_ngram)
+    # then we make sure jaccard similarity is above .9
+    lines = text_df[text_col].values
+    hasher = minhash.MinHasher(seeds=100, char_ngram=5, hashbytes=4)
+    lshcache = cache.Cache(bands=10, hasher=hasher)
+    similarities = []
+    for (line_a, line_b) in candidate_pairs:
+        doc_a, doc_b = lines[line_a], lines[line_b]
+        shingles_a = shingles(lines[line_a])
+        shingles_b = shingles(lines[line_b])
+        jaccard_sim = jaccard(shingles_a, shingles_b)
+        fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
+        fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
+        minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
+        similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
+    # reduce to only jaccards above .9
+    high_sim = [pair for pair in similarities if pair[2]>=.9]
+    len(similarities)
+    len(high_sim)
+    #make a datafame
+    sims = pd.DataFrame(high_sim, columns=["index_a", "index_b", "jaccard_sim", "minhash_sim"])
+    sims.median()
+    #check which of the pairs is older
+    sims = sims.assign(drops= sims[['index_a','index_b']].max(1))
+    drop_list = sims.drops.drop_duplicates().reset_index(drop=True)
+    i=10
+    text_df.clean_text.iloc[sims.index_a[i]]
+    text_df.clean_text.iloc[sims.index_b[i]]
+
+    text_df.shape
