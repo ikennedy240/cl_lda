@@ -119,12 +119,13 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
         try:
             text_df=text_df.sort_values(['scraped_year','scraped_month','scraped_day']).reset_index()
             reset = True
-        except:
-            logger.info('text_df has insufficient date information, dropping by month/day')
-            text_df=text_df.sort_values(['scraped_month','scraped_day']).reset_index()
-            reset = True
-        except:
-            logger.info('text_df has insufficient date information, dropping by index')
+        except(KeyError):
+            try:
+                module_logger.info('text_df has insufficient date information, dropping by month/day')
+                text_df=text_df.sort_values(['scraped_month','scraped_day']).reset_index()
+                reset = True
+            except:
+                module_logger.info('text_df has insufficient date information, dropping by index')
         # first get candidate_pairs
         candidate_pairs = candidate_duplicates(text_df, char_ngram)
         # then we make sure jaccard similarity is above .9
