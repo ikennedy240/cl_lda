@@ -8,6 +8,8 @@ import regex as re
 import pandas as pd
 import numpy as np
 import logging
+import sys
+import codecs
 
 module_logger = logging.getLogger('cl_lda.lda_output')
 
@@ -34,8 +36,7 @@ def summarize_on_stratifier(df_merged, n_topics, strat_col, topic_cols=None, thr
         no_text = df_merged[topic_cols].join(df_merged[strat_col])
     except:
         #but sometimes they're not, if the df was saved and then reloaded
-        no_text = df_merged[[str(x) for x in topic_cols]].join(df_merged[strat_col])
-
+        no_text = df_merged[[str(x) for x in topic_cols]].rename(int,axis='columns').join(df_merged[strat_col])
     # makes the distributions binary based on the threshold, 0.01 by default
     # values less than the threshold are set to 0, values higher are set to one
     # as long as they are positive!
@@ -116,6 +117,10 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             module_logger.info("Automatically generating topic list")
             topics = get_formatted_topic_list(model, formatting='keywords', n_topics=-1)
     n_topics = len(topics)
+    try:
+        df[1]
+    except:
+        df = df.rename(dict(zip([str(x) for x in range(n_topics)], range(n_topics))), axis=1)
     if sorted_topics is None:
         if strat_col is None:
             return "You must provide either sorted_topics or strat_col"
@@ -125,20 +130,21 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             mean_diff = summarize_on_stratifier(df, n_topics, strat_col)
             sorted_topics = mean_diff.sort_values('proportion', ascending=False)[1:].proportion
     if print_it:
+        print("sorted_topics.index",sorted_topics.index)
         for j in sorted_topics.index:
             print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)])
         print("\n ------- Sample Documents ------- \n\n")
         for j in sorted_topics.index[0:sample_topics]:
             print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)])
             print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n")
-            tmp_top = df.sort_values(by=j, ascending=False).iloc[:sample_texts*10].sample(sample_texts)
+            tmp_top = df[df.top_topic==j].sort_values(by=j, ascending=False)
             for i in range(sample_texts):
-                tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
+                tmp = tmp_top.iloc[i]
                 print("Topic", j, "Example #", i+1, ':\n')
                 if strat_col:
                     print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n')
                 if cl:
-                    print("This text was connected to a listing in tract #", tmp.GEOID10, '\n')
+                    print("This text had post id:", tmp.postid, " was connected to a listing in tract #", tmp.GEOID10, '\n')
                 print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n')
     else:
         with open(filepath, 'w', encoding='utf-8') as f:
@@ -148,14 +154,14 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             for j in sorted_topics.index[0:sample_topics]:
                 print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
                 print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n", file=f)
-                tmp_top = df[df.top_topic==j].sample(sample_texts)
+                tmp_top = df[df.top_topic==j].sort_values(by=j, ascending=False)
                 for i in range(sample_texts):
-                    tmp = tmp_top.sort_values(by=j, ascending=False).iloc[i]
+                    tmp = tmp_top.iloc[i]
                     print("Topic", j, "Example #", i+1, ':\n', file=f)
                     if strat_col:
                         print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n', file=f)
                     if cl:
-                        print("This text was connected to a listing in tract #", tmp.GEOID10, '\n', file=f)
+                        print("This text had address:", tmp.address, " was connected to a listing in tract #", tmp.GEOID10, '\n', file=f)
                     print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
         module_logger.info("Saved output to "+filepath)
     module_logger.info("Completed Output")

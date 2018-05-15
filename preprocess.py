@@ -89,14 +89,14 @@ def jaccard(set_a, set_b):
     return len(intersection) / len(union)
 
 # make a list of possible duplicates
-def candidate_duplicates(text_df, char_ngram=5, seeds=100, bands=5, hashbytes=4):
+def candidate_duplicates(text_df, text_col, char_ngram=5, seeds=100, bands=5, hashbytes=4):
     hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
     if seeds % bands != 0:
         raise ValueError('Seeds has to be a multiple of bands. {} % {} != 0'.format(seeds, bands))
     lshcache = cache.Cache(num_bands=bands, hasher=hasher)
 
     for i in range(len(text_df)):
-        line = text_df.iloc[i].body_text
+        line = text_df[text_col].iloc[i]
         lshcache.add_fingerprint(hasher.fingerprint(line),doc_id = i)
     candidate_pairs = set()
     for b in lshcache.bins:
@@ -107,7 +107,7 @@ def candidate_duplicates(text_df, char_ngram=5, seeds=100, bands=5, hashbytes=4)
     return candidate_pairs
 
 #Deal with duplicates
-def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
+def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5, seeds=100, bands=5, hashbytes=4, thresh = .9):
     if method == 'latlon':
         #must have 'latitude', 'longitude','price' colums to use this method
         text_df = text_df.drop_duplicates(['latitude','longitude','price'])
@@ -118,41 +118,37 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5):
     if method=='lsh':
         try:
             text_df=text_df.sort_values(['scraped_year','scraped_month','scraped_day']).reset_index()
-            reset = True
         except(KeyError):
             try:
                 module_logger.info('text_df has insufficient date information, dropping by month/day')
                 text_df=text_df.sort_values(['scraped_month','scraped_day']).reset_index()
-                reset = True
             except:
                 module_logger.info('text_df has insufficient date information, dropping by index')
+                text_df=text_df.reset_index()
         # first get candidate_pairs
-        candidate_pairs = candidate_duplicates(text_df, char_ngram)
+        candidate_pairs = candidate_duplicates(text_df, text_col, char_ngram, seeds, bands, hashbytes)
         # then we make sure jaccard similarity is above .9
-        lines = text_df[text_col].values
-        hasher = minhash.MinHasher(seeds=100, char_ngram=5, hashbytes=4)
-        lshcache = cache.Cache(bands=10, hasher=hasher)
+        lines = text_df[text_col].str.lower().values
+        hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
+        lshcache = cache.Cache(bands=bands, hasher=hasher)
         similarities = []
         for (line_a, line_b) in candidate_pairs:
             doc_a, doc_b = lines[line_a], lines[line_b]
-            shingles_a = shingles(lines[line_a])
-            shingles_b = shingles(lines[line_b])
+            shingles_a = shingles(lines[line_a], char_ngram)
+            shingles_b = shingles(lines[line_b], char_ngram)
             jaccard_sim = jaccard(shingles_a, shingles_b)
             fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
             fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
             minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
             similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
         # reduce to only jaccards above .9 and check which pair is older
-        drop_list = [min(pair[0],pair[1]) for pair in similarities if pair[2]>=.9]
-        if reset:
-            text_df = text_df.drop(set(drop_list)).set_index("index")
-        else:
-            text_df = text_df.drop(set(drop_list))
+        drop_list = [min(pair[0],pair[1]) for pair in similarities if pair[2]>=thresh]
+        text_df = text_df.drop(set(drop_list)).set_index("index")
     return text_df
 
 
 # make a corpus and dictionary from a list of texts
-def df_to_corpus(documents, stopwords=None):
+def df_to_corpus(documents, stopwords=None, dictionary=None):
     if stopwords is None:
         from sklearn.feature_extraction import stop_words
         stopwords = stop_words.ENGLISH_STOP_WORDS
@@ -161,7 +157,8 @@ def df_to_corpus(documents, stopwords=None):
     # cleans stopwords and drops words with fewer than three characters
     texts = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in documents]
     #makes a dictionary based on those texts (this is the full df) and saves it
-    dictionary = corpora.Dictionary(texts)
+    if dictionary is None:
+        dictionary = corpora.Dictionary(texts)
     #applies a bag of words vectorization to make the texts into a sparse matrix
     corpus = [dictionary.doc2bow(text) for text in texts]
     return(corpus, dictionary)

@@ -45,8 +45,8 @@ def getCensusCode(cldata):
 
 # Get state tract data
 
-def StateTractData(st, var_dict=None, save=False):
-    if var_dict is none:
+def StateTractData(st, var_dict=None, save=False, year=2015):
+    if var_dict is None:
         try:
             tmp = pd.read_csv("resources/"+st+"tracts.csv", index_col=0, dtype = {'GEOID10':object,'blockid':object})
             module_logger.info('read file')
@@ -58,11 +58,12 @@ def StateTractData(st, var_dict=None, save=False):
         census_key = f.readlines()[0].strip()
     c = Census(census_key)
     statefips = eval("states."+st+".fips")
-    tmp = pd.DataFrame(c.acs.state_county_tract(fields = list(var_dict.values()),state_fips=statefips, county_fips="*", tract="*"))
+    tmp = pd.DataFrame(c.acs.state_county_tract(fields = list(var_dict.keys()),state_fips=statefips, county_fips="*", tract="*", year=year))
     #construct column with tract code
     tmp['GEOID10']= tmp.state+tmp.county+tmp.tract
-    #give it understandable columns, and created percent white column
-    tmp.rename(columns=inv_map, inplace=True)
+    #give it understandable columns
+    tmp.rename(columns=var_dict, inplace=True)
+    tmp['acs_year'] = year
     #Write to CSV
     if save:
         tmp.to_csv("resources/"+st+"tracts.csv")
