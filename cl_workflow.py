@@ -24,43 +24,44 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 """Import text as DataFrame"""
 data_path = 'data/full_extract_5-6-18.csv'
 df_full = pd.read_csv(data_path,dtype = {'GEOID10':object,'blockid':object})
-
+df_full.columns
 """Creating Train-Test Split"""
 # We did some preliminary analysis with some data that was separately scraped from cl
 # So this just makes sure that any postids from that set end up in the training set (not the test set)
 
-#import the old data
+# #import the old data
 df_old = pd.read_csv('archive/processed5_14.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
-# clean df_full's postIDs
+# # clean df_full's postIDs
 df_full.postID = df_full.postID.str.replace('\D','')
-# Check how many matches we get
+df_full.shape
+df_full.listingDate.unique().shape
+# # Check how many matches we get
 sum(df_full.postID.isin(set(df_old.postid)))
-# Start the training set with just those matched
-train = df_full[df_full.postID.isin(set(df_old.postid))]
-# Then making a capital X just those that didn't match
-X = df_full[~df_full.postID.isin(x.postID)]
-# Then a train test split on the X, set to end with even dfs, random_state 24 for repeatability
-from sklearn.model_selection import train_test_split
-X_train, X_test = train_test_split(X,train_size =0.4653708963603937, random_state=24)
-# add the matached listings to the full train set
-X_train = pd.concat([train, X_train])
-# compare sizes
-print(X_train.shape, X_test.shape)
-# make sure the test set doesn't have any matches with old data
-sum(X_test.postID.isin(set(x.postID)))
-# save to CSV
-X_test.to_csv('data/cl_test_set.csv')
-X_train.to_csv('data/cl_train_set.csv')
+# # Start the training set with just those matched
+# train = df_full[df_full.postID.isin(set(df_old.postid))]
+# # Then making a capital X just those that didn't match
+# X = df_full[~df_full.postID.isin(x.postID)]
+# # Then a train test split on the X, set to end with even dfs, random_state 24 for repeatability
+# from sklearn.model_selection import train_test_split
+# X_train, X_test = train_test_split(X,train_size =0.4653708963603937, random_state=24)
+# # add the matached listings to the full train set
+# X_train = pd.concat([train, X_train])
+# # compare sizes
+# print(X_train.shape, X_test.shape)
+# # make sure the test set doesn't have any matches with old data
+# sum(X_test.postID.isin(set(x.postID)))
+# # save to CSV
+# X_test.to_csv('data/cl_test_set.csv')
+# X_train.to_csv('data/cl_train_set.csv')
 
-# """Preprocess Raw Data"""
-df = df.drop(['total_pop','white_pop', 'black_pop', 'county', 'state', 'tract', 'percent_white'], axis =1)
-df = df.assign(postid = df.postid.str.replace('\D',''), scraped_year = np.where(df.scraped_month==1,2018,2017))
-df.to_csv('data/df_full_raw5_14.csv')
+"""Import Training Data for Analysis"""
 
+df = pd.read_csv('data/cl_train_set.csv')
 
 # add census info
 df = cl_census.mergeCLandCensus(df)
 # clean text
+df = df.assign(body_text = df.listingText)
 df['clean_text'] = preprocess.cl_clean_text(df.body_text)
 df.body_text = preprocess.cl_clean_text(df.body_text, body_mode=True)
 
