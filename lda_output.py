@@ -109,7 +109,7 @@ def rfc_distribution(df_merged, strat_col, n_topics=None, topic_cols=None, thres
 # helper function to print topics and example texts
 # sorted topics must have the
 #need to make some changes here
-def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted_topics=None, strat_col=None, topics=None, model=None, print_it = False, cl = False):
+def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted_topics=None, strat_col=None, topics=None, model=None, print_it = False, cl = False, jitter=False):
     if topics is None:
         if model is None:
             return "You must provide either model or topics"
@@ -137,14 +137,17 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
         for j in sorted_topics.index[0:sample_topics]:
             print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)])
             print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n")
-            tmp_top = df[df.top_topic==j].sort_values(by=j, ascending=False)
+            if jitter:
+                tmp_top = df.sort_values(by=j, ascending=False).head(100).sample(10)
+            else:
+                tmp_top = df.sort_values(by=j, ascending=False)
             for i in range(sample_texts):
                 tmp = tmp_top.iloc[i]
                 print("Topic", j, "Example #", i+1, ':\n')
                 if strat_col:
                     print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n')
                 if cl:
-                    print("This text had post id:", tmp.postid, " was connected to a listing in tract #", tmp.GEOID10, '\n')
+                    print("This text had post id:", tmp.postid, " was connected to a listing in tract #", tmp.GEOID10,'and cost $', tmp.clean_price, '\n')
                 print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n')
     else:
         with open(filepath, 'w', encoding='utf-8') as f:
@@ -154,14 +157,17 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
             for j in sorted_topics.index[0:sample_topics]:
                 print("Topic #", j,' occurred in \n', sorted_topics.loc[j], '\n', topics[int(j)], file=f)
                 print("\n Top ",sample_texts," texts fitting topic", j, "are: \n \n", file=f)
-                tmp_top = df[df.top_topic==j].sort_values(by=j, ascending=False)
+                if jitter:
+                    tmp_top = df.sort_values(by=j, ascending=False).head(100).sample(10)
+                else:
+                    tmp_top = df.sort_values(by=j, ascending=False)
                 for i in range(sample_texts):
                     tmp = tmp_top.iloc[i]
                     print("Topic", j, "Example #", i+1, ':\n', file=f)
                     if strat_col:
                         print("This text rated a ", tmp[strat_col], " in ", strat_col, '\n', file=f)
                     if cl:
-                        print("This text had address:", tmp.address, " was connected to a listing in tract #", tmp.GEOID10, '\n', file=f)
+                        print("This text had address:", tmp.address, " was connected to a listing in tract #", tmp.GEOID10,'and cost $', tmp.clean_price, '\n', file=f)
                     print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
         module_logger.info("Saved output to "+filepath)
     module_logger.info("Completed Output")

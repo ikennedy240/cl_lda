@@ -15,7 +15,7 @@ import logging
 import cl_census
 from gensim import corpora, models, similarities, matutils
 from importlib import reload
-reload(preprocess)
+reload()
 
 """Start Logging"""
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -56,8 +56,8 @@ sum(df_full.postID.isin(set(df_old.postid)))
 
 """Import Training Data for Analysis"""
 
-df = pd.read_csv('data/cl_train_set.csv')
-
+df = pd.read_csv('data/cl_train_set.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+df.shape
 # add census info
 df = cl_census.mergeCLandCensus(df)
 # clean text
@@ -70,21 +70,19 @@ df.body_text = preprocess.cl_clean_text(df.body_text, body_mode=True)
 df = df[~df.clean_text.str.len().isna()]
 df = df[df.clean_text.str.len()>100]
 df = df.reset_index(drop=True)
+#at this point training data is reduced from 64750 listings to 64578 listings
 
 #matching colnames with chris
-# colnames = ['GEOID10', 'address', 'blockid', 'body_text', 'latitude', 'longitude','postid', 'price','scraped_month','scraped_day']
-# merge = new_df[['GEOID10', 'matchAddress', 'GISJOIN', 'listingText','lat','lng','postID', 'scrapedRent', 'listingMonth', 'listingDate']]
-# name_dict = dict(zip(merge.columns,colnames))
-# #merging with chris
-# merge = merge.rename(name_dict, axis=1)
-# merge.scraped_day = merge.scraped_day.str.extract(r'(\d+$)')
-# df_merged = pd.concat([df[merge.columns], merge]).reset_index(drop=True)
-# df_merged.shape
-# df_merged.to_csv('data/merged_raw.csv')
+colnames = ['address', 'blockid', 'latitude', 'longitude','postid', 'price']
+chris_cols = ['matchAddress', 'GISJOIN','lat','lng','postID', 'scrapedRent']
+name_dict = dict(zip(chris_cols,colnames))
+df = df.rename(name_dict, axis=1)
+
 
 
 """Make New Demo Columsn"""
 prop_list = ['white','black','aindian','asian','pacisland','other','latinx']
+
 df['poverty_proportion'] = df.under_poverty/df.total_poverty
 # making census vars into proportions
 for proportion in prop_list:
@@ -102,52 +100,87 @@ df = preprocess.make_stratifier(df, 'income', 'high_income')
 df = preprocess.make_stratifier(df, 'poverty_proportion', 'high_poverty')
 df = preprocess.make_stratifier(df, strat_list, new_col_list)
 
-df['race_income'] = df.high_white
 
-df = df.assign(race_income =  np.where(df.high_income==1, df.race_income+2, df.race_income))
-
-labels = {3:"high income and high white", 2:"high income low white", 1:"low income high white", 0:"low income low white"}
-df['race_income_label'] = [labels[x] for x in df.race_income]
-df[['race_income', 'race_income_label']]
-pd.crosstab(df.race_income_label, [df.high_income, df.high_white])
+"""Make Two-Way Race_Income Categorical Variable"""
+# df['race_income'] = df.high_white
+#
+# df = df.assign(race_income =  np.where(df.high_income==1, df.race_income+2, df.race_income))
+#
+# labels = {3:"high income and high white", 2:"high income low white", 1:"low income high white", 0:"low income low white"}
+# df['race_income_label'] = [labels[x] for x in df.race_income]
+# df[['race_income', 'race_income_label']]
+# pd.crosstab(df.race_income_label, [df.high_income, df.high_white])
 
 """Make Other Context Columns"""
 df['log_income'] = np.log(df.income)
-df['clean_price'] = pd.to_numeric(df.price.str.replace(r'\$|,',''), errors = 'coerce')
+df['clean_price'] = df.cleanRent
 df['log_price'] = np.log(df.clean_price)
-df = df.dropna().reset_index(drop=True)
-#seems like I had a lot of missing dates, so I set them to an arbitrary fake early date. This shouldn't be a problem for
-#the later data set
-df[df.scraped_month.isnull()] = df[df.scraped_month.isnull()].assign(scraped_day=32, scraped_month=13, scraped_year=2016)
-sum(df.scraped_month.isnull())
-# check missing values by column
-for x in df.columns:
-    print(x,sum(df[x].isnull()))
-#check the shape if we drop all nulls
-df.dropna().shape
-# drop all nulls
-df = df.dropna()
+#df = df.dropna().reset_index(drop=True)
+# Check Missing Values:
+df.isnull().sum()
+# drop missing values in those columns we'll use later. 'postOrigin' has many
+# missing values, but we won't drop them because that variable doesn't matter
+df = df.dropna(subset=['postid','income'])
+df.shape
+# with this preprocessing, we've lost a few more listings and the total set should be
+# 64290 listings in the training data
 # save processed data
-df_full = df_full.drop_duplicates('postid')
-df_full.to_csv('data/processed5_14.csv')
+df.to_csv('data/train_processed5_17.csv')
 
 """Break off the section to use the LDA"""
 # break off a df with unique addresses
 df_full = df
-df = df_full.drop_duplicates('address')
-# check for other dupes
+df = df_full.drop_duplicates('body_text')
 df.shape
-preprocess.clean_duplicates(df[df.address.str.len()>2], text_col='address', method = 'lsh', char_ngram=2, thresh=.75, bands=20).shape
-df = preprocess.clean_duplicates(df[df.address.str.len()>2], text_col='address', method = 'lsh', char_ngram=2, thresh=.75, bands=20)
-preprocess.clean_duplicates(df, text_col='clean_text', method='lsh').shape
-# drop dupes with jaccard distance > .9
-df= preprocess.clean_duplicates(df, text_col='clean_text', method='lsh')
-df.to_csv('data/dropped_address5_14b.csv')
-df = pd.read_csv('data/dropped_address5_14b.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
+# dropping duplicated addresses gives us 10320 listings for the LDA model
+57946 - 64290
+# check for other dupes
+df_full.shape
+
+df.address.sort_values()
+df = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
+df_test = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
+df.shape
+test = df
+df.to_csv('data/lda_processed5_17.csv')
+df_full = pd.read_csv('data/train_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
+df = pd.read_csv('data/lda_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})texts = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in documents]
+
+""" Very Robust Dupe Routine That Uses Repeated LDA Sorting"""
+total_dupes = 0
+cycle_dupes = 200
+n_topics = 30
+n_passes = 1
+model_runs = 0
+df_test = df
+df_test = df_test.drop(list(range(n_topics)),1)
+while cycle_dupes>100:
+    start = len(df_test)
+    # fit LDA model
+    corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df_test.clean_text], stopwords=hood_stopwords)
+    model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
+    lda_corpus = model[corpus]
+    #make dense numpy array of the topic proportions for each document
+    doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpose()
+    df_test = df_test.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
+    # clean duplicates
+    df_test = preprocess.post_lda_drop(df_test, n_topics, n_texts=50, char_ngram=5, thresh=.5, continuous=True, start = 0)
+    df_test = preprocess.post_lda_drop(df_test, n_topics, thresh=.5, n_texts=50, slice_at=100, continuous=True)
+    # rinse
+    cycle_dupes = start - len(df_test)
+    total_dupes += cycle_dupes
+    df_test = df_test.drop(list(range(n_topics)),1)
+    model_runs += 1
+    print("Ran ", model_runs, "LDA models and dropped an additional ",cycle_dupes, " for a total of ", total_dupes)
+    # repeat
+
+df.shape
+df_current = df.copy()
 """Make Corpus and Dictionary"""
 with open('resources/hoods.txt') as f:
     neighborhoods = f.read().splitlines()
 from sklearn.feature_extraction import stop_words
+# we add a long list of seattle neighborhoods to our stop words lis
 hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
 corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df.clean_text], stopwords=hood_stopwords)
 
@@ -157,7 +190,7 @@ n_passes = 50
 #Run this if you have access to more than one core set workers=n_cores-1
 model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0, workers=3)
 #otherwise run this
-#model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
+model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0)
 #save the model for future use
 now = datetime.now()
 model.save('models/model'+str(now.month)+'_'+str(now.day))
@@ -170,6 +203,54 @@ doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpo
 df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 # Make top_topic for each document
 df = df.assign(top_topic=df[list(range(n_topics))].idxmax(1))
+df.to_csv('data/no_dupes_lda_fit5_18.csv')
+df = pd.read_csv('data/no_dupes_lda_fit5_18.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+df = df.drop([str(x) for x in list(range(30))],1)
+
+"""Remove More Duplicates Found by the LDA Model"""
+df_test = df.copy() # make a copy of the df so we can make sure we want to apply the drops
+reload(preprocess)
+df_test = preprocess.post_lda_drop(df_test, n_topics, n_texts=50, char_ngram=5, thresh=.5, continuous=True, start = 0)
+
+df_test = preprocess.post_lda_drop(df_test, n_topics, thresh=.5, n_texts=50, slice_at=100, continuous=True)
+df_test.shape
+df= df_test
+
+df.sort_values(22, ascending=False).clean_text.head(20).values
+
+df_test.sort_values(0, ascending=False).body_text.head(20).values
+
+df_full.sort_values(6, ascending=False).body_text.head(100).values
+
+df_test.shape
+df=df_test
+i=3
+tmp_top = df_test.sort_values(by=i, ascending=False).iloc[0:20] # grab the top listings for the topic
+sims = preprocess.sims_all(tmp_top.body_text.str.slice(stop=300).values, 20, char_ngram=5) # calculate the jaccard similarity between all of them
+sims
+x = np.transpose((sims>.5).nonzero()) # find those texts where the similarity is above .8
+pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
+drop_list = list(set([min(pair[0],pair[1]) for pair in pairs]))
+drop_list
+
+
+sims = preprocess.sims_all(tmp_top['clean_text'].str.slice(stop=100).values, 50, 5) # calculate the jaccard similarity between all of them
+x = np.transpose((sims>.5).nonzero()) # find those texts where the similarity is above .8
+pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
+drop_list = list(set([min(pair[0],pair[1]) for pair in pairs])) # make a unique list of those, keeping only the newest dupe
+drop_list
+module_logger.info("dropped " + str(len(drop_list))+" listings from topic "+str(i)+'\n') # output some info about the drop
+max_list.append(len(drop_list))
+df_test = df_test.drop(drop_list)
+ # make a unique list of those, keeping only the newest dupe
+#df_test = df_test.drop(drop_list) #drop them from the test set
+tmp_top.drop(drop_list).body_text.values
+tmp_top.body_text.values
+df.shape
+
+df.to_csv('data/rerun_5_18.csv')
+df = pd.read_csv('data/rerun_5_18.csv',  index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+df.columns
 
 #do the same process for the full_df
 full_corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df_full.clean_text], stopwords=hood_stopwords, dictionary=dictionary)
@@ -178,19 +259,26 @@ full_doc_topic_matrix = matutils.corpus2dense(full_lda, num_terms=n_topics).tran
 df_full = df_full.reset_index(drop=True).join(pd.DataFrame(full_doc_topic_matrix))
 df_full = df_full.assign(top_topic=df_full[list(range(n_topics))].idxmax(1))
 df_full.shape
-df_full= df_full.drop(list(range(30)),1)
+df= df.drop(list(range(30)),1)
+df= df.drop([str(x) for x in list(range(30))],1)
 len(full_corpus)
+
 """Look at the distributions of the different topics"""
 import matplotlib.pyplot as plt
 %matplotlib inline
-plt.hist(df[[26]].sort_values(by=26, ascending=False).head(400).values)
+plt.hist(df[[17]].sort_values(by=17, ascending=False).head(500).values)
+plt.hist(df[df.high_black==1][[17]].sort_values(by=17, ascending=False).head(500).values)
+plt.hist(df[df.high_black==0][[17]].sort_values(by=17, ascending=False).head(500).values)
+
 plt.hist(df.groupby('GEOID10').mean()[[4]].dropna().values)
 df.columns
 df.groupby('race_income_label').mean()[26]
 plt.hist(df[df.race_income==0][12].values)
+df[df.clean_text.str.contains(' bear ')].body_text.values
 
 plt.axis([.1, 1, 0, 500])
 plt.hist(df.groupby('GEOID10').mean()[['income']].dropna().values)
+
 
 
 """Use stratifier to create various comparisions of topic distributions"""
@@ -200,20 +288,78 @@ mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
 mean_diff = mean_diff.sort_values('difference', ascending=False)
 mean_diff
 
+sorted_topics = pd.Series(range(30))
+df.groupby('top_topic').count()
 """Try a Multinomial LogisticRegression"""
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression, ElasticNet, Ridge
 from statsmodels.discrete.discrete_model import MNLogit
+from statsmodels.regression.linear_model import OLS
 # we use the full df for the regression because we want to weight results by the
 # existence of different ads in different neighborhoods, not just unique addresses
-X = df_full[["black_proportion","asian_proportion","latinx_proportion","log_income","log_price"]]
-y = df_full.top_topic
+X = df[["black_proportion","log_income","asian_proportion","latinx_proportion","log_price"]]
+y = df.top_topic
+df_tmp = df.copy()
+df_tmp[list(range(30))] = df_tmp[list(range(30))].where(df_tmp[list(range(30))]>.1,0)
+X = df[list(range(30))+["log_price", 'black_proportion','latinx_proportion']]
+y = np.where(df['white_proportion']>np.median(df['white_proportion']),1,0)
+y= df['income']
+OLR = OLS(y,X).fit()
+OLR.summary()
+OLR.predict(exog=X)
+OLR.score
+df_full_results.params.sort_values()
+df_results.params.sort_values()
+df_results.summary()
+EN = ElasticNet(alpha = .02, l1_ratio=.001)
+EN.fit(X,y)
+EN.score(X,y)
+EN.predict(X)
+LinR = LinearRegression()
+LinR.fit(X,y)
+LinR.score(X,y)
+
+RR = Ridge()
+RR.fit(X,y).score(X,y)
+pd.Series(RR.coef_)
+from sklearn.svm import SVR, SVC
+supportR = SVR()
+supportR.fit(X,y)
+
+supportC = SVC()
+supportC.fit(X,y)
+supportC.score(X,y)
+
+from sklearn.metrics import explained_variance_score, r2_score
+explained_variance_score(y, OLR.predict(X))
+r2_score(y, RR.predict(X))
+predict_df = pd.DataFrame({'predictions':OLR.predict(X), 'real_values':y, 'tractID':df.GEOID10})
+predict_df = predict_df.assign(abs_diff = abs(predict_df.predictions - predict_df.real_values))
+predict_df.sum()
+
+predict_df.groupby('tractID').mean()
+
 LR = LogisticRegression()
 LR.fit(X,y)
-lr_coefs = pd.DataFrame(LR.coef_).rename({0:"black_proportion",1:"asian_proportion",2:"latinx_proportion",3:"log_income",4:"log_price"}, axis=1)
+LR.score(X,y)
+lr_coefs = pd.DataFrame(LR.coef_).rename({0:"black_proportion",1:"log_income",2:"asian_proportion",3:"latinx_proportion",4:"log_price"}, axis=1)
 lr_coefs
 lr_coefs = lr_coefs.assign(abs_black = abs(lr_coefs.black_proportion)).sort_values("abs_black", ascending=False)
 mean_diff = lr_coefs.merge(lda_output.summarize_on_stratifier(df, n_topics, 'high_black'), left_index=True, right_index=True)
 mean_diff.drop(['abs_black','difference', 'proportion'], axis=1, inplace=True)
+mean_diff.sort_values('black_proportion')
+
+""" Mess Around with Machine Learning """
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score, f1_score, confusion_matrix, accuracy_score
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier().fit(X_train, y_train)
+predictions = rf.predict_proba(X_test)[:,1]
+
+rf.score(X_test, y_test)
+
+
+sorted_import_index = rf.feature_importances_.argsort()
 
 """Compute Standard Errors"""
 from statsmodels.discrete.discrete_model import Logit, MNLogit
@@ -243,58 +389,8 @@ df.to_csv('data/data514.csv')
 
 """Produces useful output of topics and example texts"""
 
-mean_diff
+mean_diff = list(range(30))
+sorted_topics = pd.Series(list(range(30)))
 now = datetime.now()
-reload(preprocess)
-lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'.txt', model= model, sorted_topics=mean_diff, strat_col='race_income_label', cl=True, print_it = False)
-
-
-
-
-
-
-
-
-pairs = list(preprocess.candidate_duplicates(df[df.address.str.contains('missing')], char_ngram=5))
-droplist = set([min(pair[0],pair[1]) for pair in pairs])
-missing = df[df.address.str.contains('missing')].reset_index()
-df = df.drop(missing['index'])
-df.shape
-df =  preprocess.clean_duplicates(df[df.address.str.len()>2], text_col='address', method = 'lsh', char_ngram=2, thresh=.75, bands=20)
-
-address_dupes = preprocess.candidate_duplicates(df[df.address.str.len()>2],text_col='address', char_ngram=2, seeds=100, bands=20, hashbytes=4)
-address_dupes.sort_values(0)
-
-len(address_dupes)
-
-def shingles(text, char_ngram=5):
-    return set(text[head:head + char_ngram] for head in range(0, len(text) - char_ngram))
-
-from lsh import cache, minhash
-# calculate jaccard similarity between two lists of shingles
-def jaccard(set_a, set_b):
-    intersection = set_a & set_b
-    union = set_a | set_b
-    return len(intersection) / len(union)
-lines = df.address
-similarities = []
-hasher = minhash.MinHasher(seeds=1000, char_ngram=1, hashbytes=4)
-lshcache = cache.Cache(bands=10, hasher=hasher)
-for (line_a, line_b) in address_dupes:
-    doc_a, doc_b = lines.iloc[line_a], lines.iloc[line_b]
-    shingles_a = shingles(lines.iloc[line_a], char_ngram)
-    shingles_b = shingles(lines.iloc[line_b], char_ngram)
-    try:
-        jaccard_sim = jaccard(shingles_a, shingles_b)
-    except:
-        print("jaccard failed at \n", line_a, line_b,"with \n", shingles_a, shingles_b)
-        jaccard_sim = 0
-    fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
-    fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
-    minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
-    similarities.append((lines.iloc[line_a], lines.iloc[line_b], jaccard_sim, minhash_sim))
-df.address.iloc[2975]
-jaccard(shingles(lines[3183], char_ngram=1), shingles(lines[3466], char_ngram=1))
-[shingles(x, char_ngram=2) for x in df['address'].str.lower().values]
-
-list(zip(list(y.index[1:]),list(y.index[0:])))
+reload(lda_output)
+lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'jitter.txt', model= model, sorted_topics=sorted_topics, cl=True, print_it = False, sample_topics=30, sample_texts=10, jitter=True)

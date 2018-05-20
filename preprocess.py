@@ -55,7 +55,7 @@ def cl_clean_text(text_series, clean_punct=True, body_mode=False):
         return text_series
     text_series = text_series.str.replace("QR Code Link to This Post", '').str.replace(r'\n|\r|\t','')
     text_series = text_series.str.replace(r'\S*(\.com|\.net|\.gov|\.be|\.org)\S*',' #URL ').str.replace(r'http\S*', ' #URL ').str.replace(r'\d+', ' ')
-    text_series = text_series.str.replace(r'^,+','').str.replace(r',,+','')
+    text_series = text_series.str.replace(r'^,+','').str.replace(r',,+',' ')
     if clean_punct:
         module_logger.info("Cleaning punctuation, but retaining exclamations and dollarsigns")
         # We want to clean all non-word characters, but we think certain punctuation might be important, so this retains combinations of $ and !
@@ -88,13 +88,24 @@ def jaccard(set_a, set_b):
     union = set_a | set_b
     return len(intersection) / len(union)
 
+def jaccard_sim(line_a, line_b, char_ngram=5):
+    shingles_a = shingles(line_a, char_ngram)
+    shingles_b = shingles(line_b, char_ngram)
+    return jaccard(shingles_a, shingles_b)
+
+def sims_all(lines, n_texts, char_ngram=5):
+    sims_all = np.zeros((n_texts, n_texts), dtype=np.float64)
+    for i, line in enumerate(lines):
+        for j in range(i+1, len(lines)):
+            sims_all[i, j] = jaccard_sim(lines[i], lines[j], char_ngram)
+    return sims_all
+
 # make a list of possible duplicates
 def candidate_duplicates(text_df, text_col, char_ngram=5, seeds=100, bands=5, hashbytes=4):
     hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
     if seeds % bands != 0:
         raise ValueError('Seeds has to be a multiple of bands. {} % {} != 0'.format(seeds, bands))
     lshcache = cache.Cache(num_bands=bands, hasher=hasher)
-
     for i in range(len(text_df)):
         line = text_df[text_col].iloc[i]
         lshcache.add_fingerprint(hasher.fingerprint(line),doc_id = i)
@@ -108,6 +119,7 @@ def candidate_duplicates(text_df, text_col, char_ngram=5, seeds=100, bands=5, ha
 
 #Deal with duplicates
 def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5, seeds=100, bands=5, hashbytes=4, thresh = .9):
+    start = len(text_df)
     if method == 'latlon':
         #must have 'latitude', 'longitude','price' colums to use this method
         text_df = text_df.drop_duplicates(['latitude','longitude','price'])
@@ -117,7 +129,7 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5, se
     #use LSH minhash to clean dupes requires LSH and minhash3 to run!!!
     if method=='lsh':
         try:
-            text_df=text_df.sort_values(['scraped_year','scraped_month','scraped_day']).reset_index()
+            text_df = text_df.sort_values('listingDate').reset_index()
         except(KeyError):
             try:
                 module_logger.info('text_df has insufficient date information, dropping by month/day')
@@ -127,6 +139,7 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5, se
                 text_df=text_df.reset_index()
         # first get candidate_pairs
         candidate_pairs = candidate_duplicates(text_df, text_col, char_ngram, seeds, bands, hashbytes)
+        module_logger.info("Found "+str(len(candidate_pairs))+" possible duplicate pairs")
         # then we make sure jaccard similarity is above .9
         lines = text_df[text_col].str.lower().values
         hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
@@ -134,18 +147,42 @@ def clean_duplicates(text_df, text_col='body_text',method = 100,char_ngram=5, se
         similarities = []
         for (line_a, line_b) in candidate_pairs:
             doc_a, doc_b = lines[line_a], lines[line_b]
-            shingles_a = shingles(lines[line_a], char_ngram)
-            shingles_b = shingles(lines[line_b], char_ngram)
-            jaccard_sim = jaccard(shingles_a, shingles_b)
-            fingerprint_a = set(hasher.fingerprint(doc_a.encode('utf8')))
-            fingerprint_b = set(hasher.fingerprint(doc_b.encode('utf8')))
-            minhash_sim = len(fingerprint_a & fingerprint_b) / len(fingerprint_a | fingerprint_b)
-            similarities.append((line_a, line_b, jaccard_sim, minhash_sim))
+            similarities.append((line_a, line_b, jaccard_sim(doc_a, doc_b, char_ngram)))
+            if len(similarities) % 10000 == 0:
+                module_logger.info("Processed "+str(len(similarities))+" possible duplicates")
         # reduce to only jaccards above .9 and check which pair is older
         drop_list = [min(pair[0],pair[1]) for pair in similarities if pair[2]>=thresh]
         text_df = text_df.drop(set(drop_list)).set_index("index")
+        dupes = start - len(text_df)
+        module_logger.info("Dropped "+str(dupes)+" duplicates")
     return text_df
 
+def post_lda_drop(df_test, n_topics, text_col='clean_text', n_texts=40, char_ngram=5, thresh=.9, continuous=False, return_max=False, slice_at=None, start=0):
+    if continuous:
+        dropped = n_texts+1
+        while dropped>n_texts:
+            dropped = len(df_test)
+            df_test, max_list = post_lda_drop(df_test, n_topics, text_col, n_texts, char_ngram, thresh, continuous=False, return_max=True, slice_at=slice_at, start=start)
+            start+= n_texts - max(max_list) - 1
+            dropped = dropped - len(df_test)
+            print(dropped, start)
+        return df_test
+    max_list = []
+    for i in range(n_topics):
+        tmp_top = df_test.sort_values(by=i, ascending=False).iloc[start:n_texts+start] # grab the top listings for the topic
+        if slice_at is None:
+            sims = sims_all(tmp_top[text_col].values, n_texts, char_ngram) # calculate the jaccard similarity between all of them
+        else:
+            sims = sims_all(tmp_top[text_col].str.slice(stop=slice_at).values, n_texts, char_ngram) # calculate the jaccard similarity between all of them
+        x = np.transpose((sims>thresh).nonzero()) # find those texts where the similarity is above .8
+        pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
+        drop_list = list(set([min(pair[0],pair[1]) for pair in pairs])) # make a unique list of those, keeping only the newest dupe
+        module_logger.info("dropped " + str(len(drop_list))+" listings from topic "+str(i)+'\n') # output some info about the drop
+        max_list.append(len(drop_list))
+        df_test = df_test.drop(drop_list) #drop them from the test set
+    if return_max:
+        return df_test, max_list
+    return df_test
 
 # make a corpus and dictionary from a list of texts
 def df_to_corpus(documents, stopwords=None, dictionary=None):
