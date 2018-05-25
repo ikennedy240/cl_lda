@@ -172,30 +172,44 @@ def text_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted
         module_logger.info("Saved output to "+filepath)
     module_logger.info("Completed Output")
 
+# an output function which makes individual files
+def multi_file_output(df, text_col, filepath, sample_topics=10, sample_texts=5, sorted_topics=None, strat_col=None, topics=None, model=None):
+    if topics is None:
+        if model is None:
+            return "You must provide either model or topics"
+        else:
+            module_logger.info("Automatically generating topic list")
+            topics = get_formatted_topic_list(model, formatting='keywords', n_topics=-1)
+    n_topics = len(topics)
+    try:
+        df[1]
+    except:
+        df = df.rename(dict(zip([str(x) for x in range(n_topics)], range(n_topics))), axis=1)
+    if sorted_topics is None:
+        if strat_col is None:
+            return "You must provide either sorted_topics or strat_col"
+        # if no sorted_topics are provided, they're calculated with default values
+        else:
+            module_logger.info("Using default paramaters to produce topics sorted by stratifier")
+            mean_diff = summarize_on_stratifier(df, n_topics, strat_col)
+            sorted_topics = mean_diff.sort_values('proportion', ascending=False)[1:].proportion
+    # What we need to do is make a separate file with meta-data for each files
+    # Meta data should be: topic, topic proportion, postID, price
+    for j in sorted_topics.index[0:sample_topics]:
+        tmp_top = df.sort_values(by=j, ascending=False)
+        for i in range(sample_texts):
+            tmp = tmp_top.iloc[i]
+            filename = "topic_"+str(j)+"_prop_"+str(round(tmp[j],2))+"_postid_"+str(tmp.postid)+"_price_"+str(tmp.clean_price)+".txt"
+            #module_logger.info("Trying"+str(filename))
+            with open(filepath+'/'+filename, 'w', encoding='utf-8') as f:
+                print("Topic", j, "Example #", i+1, ':\n', file=f)
+                print("This text had address:", tmp.address, " was connected to a listing in tract #", tmp.GEOID10,' with post ID ',tmp.postid, ' and cost $', tmp.clean_price, '\n', file=f)
+                print("was ",round(tmp.loc[j]*100,2),"percent topic", j, ':\n', tmp[text_col], '\n', file=f)
+    module_logger.info("Saved output to "+filepath)
+
 
 
 if __name__ == "__main__":
-    model = models.LdaModel.load('models/4_12model')
-    get_formatted_topic_list(model, formatting='summary')
-    df_merged = pd.read_csv('data/cl_lda4_15.csv')
-    n_topics = 50
-    strat_col = 'high_white'
-    x = rfc_distribution(df_merged, n_topics, strat_col='high_white', thresh = 0.01, method="mean")
-    x
-    mean_diff = summarize_on_stratifier(df_merged, n_topics, strat_col='high_white', topic_cols=False, thresh = 0.01, method="mean")
-    sorted_rfc = mean_diff.loc[x].iloc[::-1]
-    mean_diff= mean_diff.iloc[x]
-    mean_diff['rfc'] = range(1,51)
-    mean_diff
-    df=df_merged
-    text_output = 'output/4_15.txt'
-    sample_topics = 10
-    sample_texts = 5
-    sorted_topics = x.all_r
-    i=1
-    j='1'
-    tmp_top['1']
-    x.columns
-    text_output(df_merged, 'output/test.txt', sample_topics=10, sample_texts=5, sorted_topics=x.all_r, topics=None, model=model)
-    model.print_topics(10,10)
-    ["Topic "+str(x[0])+": "+re.sub(r'\s+', ', ',re.sub(r'\d|\W',' ',x[1]))[2:-2] for x in test]
+    df = pd.read_csv('data/no_dupes_lda_fit5_18.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+    model = models.LdaModel.load('models/model5_18')
+    df.clean_price

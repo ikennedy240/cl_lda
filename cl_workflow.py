@@ -362,3 +362,5 @@ sorted_topics = pd.Series(list(range(30)))
 now = datetime.now()
 reload(lda_output)
 lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'jitter.txt', model= model, sorted_topics=sorted_topics, cl=True, print_it = False, sample_topics=30, sample_texts=10, jitter=True)
+lda_output.multi_file_output(df, text_col='body_text', filepath='output/test', model= model, sorted_topics=sorted_topics, sample_topics=30, sample_texts=10)
+df.clean_price
