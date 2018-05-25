@@ -133,18 +133,25 @@ df_full = df
 df = df_full.drop_duplicates('body_text')
 df.shape
 # dropping duplicated addresses gives us 10320 listings for the LDA model
-57946 - 64290
+57946 - 34206
 # check for other dupes
 df_full.shape
 
 df.address.sort_values()
 df = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
 df_test = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
-df.shape
-test = df
+df_test.shape[0]
+n = df_test.unique('address').groupby('GEOID10').listingText.count()*df.shape[0]/df_test.unique('address').shape[0]
+m= df.groupby('GEOID10').listingText.count()
+
+from scipy.stats import chisquare
+chisquare(pd.DataFrame({'full':n,'small':m}), axis=None)
+pd.DataFrame({'full':n,'small':m})
+
+help(chisquare)
 df.to_csv('data/lda_processed5_17.csv')
 df_full = pd.read_csv('data/train_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
-df = pd.read_csv('data/lda_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})texts = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in documents]
+df = pd.read_csv('data/no_dupes_lda_fit5_18.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
 
 """ Very Robust Dupe Routine That Uses Repeated LDA Sorting"""
 total_dupes = 0
@@ -194,7 +201,9 @@ model = models.LdaModel(corpus, id2word = dictionary, num_topics=n_topics, passe
 #save the model for future use
 now = datetime.now()
 model.save('models/model'+str(now.month)+'_'+str(now.day))
-#model = models.LdaModel.load('models/model4_23')
+model = models.LdaModel.load('models/model5_18')
+model.log_perplexity(corpus)
+
 """Merge LDA output and DF"""
 #Make LDA corpus of our Data
 lda_corpus = model[corpus]
@@ -207,50 +216,6 @@ df.to_csv('data/no_dupes_lda_fit5_18.csv')
 df = pd.read_csv('data/no_dupes_lda_fit5_18.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
 df = df.drop([str(x) for x in list(range(30))],1)
 
-"""Remove More Duplicates Found by the LDA Model"""
-df_test = df.copy() # make a copy of the df so we can make sure we want to apply the drops
-reload(preprocess)
-df_test = preprocess.post_lda_drop(df_test, n_topics, n_texts=50, char_ngram=5, thresh=.5, continuous=True, start = 0)
-
-df_test = preprocess.post_lda_drop(df_test, n_topics, thresh=.5, n_texts=50, slice_at=100, continuous=True)
-df_test.shape
-df= df_test
-
-df.sort_values(22, ascending=False).clean_text.head(20).values
-
-df_test.sort_values(0, ascending=False).body_text.head(20).values
-
-df_full.sort_values(6, ascending=False).body_text.head(100).values
-
-df_test.shape
-df=df_test
-i=3
-tmp_top = df_test.sort_values(by=i, ascending=False).iloc[0:20] # grab the top listings for the topic
-sims = preprocess.sims_all(tmp_top.body_text.str.slice(stop=300).values, 20, char_ngram=5) # calculate the jaccard similarity between all of them
-sims
-x = np.transpose((sims>.5).nonzero()) # find those texts where the similarity is above .8
-pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
-drop_list = list(set([min(pair[0],pair[1]) for pair in pairs]))
-drop_list
-
-
-sims = preprocess.sims_all(tmp_top['clean_text'].str.slice(stop=100).values, 50, 5) # calculate the jaccard similarity between all of them
-x = np.transpose((sims>.5).nonzero()) # find those texts where the similarity is above .8
-pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
-drop_list = list(set([min(pair[0],pair[1]) for pair in pairs])) # make a unique list of those, keeping only the newest dupe
-drop_list
-module_logger.info("dropped " + str(len(drop_list))+" listings from topic "+str(i)+'\n') # output some info about the drop
-max_list.append(len(drop_list))
-df_test = df_test.drop(drop_list)
- # make a unique list of those, keeping only the newest dupe
-#df_test = df_test.drop(drop_list) #drop them from the test set
-tmp_top.drop(drop_list).body_text.values
-tmp_top.body_text.values
-df.shape
-
-df.to_csv('data/rerun_5_18.csv')
-df = pd.read_csv('data/rerun_5_18.csv',  index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
-df.columns
 
 #do the same process for the full_df
 full_corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df_full.clean_text], stopwords=hood_stopwords, dictionary=dictionary)
@@ -262,6 +227,8 @@ df_full.shape
 df= df.drop(list(range(30)),1)
 df= df.drop([str(x) for x in list(range(30))],1)
 len(full_corpus)
+
+df_full.to_csv('data/full_model_fit5_21.csv')
 
 """Look at the distributions of the different topics"""
 import matplotlib.pyplot as plt
@@ -280,7 +247,7 @@ plt.axis([.1, 1, 0, 500])
 plt.hist(df.groupby('GEOID10').mean()[['income']].dropna().values)
 
 
-
+df[df['4']>.01][[str(x) for x in list(range(30))]].idxmax(1).value_counts()
 """Use stratifier to create various comparisions of topic distributions"""
 strat_col = 'high_white'
 lda_output.compare_topics_distribution(df, n_topics, strat_col)
@@ -297,16 +264,17 @@ from statsmodels.regression.linear_model import OLS
 # we use the full df for the regression because we want to weight results by the
 # existence of different ads in different neighborhoods, not just unique addresses
 X = df[["black_proportion","log_income","asian_proportion","latinx_proportion","log_price"]]
-y = df.top_topic
+y = df.white_proportion
 df_tmp = df.copy()
 df_tmp[list(range(30))] = df_tmp[list(range(30))].where(df_tmp[list(range(30))]>.1,0)
-X = df[list(range(30))+["log_price", 'black_proportion','latinx_proportion']]
+topic_0 + topic_7 + topic_8 + topic_9 + topic_12  + topic_14 + topic_16 + topic_17+ topic_20 + topic_23 + topic_24 + topic_25  + topic_28
+X = df[[str(x) for x in [0,7,8,9,12,14,16,17,20,23,24,25,28]]+["black_proportion","log_income","log_price","total_RE"]]
 y = np.where(df['white_proportion']>np.median(df['white_proportion']),1,0)
 y= df['income']
 OLR = OLS(y,X).fit()
 OLR.summary()
 OLR.predict(exog=X)
-OLR.score
+
 df_full_results.params.sort_values()
 df_results.params.sort_values()
 df_results.summary()
@@ -346,7 +314,7 @@ lr_coefs
 lr_coefs = lr_coefs.assign(abs_black = abs(lr_coefs.black_proportion)).sort_values("abs_black", ascending=False)
 mean_diff = lr_coefs.merge(lda_output.summarize_on_stratifier(df, n_topics, 'high_black'), left_index=True, right_index=True)
 mean_diff.drop(['abs_black','difference', 'proportion'], axis=1, inplace=True)
-mean_diff.sort_values('black_proportion')
+mean_diff
 
 """ Mess Around with Machine Learning """
 from sklearn.model_selection import train_test_split
@@ -388,7 +356,7 @@ df.to_csv('data/data514.csv')
 
 
 """Produces useful output of topics and example texts"""
-
+df[list(range(30))]
 mean_diff = list(range(30))
 sorted_topics = pd.Series(list(range(30)))
 now = datetime.now()

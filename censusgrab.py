@@ -15,9 +15,9 @@ import json
 from sklearn.metrics import roc_auc_score, f1_score, confusion_matrix, accuracy_score
 import regex as re
 
-df = pd.read_csv('data/lda_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
-
-
+df = pd.read_csv('data/no_dupes_lda_fit5_18.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
+df.shape
+df2 = pd.read_csv('data/lda_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
 
 '''prepare a train/test set and a validation set'''
 # Split data into training and test sets
@@ -28,18 +28,10 @@ stop_words = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
 from sklearn.model_selection import train_test_split
 pattern = re.compile(r'\b(' + r'|'.join(stop_words) + r')\b\s*', flags=re.IGNORECASE)
 
-x ='|'.join(stop_words)
-df_small.clean_text = df_small.clean_text.str.lower().replace(,'')
-df_small.clean_text.head(10).values
-X = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in df.clean_text.values]
-
-
-regex_pat = re.compile(r'FUZ', flags=re.IGNORECASE)
-pd.Series(['foo', 'bellvue', np.nan]).str.replace(r'\b(' + r'|'.join(stop_words) + r')\b\s*', 'bar')
-
+X = [[word for word in pattern.sub('', document.lower()).split() if len(word)>3] for document in df2.clean_text.values]
 X = [' '.join(x) for x in X]
 X_train, X_test, y_train, y_test = train_test_split(X, df['high_white'], random_state=0)
-
+X[:10]
 
 
 """CountVectorizer"""
@@ -123,19 +115,18 @@ Largest Coefs:
 
 print(df[df.body_text.str.contains("brewer")].body_text.values)
 
+
+
 """TfidfVectorizer"""
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-tfidf = TfidfVectorizer(stop_words=stop_words, ngram_range =(1,2), vocabulary=features).fit(X_train)
-tfidf
+tfidf = TfidfVectorizer(stop_words=stop_words, ngram_range =(1,3)).fit(X_train)
 len(tfidf.get_feature_names())
 X_train_tfidf = tfidf.transform(X_train)
 model = LogisticRegression().fit(X_train_tfidf, y_train)
 predictions = model.predict(tfidf.transform(X_test))
-sub_predictions = model.predict(tfidf.transform(S_X))
 
 print('AUC: ', roc_auc_score(y_test, predictions))
-print('AUC: ', roc_auc_score(S_y, sub_predictions))
 
 
 feature_names = np.array(tfidf.get_feature_names())

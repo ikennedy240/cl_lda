@@ -174,7 +174,7 @@ def post_lda_drop(df_test, n_topics, text_col='clean_text', n_texts=40, char_ngr
             sims = sims_all(tmp_top[text_col].values, n_texts, char_ngram) # calculate the jaccard similarity between all of them
         else:
             sims = sims_all(tmp_top[text_col].str.slice(stop=slice_at).values, n_texts, char_ngram) # calculate the jaccard similarity between all of them
-        x = np.transpose((sims>thresh).nonzero()) # find those texts where the similarity is above .8
+        x = np.transpose((sims>thresh).nonzero()) # find those texts where the similarity is above a threshold
         pairs = [(tmp_top.iloc[pair[0]].name, tmp_top.iloc[pair[1]].name) for pair in x]
         drop_list = list(set([min(pair[0],pair[1]) for pair in pairs])) # make a unique list of those, keeping only the newest dupe
         module_logger.info("dropped " + str(len(drop_list))+" listings from topic "+str(i)+'\n') # output some info about the drop
