@@ -1,3 +1,4 @@
+qr code link to this post
 seattle
 bellevue
 capitol hill
@@ -10,7 +11,6 @@ lynnwood
 tacoma
 puyallup
 bothell
-university place
 downtown
 lakewood
 ballard
@@ -34,8 +34,6 @@ lacey
 lower queen anne
 woodinville
 burien
-microsoft
-amazon
 eastlake
 juanita
 magnolia
@@ -74,11 +72,9 @@ lake union
 eastside
 south hill
 spanaway
-district
 south king
 downtown bellevue
 jblm
-facebook
 auburn
 lakeland hills
 downtown tacoma

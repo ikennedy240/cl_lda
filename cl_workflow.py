@@ -15,7 +15,7 @@ import logging
 import cl_census
 from gensim import corpora, models, similarities, matutils
 from importlib import reload
-reload()
+reload(preprocess)
 
 """Start Logging"""
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -175,7 +175,7 @@ while cycle_dupes>100:
     df_test = preprocess.post_lda_drop(df_test, n_topics, thresh=.5, n_texts=50, slice_at=100, continuous=True)
     # rinse
     cycle_dupes = start - len(df_test)
-    total_dupes += cycle_dupes
+    total_dupes += cycle_dupesß
     df_test = df_test.drop(list(range(n_topics)),1)
     model_runs += 1
     print("Ran ", model_runs, "LDA models and dropped an additional ",cycle_dupes, " for a total of ", total_dupes)
@@ -183,6 +183,9 @@ while cycle_dupes>100:
 
 df.shape
 df_current = df.copy()
+
+df['preproc_text'] = preprocess.preprocess(df.listingText)
+
 """Make Corpus and Dictionary"""
 with open('resources/hoods.txt') as f:
     neighborhoods = f.read().splitlines()
