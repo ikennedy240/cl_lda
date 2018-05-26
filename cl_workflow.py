@@ -58,11 +58,12 @@ sum(df_full.postID.isin(set(df_old.postid)))
 
 df = pd.read_csv('data/cl_train_set.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
 df.shape
+(64750, 39)
 # add census info
 df = cl_census.mergeCLandCensus(df)
 # clean text
 df = df.assign(body_text = df.listingText)
-df['clean_text'] = preprocess.cl_clean_text(df.body_text)
+df['clean_text'] = preprocess.preprocess(df.body_text)
 df.body_text = preprocess.cl_clean_text(df.body_text, body_mode=True)
 
 
@@ -122,33 +123,27 @@ df.isnull().sum()
 # missing values, but we won't drop them because that variable doesn't matter
 df = df.dropna(subset=['postid','income'])
 df.shape
+(64187, 61)
 # with this preprocessing, we've lost a few more listings and the total set should be
 # 64290 listings in the training data
 # save processed data
-df.to_csv('data/train_processed5_17.csv')
+df.to_csv('data/train_processed5_25.csv')
 
 """Break off the section to use the LDA"""
 # break off a df with unique addresses
 df_full = df
-df = df_full.drop_duplicates('body_text')
+df = df_full.drop_duplicates('clean_text')
 df.shape
+(54055, 61)
 # dropping duplicated addresses gives us 10320 listings for the LDA model
 57946 - 34206
 # check for other dupes
 df_full.shape
 
-df.address.sort_values()
 df = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
-df_test = preprocess.clean_duplicates(df, text_col='clean_text', method = 'lsh', char_ngram=5, thresh=.5)
-df_test.shape[0]
-n = df_test.unique('address').groupby('GEOID10').listingText.count()*df.shape[0]/df_test.unique('address').shape[0]
-m= df.groupby('GEOID10').listingText.count()
-
-from scipy.stats import chisquare
-chisquare(pd.DataFrame({'full':n,'small':m}), axis=None)
-pd.DataFrame({'full':n,'small':m})
-
-help(chisquare)
+df.shape
+(32816, 61)
+32816 - 17523
 df.to_csv('data/lda_processed5_17.csv')
 df_full = pd.read_csv('data/train_processed5_17.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
 df = pd.read_csv('data/no_dupes_lda_fit5_18.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object})
@@ -161,7 +156,7 @@ n_passes = 1
 model_runs = 0
 df_test = df
 df_test = df_test.drop(list(range(n_topics)),1)
-while cycle_dupes>100:
+while cycle_dupes>50:
     start = len(df_test)
     # fit LDA model
     corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df_test.clean_text], stopwords=hood_stopwords)
@@ -175,16 +170,16 @@ while cycle_dupes>100:
     df_test = preprocess.post_lda_drop(df_test, n_topics, thresh=.5, n_texts=50, slice_at=100, continuous=True)
     # rinse
     cycle_dupes = start - len(df_test)
-    total_dupes += cycle_dupesß
+    total_dupes += cycle_dupes
     df_test = df_test.drop(list(range(n_topics)),1)
     model_runs += 1
     print("Ran ", model_runs, "LDA models and dropped an additional ",cycle_dupes, " for a total of ", total_dupes)
     # repeat
 
-df.shape
-df_current = df.copy()
-
-df['preproc_text'] = preprocess.preprocess(df.listingText)
+df_test.shape
+(14382, 61)
+df = df_test
+df.to_csv('data/no_dupes_5_25.csv')
 
 """Make Corpus and Dictionary"""
 with open('resources/hoods.txt') as f:
