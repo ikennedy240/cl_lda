@@ -69,13 +69,13 @@ def cl_clean_text(text_series, clean_punct=True, body_mode=False):
 
 def preprocess(text):
     with open('resources/seattle_stop_words.txt') as f:
-        neighborhoods = f.read().splitlines()
-    from sklearn.feature_extraction import stop_words
-    stop_words = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
-    stopword_pattern = re.compile(r'\b(' + r'|'.join(stop_words) + r')\b\s*', flags=re.IGNORECASE)
-    punctuation_pattern = r"[#\w']+|[!?]+"
+        neighborhoods = f.read().splitlines() # read stopwrod file
+    from sklearn.feature_extraction import stop_words # get sklearn stop_words
+    stop_words = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS) # join our stopwords and the sklearn ones
+    stopword_pattern = re.compile(r'\b(' + r'|'.join(stop_words) + r')\b\s*', flags=re.IGNORECASE) # turn the stopwords into a compiled regex
+    punctuation_pattern = r"[#\w]+|[!?]+" # compile a regex that saves certain characters
     url_pattern = r'(http)?(www)?\S*(\.com|\.net|\.gov|\.be|\.org)\S*'
-    short_pattern = r' \b\w{1,3}\b'
+    short_pattern = r"(^| |')\b\w{1,3}\b"
     text = (text.str.lower() # make lowercase
            .str.replace(stopword_pattern, '') # drop neighborhoods and other stopwords
            .str.replace(url_pattern, '') # drop urls
