@@ -1,0 +1,116 @@
+---
+title: "Comparing stm to traditional LDA"
+output:
+  html_document:
+    df_print: paged
+---
+
+I want to begin by importing data that already has cleaned text, lots of possible co-variates, and has been fitted with an LDA model using gensim in python. I'll then fit a new LDA using the stm package, then a SAGE model without co-variates, and then a SAGE model with covariates
+
+```{r load libraries}
+library(stm) # runs the topic models
+library(quanteda) # makes the dictionary and corpus
+library(tidyverse) # makes nice output and stuff
+library(tidytext) # does amazing things with text
+library(drlib) # for reorder within
+```
+
+
+```{r read data}
+cl_train <- read_csv('data/no_dupes_lda_fit5_26.csv') %>% #read python LDA data
+  rename(py_index = X1) %>% # rename the old index column (starts at 0)
+  rename_at(vars(`0`:`9`), funs(paste0('topic_',.))) %>% # rename the topics by prepending 'topic'
+  mutate( # add some new variables for regressions
+    pop_thousands = total_RE/1000, # population in thousands
+    percent_white = white_proportion*100, # racial percentages
+    percent_black = black_proportion*100)
+```
+
+
+
+# Training a SAGE stm with covariates
+```{r fit SAGE stm}
+temp<- textProcessor(documents = cl_train$clean_text, metadata=cl_train)
+out <- prepDocuments(temp$documents, temp$vocab, temp$meta)
+sage_model <- stm(out$documents, out$vocab, K = 10, prevalence = ~white_proportion + pop_thousands + log_income + log_price, data=out$meta) # fit an SAGE model using stm and covariates
+K = c(5,10,15,30)
+searchK(out$documents, out$vocab, K = K, prevalence = ~white_proportion + black_proportion + pop_thousands + log_income + log_price, data=out$meta)
+```
+
+```{r examine base model topic distributions}
+td_gamma <- tidy(sage_model, matrix = "gamma") # get topic proprtions by document
+sage_2_fit <- spread(td_gamma,topic,gamma) %>% mutate(document = out$meta$postid) # spread the proportions
+
+model_compare <- cl_train %>% select(topic_0:topic_9, postid) %>% mutate(postid=as.character(postid)) %>% inner_join(sage_fit, by=c('postid'='document')) # merge with gensim lda
+cor(model_compare %>% select(-postid)) # compare correlations: model similarity is confirmed, most topics are >.5 (often over .7) across models
+cor(inner_join(sage_fit,sage_2_fit %>% mutate(document = as.character(document)), by="document") %>% select(-document)) # LDA and Sage models are very similar as estimated by stm. Topics 1 and 2 seem to be mixed, and topic 10 matches with .79 cor. All other topics match with corr >.9
+```
+
+Very high correlations are still common with the SAGE model. 
+SAGE and LDA models as estimated by stm are very highly correlated
+
+```{r t tests}
+cl_merged <- cl_train %>% select(postid, high_white, high_black, black_proportion, white_proportion, log_income, log_price, pop_thousands) %>% mutate(postid=as.character(postid)) %>% inner_join(sage_2_fit %>% mutate(document = as.character(document)), by=c('postid'='document')) # merge with gensim lda
+high_prop = cl_merged %>% filter(high_white==1) %>% select(`1`:`10`) %>% as.data.frame() # make a df limited to one set of a stratifier
+low_prop = cl_merged %>% filter(high_white==0) %>% select(`1`:`10`) %>% as.data.frame() # an the other side
+labels <- sageLabels(sage_model) #extract model labels
+
+ttest_out <- function(a,b){ # output and save parts of the t.test function
+  test <- t.test(a,b, alternative = 'two.sided', conf.level = 0.95) # set params
+  p <- test$p.value #save p value
+  point_est <- test$estimate[1] - test$estimate[2] # save point estimate
+  high_est <- max(test$conf.int) # save the high estimate
+  low_est <- min(test$conf.int) # and the low estimate
+  return(data_frame('point_est' = point_est, 'high_est' = high_est, 'low_est' = low_est, 'p_value'=p)) # return a tibble row
+}
+
+tmp = data_frame() # start with an empty dataframe
+for(i in 1:10){ # loop through topics
+  tmp = bind_rows(tmp, ttest_out(high_prop[,i] ,low_prop[,i])) #t.test each row
+}
+t_tests <- bind_cols(tmp, 'topic' = names(high_prop)) %>% # add a row of topic names
+  select(topic, everything()) %>% # reoder cols
+  mutate(topic = gsub('_',' ',topic), topic = gsub('t','T',topic)) # make nice names
+#t_tests # uncomment to show t_tests
+```
+
+```{r rope ladder}
+# make rope ladder plot of output
+t_tests %>% filter(abs(point_est)>.01) %>% # retain only large mean differences
+  ggplot(aes(x = reorder(topic,-point_est), y = point_est)) + # reorder topics for pretty output
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color = "darkblue") + # plot the rope ladder
+    geom_text(aes(label = round(point_est,4)), nudge_x = 0.2) + # add point estimates
+    #geom_text(aes(label = topic, nudge_x = -.2)) + # add topic names
+    scale_x_discrete("") + # remove x label and scale
+    geom_hline(yintercept = 0, color = "red") + # plot a line at 0
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+          #axis.text.y = element_blank()) + #remove y text
+    ylab('Topic prevalant in low White neighborhoods          Topic prevalant in high White neighborhoods')+ # label the high and low proportions
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    coord_flip()+ # remove gridlines
+    ggtitle("Comparison of Mean Differences Between High White and Low White Neighborhoods") # set title
+```
+
+```{r}
+prep <- estimateEffect(1:10 ~ black_proportion, lda_model, lda_fit)
+plot(prep, "white_proportion", model=sage_model,
+method="difference",cov.value1=1,cov.value2=0)
+summary(prep)
+summary(sage_model)
+```
+
+```{r}
+
+
+searchk_results = rbind(
+c(1,5,8.421402,-32.46213,-6.296592,6.275635,-8305863,-8305858,22),
+c(2,10,9.191555,-44.62939,-6.237458,5.340548,-8225774,-8225759,70),
+c(3,15,9.421018,-51.82451,-6.199354,4.859759,-8176189,-8176161,30),
+c(4,30,9.673995,-59.21235,-6.145251,4.139986,-8102033,-8101958,29))
+
+names(searchk_results) = c('K', 'exclus','semcoh','heldout','residual','bound','lbound','em.its')
+
+```
+
+

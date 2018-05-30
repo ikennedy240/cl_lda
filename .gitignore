@@ -13,3 +13,4 @@
 *.log
 *.csv
 *.DS_Store
+.Rproj.user

@@ -180,6 +180,8 @@ df_test.shape
 (14382, 61)
 df = df_test
 df.to_csv('data/no_dupes_5_25.csv')
+df =  pd.read_csv('data/no_dupes_5_25.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+
 
 """Make Corpus and Dictionary"""
 with open('resources/hoods.txt') as f:
@@ -190,7 +192,7 @@ hood_stopwords = neighborhoods + list(stop_words.ENGLISH_STOP_WORDS)
 corpus, dictionary = preprocess.df_to_corpus([str(x) for x in df.clean_text], stopwords=hood_stopwords)
 
 """Run Lda Model"""
-n_topics = 30
+n_topics = 10
 n_passes = 50
 #Run this if you have access to more than one core set workers=n_cores-1
 model = models.ldamulticore.LdaMulticore(corpus, id2word = dictionary, num_topics=n_topics, passes = n_passes, iterations = 100, minimum_probability=0, workers=3)
@@ -210,7 +212,7 @@ doc_topic_matrix = matutils.corpus2dense(lda_corpus, num_terms=n_topics).transpo
 df = df.reset_index(drop=True).join(pd.DataFrame(doc_topic_matrix))
 # Make top_topic for each document
 df = df.assign(top_topic=df[list(range(n_topics))].idxmax(1))
-df.to_csv('data/no_dupes_lda_fit5_18.csv')
+df.to_csv('data/no_dupes_lda_fit5_26.csv')
 df = pd.read_csv('data/no_dupes_lda_fit5_18.csv', index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
 df = df.drop([str(x) for x in list(range(30))],1)
 
@@ -246,6 +248,7 @@ plt.hist(df.groupby('GEOID10').mean()[['income']].dropna().values)
 
 
 df[df['4']>.01][[str(x) for x in list(range(30))]].idxmax(1).value_counts()
+
 """Use stratifier to create various comparisions of topic distributions"""
 strat_col = 'high_white'
 lda_output.compare_topics_distribution(df, n_topics, strat_col)
@@ -253,7 +256,7 @@ mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
 mean_diff = mean_diff.sort_values('difference', ascending=False)
 mean_diff
 
-sorted_topics = pd.Series(range(30))
+sorted_topics = pd.Series(range(n_topics))
 df.groupby('top_topic').count()
 """Try a Multinomial LogisticRegression"""
 from sklearn.linear_model import LogisticRegression, LinearRegression, ElasticNet, Ridge
@@ -303,7 +306,8 @@ predict_df = predict_df.assign(abs_diff = abs(predict_df.predictions - predict_d
 predict_df.sum()
 
 predict_df.groupby('tractID').mean()
-
+X = df[["black_proportion","log_income","asian_proportion","latinx_proportion","log_price"]]
+y = df.top_topic
 LR = LogisticRegression()
 LR.fit(X,y)
 LR.score(X,y)
@@ -354,11 +358,12 @@ df.to_csv('data/data514.csv')
 
 
 """Produces useful output of topics and example texts"""
-df[list(range(30))]
-mean_diff = list(range(30))
-sorted_topics = pd.Series(list(range(30)))
+df[list(range(n_topics))]
+mean_diff = list(range(n_topics))
+sorted_topics = mean_diff
 now = datetime.now()
 reload(lda_output)
-lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'jitter.txt', model= model, sorted_topics=sorted_topics, cl=True, print_it = False, sample_topics=30, sample_texts=10, jitter=True)
+lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'jitter.txt', model= model, sorted_topics=sorted_topics, cl=True, print_it = False, sample_topics=30, sample_texts=10, jitter=False)
 lda_output.multi_file_output(df, text_col='body_text', filepath='output/test', model= model, sorted_topics=sorted_topics, sample_topics=30, sample_texts=10)
 df.clean_price
+lda_output.get_formatted_topic_list(model, formatting="summary", n_topics=-1, n_terms=20)
