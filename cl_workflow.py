@@ -15,7 +15,7 @@ import logging
 import cl_census
 from gensim import corpora, models, similarities, matutils
 from importlib import reload
-reload(preprocess)
+reload(lda_output)
 
 """Start Logging"""
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -56,7 +56,7 @@ sum(df_full.postID.isin(set(df_old.postid)))
 
 """Import Training Data for Analysis"""
 
-df = pd.read_csv('data/cl_train_set.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postid':object})
+df = pd.read_csv('data/cl_train_set.csv',index_col=0,dtype = {'GEOID10':object,'blockid':object, 'postID':object})
 df.shape
 (64750, 39)
 # add census info
@@ -252,7 +252,8 @@ df[df['4']>.01][[str(x) for x in list(range(30))]].idxmax(1).value_counts()
 """Use stratifier to create various comparisions of topic distributions"""
 strat_col = 'high_white'
 lda_output.compare_topics_distribution(df, n_topics, strat_col)
-mean_diff = lda_output.summarize_on_stratifier(df, n_topics, strat_col)
+df = df.rename(dict(zip([str(x) for x in range(1,13)], range(1,13))), axis=1)
+mean_diff = lda_output.summarize_on_stratifier(df, 12, 'high_white', topic_cols = list(range(1,13)))
 mean_diff = mean_diff.sort_values('difference', ascending=False)
 mean_diff
 
@@ -358,12 +359,15 @@ df.to_csv('data/data514.csv')
 
 
 """Produces useful output of topics and example texts"""
+df = pd.read_csv('data/stm_twelve_5_29.csv',dtype = {'GEOID10':object, 'postid':object})
 df[list(range(n_topics))]
 mean_diff = list(range(n_topics))
 sorted_topics = mean_diff
 now = datetime.now()
 reload(lda_output)
 lda_output.text_output(df, text_col='body_text', filepath='output/cl'+str(now.month)+'_'+str(now.day)+'jitter.txt', model= model, sorted_topics=sorted_topics, cl=True, print_it = False, sample_topics=30, sample_texts=10, jitter=False)
-lda_output.multi_file_output(df, text_col='body_text', filepath='output/test', model= model, sorted_topics=sorted_topics, sample_topics=30, sample_texts=10)
-df.clean_price
+lda_output.multi_file_output(df, text_col='body_text', filepath='output/test', sorted_topics=mean_diff, sample_topics=12, sample_texts=10, topics=mean_diff)
+
 lda_output.get_formatted_topic_list(model, formatting="summary", n_topics=-1, n_terms=20)
+
+df[df.postid=='6436256628']
