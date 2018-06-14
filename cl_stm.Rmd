@@ -13,6 +13,7 @@ library(quanteda) # makes the dictionary and corpus
 library(tidyverse) # makes nice output and stuff
 library(tidytext) # does amazing things with text
 library(drlib) # for reorder within
+library(tidystm)
 ```
 
 
@@ -24,6 +25,7 @@ cl_train <- read_csv('data/no_dupes_lda_fit5_26.csv') %>% #read python LDA data
     pop_thousands = total_RE/1000, # population in thousands
     percent_white = white_proportion*100, # racial percentages
     percent_black = black_proportion*100)
+
 ```
 
 
@@ -32,27 +34,29 @@ cl_train <- read_csv('data/no_dupes_lda_fit5_26.csv') %>% #read python LDA data
 ```{r fit SAGE stm}
 temp<- textProcessor(documents = cl_train$clean_text, metadata=cl_train)
 out <- prepDocuments(temp$documents, temp$vocab, temp$meta)
-sage_model <- stm(out$documents, out$vocab, K = 10, prevalence = ~white_proportion + pop_thousands + log_income + log_price, data=out$meta) # fit an SAGE model using stm and covariates
-K = c(5,10,15,30)
-searchK(out$documents, out$vocab, K = K, prevalence = ~white_proportion + black_proportion + pop_thousands + log_income + log_price, data=out$meta)
+sage_model_12 <- stm(out$documents, out$vocab, K = 12, prevalence = ~high_black + high_white + pop_thousands + log_income + log_price, data=out$meta)
+sage_model_all_race <- stm(out$documents, out$vocab, K = 24, prevalence = ~black_proportion + white_proportion + latinx_proportion + asian_proportion + pop_thousands + log_income + log_price, data=out$meta) # fit an SAGE model using stm and covariates
+
+K = c(16,18,20,22,24,26,28,30)
+search_results = searchK(out$documents, out$vocab, K = K, prevalence = ~white_proportion + black_proportion + pop_thousands + log_income + log_price, data=out$meta)
+search_results
+plot(search_results)
+labelTopics(sage_model_12)
+cl_train %>% select(high_white, high_black, income, clean_price, pop_thousands) %>% summarise_all(sd)
+data.frame(t(summary_stats))
 ```
 
-```{r examine base model topic distributions}
-td_gamma <- tidy(sage_model, matrix = "gamma") # get topic proprtions by document
-sage_2_fit <- spread(td_gamma,topic,gamma) %>% mutate(document = out$meta$postid) # spread the proportions
-
-model_compare <- cl_train %>% select(topic_0:topic_9, postid) %>% mutate(postid=as.character(postid)) %>% inner_join(sage_fit, by=c('postid'='document')) # merge with gensim lda
-cor(model_compare %>% select(-postid)) # compare correlations: model similarity is confirmed, most topics are >.5 (often over .7) across models
-cor(inner_join(sage_fit,sage_2_fit %>% mutate(document = as.character(document)), by="document") %>% select(-document)) # LDA and Sage models are very similar as estimated by stm. Topics 1 and 2 seem to be mixed, and topic 10 matches with .79 cor. All other topics match with corr >.9
-```
 
 Very high correlations are still common with the SAGE model. 
 SAGE and LDA models as estimated by stm are very highly correlated
 
 ```{r t tests}
-cl_merged <- cl_train %>% select(postid, high_white, high_black, black_proportion, white_proportion, log_income, log_price, pop_thousands) %>% mutate(postid=as.character(postid)) %>% inner_join(sage_2_fit %>% mutate(document = as.character(document)), by=c('postid'='document')) # merge with gensim lda
-high_prop = cl_merged %>% filter(high_white==1) %>% select(`1`:`10`) %>% as.data.frame() # make a df limited to one set of a stratifier
-low_prop = cl_merged %>% filter(high_white==0) %>% select(`1`:`10`) %>% as.data.frame() # an the other side
+#td_gamma <- tidy(sage_model_12, matrix = "gamma") # get topic proprtions by document
+#sage_2_fit <- spread(td_gamma,topic,gamma) %>% mutate(document = out$meta$postid) # spread the proportions
+
+cl_merged <- cl_train %>% select(postid, high_white, high_black, black_proportion, white_proportion, log_income, log_price, pop_thousands, listingText, body_text, clean_text, clean_price, address, postid, GEOID10) %>% mutate(postid=as.character(postid)) %>% inner_join(sage_2_fit %>% mutate(document = as.character(document)), by=c('postid'='document')) # merge with gensim lda
+high_prop = cl_merged %>% filter(high_white==1) %>% select(`1`:`12`) %>% as.data.frame() # make a df limited to one set of a stratifier
+low_prop = cl_merged %>% filter(high_white==0) %>% select(`1`:`12`) %>% as.data.frame() # an the other side
 labels <- sageLabels(sage_model) #extract model labels
 
 ttest_out <- function(a,b){ # output and save parts of the t.test function
@@ -65,18 +69,18 @@ ttest_out <- function(a,b){ # output and save parts of the t.test function
 }
 
 tmp = data_frame() # start with an empty dataframe
-for(i in 1:10){ # loop through topics
+for(i in 1:12){ # loop through topics
   tmp = bind_rows(tmp, ttest_out(high_prop[,i] ,low_prop[,i])) #t.test each row
 }
 t_tests <- bind_cols(tmp, 'topic' = names(high_prop)) %>% # add a row of topic names
   select(topic, everything()) %>% # reoder cols
   mutate(topic = gsub('_',' ',topic), topic = gsub('t','T',topic)) # make nice names
-#t_tests # uncomment to show t_tests
+t_tests %>% arrange(desc(abs(point_est))) # uncomment to show t_tests
 ```
 
 ```{r rope ladder}
 # make rope ladder plot of output
-t_tests %>% filter(abs(point_est)>.01) %>% # retain only large mean differences
+t_tests %>% # retain only large mean differences
   ggplot(aes(x = reorder(topic,-point_est), y = point_est)) + # reorder topics for pretty output
     geom_pointrange(aes(ymax = high_est, ymin = low_est), color = "darkblue") + # plot the rope ladder
     geom_text(aes(label = round(point_est,4)), nudge_x = 0.2) + # add point estimates
@@ -93,24 +97,164 @@ t_tests %>% filter(abs(point_est)>.01) %>% # retain only large mean differences
 ```
 
 ```{r}
-prep <- estimateEffect(1:10 ~ black_proportion, lda_model, lda_fit)
-plot(prep, "white_proportion", model=sage_model,
-method="difference",cov.value1=1,cov.value2=0)
-summary(prep)
-summary(sage_model)
+#topicQuality(sage_model_12, out$documents)
+effects <- estimateEffect(1:26 ~ black_proportion + asian_proportion + latinx_proportion + pop_thousands + log_income + log_price, sage_model, out$meta)
+effects_dummies <- estimateEffect(1:26~white_proportion + black_proportion + pop_thousands + log_income + log_price, sage_model_dummies, out$meta)
+effects_12 <- estimateEffect(1:12 ~ high_white, sage_model_12, out$meta)
+effects_full <- estimateEffect(1:24 ~ black_proportion + white_proportion + latinx_proportion + asian_proportion + pop_thousands + log_income + log_price, sage_model_all_race, out$meta)
+effects_black <- estimateEffect(1:12 ~ h + pop_thousands + log_income + log_price, sage_model_all, out$meta)
+sum <- summary(effects_12)
+plot(effects_12, "log_price", method = 'difference', cov.value1 =7.3, cov.value2 = 7.8)
+summary(effects_white)
+summary(effects_latinx)
+summary(effects_full)
+sum
 ```
 
 ```{r}
-
-
-searchk_results = rbind(
-c(1,5,8.421402,-32.46213,-6.296592,6.275635,-8305863,-8305858,22),
-c(2,10,9.191555,-44.62939,-6.237458,5.340548,-8225774,-8225759,70),
-c(3,15,9.421018,-51.82451,-6.199354,4.859759,-8176189,-8176161,30),
-c(4,30,9.673995,-59.21235,-6.145251,4.139986,-8102033,-8101958,29))
-
-names(searchk_results) = c('K', 'exclus','semcoh','heldout','residual','bound','lbound','em.its')
+topic_titles = c('Rent-by-owner',
+'New Central Neighborhood',
+'Developments: Social Community',
+'Developments: Car friendly',
+'Expensive Single Family Homes',
+'Core Neighborhoods, Basic Units',
+'Luxury Hipster Apartments',
+'Downtown with views',
+'Response to Ordinances',
+'Developments: Out of town',
+'Excellent Schools ',
+"'In the heart of' core neighborhoods")
 
 ```
 
+
+```{r}
+coef_sum <- data.frame()
+for(i in 1:12){
+  row <- data.frame(topic = paste('Topic',i),
+                    title = topic_titles[[i]],
+                    race = c('white','black'),
+                    coefs = c(sum$tables[i][[1]][2,1],sum$tables[i][[1]][3,1]), 
+                    stderrs = c(sum$tables[i][[1]][2,2],sum$tables[i][[1]][3,2])
+                    )
+  coef_sum <- bind_rows(coef_sum, row)
+}
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='black') %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color = 'purple')+
+    geom_text(aes(y = coefs + (.0009*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.009) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of high-Black neighborhoods on Topic Distributions")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-.04,.075)+
+    coord_flip() # remove gridlines
+
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='white') %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color='darkblue')+
+    geom_text(aes(y = coefs + (.0021*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.017) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of high-White neighborhoods on Topic Distributions")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-.09,.21)+
+    coord_flip() # remove gridlines
+
+length(coef_sum$title[[1]])
+```
+
+```{r}
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='black') %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color = 'purple')+
+    #geom_text(aes(y = coefs + (.0009*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.007) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of high-Black neighborhoods on Topic Distributions")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +# remove gridlines
+    #ylim(-.04,.075)+
+    coord_flip()
+
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='white') %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color='darkblue')+
+    #geom_text(aes(y = coefs + (.0021*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.011) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of high-White neighborhoods on Topic Distributions")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+   # ylim(-.09,.21)+
+    coord_flip() # remove gridlines
+
+```
+
+```{r}
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='black') %>%arrange(desc(abs(coefs))) %>% head(5) %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color = 'purple')+
+    geom_text(aes(y = coefs + (.001*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.009) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Top 5 Largest high-Black effects")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-.04,.065)+
+    coord_flip() # remove gridlines
+
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>% filter(race=='white') %>% arrange(desc(abs(coefs))) %>% head(5) %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est), color='darkblue')+
+    geom_text(aes(y = coefs + (.0021*nchar(title)), label = title)) +
+    geom_text(aes(label = topic), nudge_y = -.017) +
+    theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Top 5 Largest high-White effects")+
+    theme(text = element_text(size=10), #, # set values for text
+          axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-.09,.21)+
+    coord_flip() # remove gridlines
+
+```
+
+```{r}
+write_csv(cl_merged, 'data/stm_twelve_5_29.csv')
+cl_merged %>% names() 
+
+cl_merged %>% filter(high_black==0) %>% filter(str_detect(body_text,"security")) %>% select(body_text, `1`:`12`, everything())
+cl_merged %>% group_by(high_black) %>% select(`1`:`12`) %>% summarise_all(mean)
+```
 
