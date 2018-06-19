@@ -1,0 +1,328 @@
+---
+title: "Reproducing cl_workflow.py in R"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r load libraries}
+library(stm) # runs the topic models
+library(quanteda) # makes the dictionary and corpus
+library(tidyverse) # makes nice output and stuff
+library(tidytext) # does amazing things with text
+library(drlib) # for reorder within
+library(tidystm) # 
+library(SnowballC)
+library(stringdist)
+```
+
+Load the Training Set:
+
+```{r read data}
+cl_train <- read_csv('data/cl_train_set.csv') %>% #import cl data
+  rename(py_index = X1) %>% # maintain original indices
+  mutate(log_price = log(cleanRent)) # make a logged price variable
+cl_data <- cl_train
+``` 
+
+Add Census Info, Add Context Columns
+
+```{r adding census info}
+tracts <- read_csv('resources/WAtracts.csv') %>% select(-X1) #read dataframe of census tracts for WA
+re_cols <- c("white","black", "aindian", "asian","pacisland", "other", "latinx") # save a vector of race and ethnicity categories
+tracts <- bind_cols(tracts, setNames(tracts[re_cols]/tracts$total_RE, paste0(re_cols,"_proportion"))) %>% # make racial proportion columns
+  mutate(pov_proportion = under_poverty/total_poverty, # poverty proportion variable
+         log_income = log(income), # log income variable
+         pop_thousands = total_RE/1000)# population in thousands
+cl_data <- inner_join(cl_data, tracts, by='GEOID10') %>% # join cl_data and tract data
+  drop_na(black_proportion, asian_proportion, latinx_proportion, pop_thousands, log_income, log_price) # drop na values in covariate cols
+
+```
+
+
+Clean Text
+```{r text cleaning}
+neighborhoods <- read_file('resources/seattle_stop_words.txt') # read stopword file
+pattern <- paste0('\\b',str_replace_all(neighborhoods,'\n', '|'),'\\b\\s*') # make regex
+# drop urls
+cl_data <- cl_data %>% mutate(cleanText = str_to_lower(listingText), # convert to lower
+                              cleanText = str_replace_all(cleanText, # clean urls 
+                                                           '(http)?(www)?\\S*(\\.com|\\.net|\\.gov|\\.be|\\.org)\\S*', ''),
+                              cleanText = str_replace_all(cleanText, pattern, ''), # remove neighborhood names
+                              cleanText = ifelse(str_length(cleanText)>3,cleanText,NA), # sets texts to NA if they're less than 3 characters (Because otherwise they throw off the text processor below)
+                              listingText = str_replace_all(listingText, 'QR Code Link to This Post\n', '') # remove this phrase from the listing text
+                                                           ) %>% 
+  # this will make some rows NA, drop them
+  drop_na(cleanText) 
+```
+
+Clean duplicates
+
+
+```{r set vars for dupe cleaning}
+#start up vars
+cl_dropped <- cl_data
+thresh = .05
+interval = 99
+```
+
+```{r lame loopy dupe cleaning}
+# loopy loops
+# init a high model total
+model_total=51
+n_topics = 24
+# loop while the model total is high
+while(model_total>50){
+  model_total=0 # reset model total
+  # preprocess the documents, make a corpus
+  temp <- textProcessor(documents = cl_dropped$cleanText, meta=cl_dropped, onlycharacter = TRUE) 
+  out <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
+  # fit a limited model to that data
+  dupe_model <- stm(out$documents, out$vocab, K = n_topics, max.em.its = 20,verbose = TRUE)
+  dupe_gamma <- tidy(dupe_model, matrix = "gamma") # get topic proprtions by document
+  dupe_fit <- spread(dupe_gamma,topic,gamma) %>% 
+    rename_at(vars(`1`:`24`), 
+              funs(paste0('topic_',.))) %>% # rename topics
+    mutate(py_index = temp$meta$py_index) # spread the proportions
+  # start some counters
+  it_start = 1 
+  it_total = 701
+  # loop through iterations
+  while(it_total>200){
+    it_total = 0
+    it_max = 0
+    # loop through topics
+    for(i in paste0('topic_',1:n_topics)){
+      # grab the top 100 documents matching each topic
+      top_100 <- dupe_fit %>% 
+        arrange(get(i)) %>% 
+        select(py_index) %>% 
+        slice(it_start:(it_start+interval)) %>% 
+        inner_join(cl_dropped, by='py_index') %>%
+        select(py_index,cleanText)
+      # get the texts of those documents and compare them
+      dist_matrix <- stringdistmatrix(top_100$cleanText, method = 'jaccard')
+      candidates <- as.data.frame(which(as.matrix(dist_matrix)<thresh, arr.ind = T)) %>% 
+        filter(row!=col) %>% 
+        mutate(candidate = ifelse(row>col,col,row))
+      # get the ids of the ones to drop
+      drop_list <- top_100$py_index[c(unique(candidates$candidate))]
+      # drop them
+      cl_dropped <- cl_dropped %>% filter(!py_index %in% drop_list)
+      # drop them from the fit object too
+      dupe_fit <- dupe_fit %>% filter(!py_index %in% drop_list)
+      print(paste("Dropped", length(drop_list), "listings from",i)) # print for logging
+      # update the total for this iteration
+      it_total <- it_total + length(drop_list)
+      # if this topic beat the last max for this iteration update it
+      if(length(drop_list)>it_max){
+        it_max = length(drop_list)
+      }
+    }
+    # update the start for this iteration
+    it_start = it_start + 100 - it_max
+    print(paste("Dropped",it_total,"total listings this iteration")) # print for logging
+    model_total <- model_total + it_total
+  }
+  print(paste("Dropped",model_total,"total listings with this model")) # print for logging
+}
+
+
+```
+
+```{r check results}
+i = 'topic_7'
+top_100 <- model_fit %>% # grab the model fit
+        arrange(get(i)) %>% # arrange by a topic
+        select(py_index) %>% # select the index
+        head(1000) %>% # only grab the top 1000
+        inner_join(cl_dropped, by='py_index') %>% # join with the documents
+        filter(latinx_proportion>.06) %>% # filter by some covariate
+        select(py_index,cleanText) # select only the texts
+x <- as.matrix(stringdistmatrix(top_100$cleanText, method = 'jaccard'))
+
+```
+
+
+Run STM Model
+```{r fit the models}
+# run the STM text processor for additional cleaning, including stemming, removing punctuation, numbers, and words smaller than 3 characters
+# preprocess the documents, make a corpus
+temp <- textProcessor(documents = cl_dropped$cleanText, meta=cl_dropped, onlycharacter = TRUE) 
+out <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
+
+# search_k <- searchK(out$documents,
+#                      out$vocab, 
+#                      K = c(24,50,100),
+#                      emtol = 0.00002,
+#                      prevalence = ~ black_proportion + 
+#                        asian_proportion + 
+#                        latinx_proportion + 
+#                        pop_thousands + 
+#                        pov_proportion +
+#                        log_income + 
+#                        log_price, 
+#                      data=out$meta
+#                      )
+
+
+# fit a full model with that data
+full_model_24 <- stm(out$documents, 
+                     out$vocab, 
+                     K = 24,
+                     prevalence = ~ black_proportion + 
+                       asian_proportion + 
+                       latinx_proportion + 
+                       pop_thousands + 
+                       pov_proportion +
+                       log_income + 
+                       log_price, 
+                     data=out$meta)
+
+full_model_50 <- stm(out$documents, 
+                     out$vocab, 
+                     K = 50,
+                     prevalence = ~ black_proportion + 
+                       asian_proportion + 
+                       latinx_proportion + 
+                       pop_thousands + 
+                       pov_proportion +
+                       log_income + 
+                       log_price, 
+                     data=out$meta)
+
+full_model_100 <- stm(out$documents, out$vocab, K = 100,prevalence = ~ black_proportion + asian_proportion + latinx_proportion + pop_thousands + pov_proportion + log_income + log_price, data=out$meta)
+
+white_model_50 <- stm(out$documents, out$vocab, K = 50, emtol = 0.0001, prevalence = ~ black_proportion + asian_proportion + latinx_proportion + pop_thousands + pov_proportion + log_income + log_price, data=out$meta)
+
+white_model_100 <- stm(out$documents, out$vocab, K = 100, emtol = 0.0001, prevalence = ~ black_proportion + asian_proportion + latinx_proportion + pop_thousands + pov_proportion + log_income + log_price, data=out$meta)
+
+
+model <- full_model_100
+model_gamma <- tidy(model, matrix = "gamma") # get topic proprtions by document
+model_fit <- spread(model_gamma,topic,gamma) %>% 
+    rename_at(vars(`1`:`100`), 
+              funs(paste0('topic_',.))) %>% # rename topics
+    mutate(py_index = temp$meta$py_index) # spread the proportions
+```
+
+Visualizations
+
+```{r}
+n_topics = 100
+effects_pov <- estimateEffect(1:n_topics ~ black_proportion + latinx_proportion + asian_proportion + pop_thousands + pov_proportion + log_income + log_price, model, out$meta)
+sum = summary(effects_pov)
+```
+
+
+```{r}
+coef_sum <- data.frame()
+for(i in 1:n_topics){
+  row <- data.frame(topic = paste('Topic',i),
+                    race = c('black','latinx','asian'),
+                    coefs = c(sum$tables[i][[1]][2,1],sum$tables[i][[1]][3,1],sum$tables[i][[1]][4,1]), 
+                    stderrs = c(sum$tables[i][[1]][2,2],sum$tables[i][[1]][3,2],sum$tables[i][[1]][4,2])
+                    )
+  coef_sum <- bind_rows(coef_sum, row)
+}
+coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>%
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est, color=race), size=.2)+
+    #geom_text(aes(y = coefs + (.0009*nchar(title)), label = title)) +
+    #geom_text(aes(label = topic), nudge_y = -.009) +
+    #theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions")+
+    theme(text = element_text(size=10), #, # set values for text
+          #axis.text.y = element_blank(),
+          #axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-.45,.7)+
+    coord_flip() # remove gridlines
+
+```
+
+Messing about
+
+```{r}
+coef_sum %>% group_by(race) %>% summarise(absmean = mean(abs(coefs)), max = max(coefs), min = min(coefs))
+topics <-  sageLabels(model)
+topics_white <- sageLabels(white_model_50)
+func <- paste('white_proportion ~', paste0(paste0('topic_', 3:100),collapse = " + "))
+summary(lm(func,data = with_topics))
+
+```
+
+
+Text Output
+
+Ok, what's the deal here, what do you want from this:
+- I want texts that represent the topics
+- I want texts that represent various kinds of neighborhoods
+- I want to limit the total number of texts I have to deal with
+
+```{r export key texts}
+# basic grab your top n for a topic funciton with optional covariates
+with_topics <- inner_join(model_fit, cl_dropped, by='py_index') #this is a global variable that gets used by the functions below
+
+grab_top_texts <- function(df, topic, n, covariate='none', thresh=NULL){
+  ordered <- df[order(-df[[topic]]),] # order the dataframe by the given topic 
+  if(covariate!='none'){
+    if(is.null(thresh)){ # if there's no threshold
+      thresh = median(cl_dropped[[covariate]]) # use the median in the data
+    }
+    return(head(ordered[ordered[[covariate]]>thresh,], n))#return the top 'n' matchs by py_index
+  }
+  return(head(ordered, n))
+}
+
+# prepares a df of the top n texts that match certain topics and covariates
+prep_df <- function(topic,n=10, covariates = NULL){
+  top_texts <- data.frame() # empty df
+  if(is.null(covariates)){ # set defaults if necessary
+    covariates <- c('none',"black_proportion", "latinx_proportion", "asian_proportion")
+  }
+  for(covariate in covariates){ # loop through covariates
+    top_list <- grab_top_texts(with_topics[!(with_topics$py_index %in% top_texts$py_index),],topic,n,covariate) # grab the top n that aren't already grabbed
+    top_list['covariate'] = covariate # record the covariate name
+    top_texts <- rbind(top_texts, top_list) # bind to the top texts
+  }
+  top_texts['topic'] = topic # record the topic
+  return(top_texts)
+}
+# a function to produce text output
+text_output <- function(py_index,df,filepath){
+  df = df[df$py_index==py_index,]
+  filepath = paste0(filepath,paste(df$topic, df$postID, sep='_'),'.txt') # include the topic and post id in the filename
+  # prepare file contents
+  contents = paste0("This text was a ",round(df[df$topic],3), " match for ", df$topic, 
+                   " and assoicated with postID ", df$postID,
+                   " at ", df$matchAddress, " in tract ", df$GEOID10,
+                   ", and cost ", df$cleanRent,
+                   "\nIt was associated with above median ", df$covariate, "\n\n",
+                   'Title: ',df$listingTitle, '\n\nText: ',df$listingText
+                   ) 
+  # write the file
+  write_file(contents, filepath)
+}
+
+```
+
+```{r}
+# grab the texts
+# add to a dataframe with some metadata
+top_texts <- map_dfr(paste0('topic_', 1:n_topics), prep_df, n=3) # map through the topics and make a df
+# walk the dataframe to make files
+
+walk(top_texts$py_index, text_output, df=top_texts, filepath = 'output/text/')
+```
+
+
+
+
+
+
+
+
