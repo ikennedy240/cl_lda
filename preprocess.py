@@ -85,6 +85,17 @@ def preprocess(text):
            .str.replace(short_pattern, '')) # drop words with less than 3 characters
     return text
 
+def tweet_preprocess(text):
+    punctuation_pattern = r"[#\w]+|[!?]+" # compile a regex that saves certain characters
+    url_pattern = r'(http)?(www)?\S*(\.com|\.net|\.gov|\.be|\.org)\S*'
+    short_pattern = r"(^| |')\b\w{1,3}\b"
+    text = (text.str.lower() # make lowercase
+           .str.replace(url_pattern, '') # drop urls
+           .str.replace(r'\d+', '') # drop digits
+           .str.findall(punctuation_pattern) # drop most punctuation
+           .str.join(' ') # join after punctuation drop
+           .str.replace(short_pattern, '')) # drop words with less than 3 characters
+    return text
 
 #take out neighborhood Names
 def clean_neighborhoods(text_series, neighborhoods=None):

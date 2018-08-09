@@ -1,6 +1,8 @@
 *.pyc
+*.pickle
 *.swp
 *.txt
+*.zip
 *.json
 *.Rhistory
 *.Rdata
@@ -13,4 +15,5 @@
 *.log
 *.csv
 *.DS_Store
+*.bin
 .Rproj.user
