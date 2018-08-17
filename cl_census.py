@@ -52,7 +52,7 @@ def StateTractData(st, var_dict=None, save=False, year=2015):
             module_logger.info('read file')
             return tmp
         except:
-            var_dict = {'B03002_001E': 'total_RE','B03002_003E': 'white', 'B03002_004E': 'black', 'B03002_005E': 'aindian', 'B03002_006E': 'asian', 'B03002_007E': 'pacisland', 'B03002_009E': 'other', 'B03002_012E': 'latinx', 'B17001_001E': 'total_poverty', 'B17001_002E': 'under_poverty', 'B19013_001E': 'income'}
+            var_dict = {'B03002_001E': 'total_RE','B03002_003E': 'white', 'B03002_004E': 'black', 'B03002_005E': 'aindian', 'B03002_006E': 'asian', 'B03002_007E': 'pacisland', 'B03002_009E': 'other', 'B03002_012E': 'latinx', 'B17001_001E': 'total_poverty', 'B17001_002E': 'under_poverty', 'B19013_001E': 'income', 'B06009_011E': 'col_degree', 'B08015_001E':'commute'}
         #Census API code
     with open('resources/censusapikey.txt', 'r') as f:
         census_key = f.readlines()[0].strip()
@@ -137,28 +137,3 @@ def prep_scraped_data(path = 'data/new_data', archive = 'archive', import_all=Fa
 
 
 if __name__ == '__main__':
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    seattle = pd.read_csv('data/seattlefull.csv', index_col=0, dtype = {'GEOID10':object,'blockid':object})
-    seattle_new = import_scraped_data()
-    seattle_new.to_csv('data/seattle_new.csv')
-    tmp = mergeCLandCensus(seattle_new)
-    st = 'WA'
-    small = seattle_new.iloc[:10].copy()
-    small = getCensusCode(small[:10])
-    small = mergeCLandCensus(small.iloc[:10])
-    cldata = small.iloc[:10]
-    seattle_census = getCensusCode(seattle_new)
-    #take in new file, give it a date
-    #run getCensusCode on it,
-    # merge mergeCLandCensus
-    # rename file: prepped+file
-    files =  os.listdir('data')
-    filtered = [i for i in files if not re.match('seattle',i)]
-    prep_scraped_data()
-    x = import_scraped_data()
-    seattle = mergeCLandCensus(seattle)
-    seattle = seattle.drop([0], axis=0).drop(['Unnamed: 0.1', 'Unnamed: 0.1.1'], axis=1)
-    x.drop(['Unnamed: 0.1'], axis=1, inplace=True)
-    seattle_full = pd.concat([x,seattle])
-    seattle.to_csv('seattle_old_4_22.csv')
-    seattle_full.to_csv('seattle_full.csv')

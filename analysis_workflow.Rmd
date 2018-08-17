@@ -14,10 +14,11 @@ library(tidytext) # does amazing things with text
 library(SnowballC)
 library(stringdist)
 library(ggmap)
+library(knitr)
 #library(e1071)
 ```
 
-Load the Training Set:
+Load the craigslist data:
 
 ```{r read data}
 cl_full <- read_csv('data/cl_full.csv') %>% #import cl data # maintain original indices
@@ -26,7 +27,6 @@ cl_full <- read_csv('data/cl_full.csv') %>% #import cl data # maintain original 
          log_sqft = log(cleanSqft)
          )# make a log square foot variable
 cl_data <- cl_full # make a copied df to use below (because we'll drop duplicates)
-
 ``` 
 
 Add Census Info, Add Context Columns
@@ -89,10 +89,10 @@ That was when I was using simple Jaccard matching which I think is fast and quit
 ```{r set vars for dupe cleaning}
 #start up vars
 thresh = .7
-interval = 99
+interval = 50
 n_topics = 40
 cl_dropped <- cl_data
-# cl_save <- cl_dropped
+#cl_save <- cl_dropped
 # cl_dropped <- cl_save
 # cl_dropped_08 <- cl_dropped
 ```
@@ -120,13 +120,14 @@ for(i in addresses$matchAddress){
   address_total <- address_total + length(drop_list)
 }
 print(address_total)
+#write_csv(cl_dropped, "data/cl_dropped_addresses.csv")
 ```
 
 
 ```{r stm loop cleaning}
 # loopy loops
 # init a high model total
-model_total=51
+model_total=6
 # loop while the model total is high
 while(model_total>5){
   model_total=0 # reset model total
@@ -138,7 +139,7 @@ while(model_total>5){
   dupe_fit <- as_data_frame(make.dt(dupe_model, out_dupe$meta))
   # start some counters
   it_start = 1 
-  it_total = 701
+  it_total = 11
   # loop through iterations
   while(it_total>10){
     it_total = 0
@@ -147,7 +148,7 @@ while(model_total>5){
     for(i in paste0('Topic',1:n_topics)){
       # grab the top 100 documents matching each topic
       top_100 <- dupe_fit %>% 
-        arrange(get(i)) %>% 
+        arrange(desc(get(i))) %>% 
         select(py_index) %>% 
         slice(it_start:(it_start+interval)) %>% 
         inner_join(cl_dropped, by='py_index') %>%
@@ -178,6 +179,7 @@ while(model_total>5){
   }
   print(paste("Dropped",model_total,"total listings with this model")) # print for logging
 }
+write_csv(cl_dropped, "data/cl_dropped.csv")
 ```
 
 notes for finding the best threshold:
@@ -363,7 +365,7 @@ It's hard to pick from those models, but it's clear that I want to include non-w
 
 
 ```{r}
-model <- full_model_50
+model <- full_model_40
 model_fit <-  as_data_frame(make.dt(model, out$meta))
 # labelTopics(model, n = 12)
 ```
@@ -373,7 +375,7 @@ Visualizations
 ```{r}
 n_topics = 40
 effects <- estimateEffect(1:n_topics ~ black_proportion + latinx_proportion + asian_proportion + pop_thousands + pov_proportion + log_income + log_price + log_sqft, model, out$meta)
-sum == summary(effects)
+sum <-  summary(effects)
 
 ```
 
@@ -399,7 +401,7 @@ coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic
     #theme_minimal() + # auto exlude backgound shading
     theme(text = element_text(size=10))+ #, # set values for text
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions")+
+    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions - Training Set")+
     theme(text = element_text(size=10), #, # set values for text
           #axis.text.y = element_blank(),
           #axis.title.x = element_blank(),
@@ -410,7 +412,19 @@ coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic
 
 #coef_sum %>% filter(race=='asian') %>% arrange(desc(abs(coefs))) #%>% select(topic)
 ```
-
+2
+8
+17
+21
+23
+24
+27
+29
+31
+34
+36
+37
+38
 
 
 
@@ -490,38 +504,41 @@ top_texts <- map_dfr(paste0('Topic', 1:n_topics), prep_df, n=5, covariates=top_c
 walk(top_texts$py_index, text_output, df=top_texts, filepath = 'output/text/')
 
 #prep extra texts
-extra <- model_fit %>% arrange(desc(topic_39)) %>% filter(!(py_index %in% top_texts$py_index)) %>% head(5) %>% mutate(topic = 'topic_39', covariate = 'none')
+extra <- model_fit %>% #arrange(desc(Topic34)) %>% 
+  filter(Topic34>.2) %>%
+  #filter(!(py_index %in% top_texts$py_index)) %>% 
+  #filter(black_proportion > .1)
+  
+  #mutate(topic = 'topic_39', covariate = 'none')
 walk(extra$py_index, text_output, df=extra, filepath = 'output/text/extras/')
 ```
 
-1(1) not a true dupe, 
-3(2) one true dupe and one sep unit, 
-6(1) not a dupe, same property mangement, 
-7(0), 
-9(0), 
-12(0), 
-13(0), 
-15(1) true dupe, 
-21(0), 
-22(0), 
-28(1) true dupe, 
-29(1) different units, same building, 
-30(0), 
-31(0), 
-32(0), 
-36(0), 
-38(0)
-topic 29 doc 8
-spacious unit with gorgeous lake views blue dolphin apartments is currently offering a spacious corner 1 bedroom unit with gorgeous peek a boo views of lake washington unit offers hardwood floors a gas fireplace dishwasher and microwave the blue dolphin building overlooks lake washington and has a beautiful lawn that rolls down to 120 of lakefront enjoy swimming bbqing or sunning on the dock we also offer boat moorage with slips available for rental we are located just one block south of s restaurants coffee shops and groceries and we are just a 7 minute drive to rent 1695 per month 720 security deposit no smoking no pets 400 lakeside ave s please call or email lori at show contact info bluedolphinapartments gmail 
+2 (0)
+--4 (1)
+8(0)
+--11(1)
+17 (0)
+21 (0)
+23 (0)
+24 (0)
+27 (0)
+29 (0)
+31 (0)
+34 (0)
+36 (0)
+37 (0)
+38 (0)
+
+Only two dupes in the top texts and zero in key topics
 
 ```{r testing for dupe thresh}
-top_10 <- top_texts %>% filter(topic == 'Topic38')
+top_10 <- top_texts %>% filter(topic == 'Topic40')
 dist_matrix <- stringdistmatrix(top_10$cleanText, method = 'jaccard', q =10)
 candidates <- as.data.frame(which(as.matrix(dist_matrix)<.7, arr.ind = T)) %>%
   filter(row!=col) %>%
   mutate(candidate = ifelse(row>col,row,col))
 dist_matrix
-cat(top_10$fullText[[8]])
+cat(top_10$fullText[[13]])
 ```
 
 
@@ -529,6 +546,7 @@ cat(top_10$fullText[[8]])
 ```{r}
 names(cl_full)
 cl_dropped%>% group_by(matchAddress) %>% count() %>% arrange(desc(n))
+top_10 <- cl_dropped %>% filter(matchAddress=='2400 4th Ave')
 ```
 
 
@@ -553,14 +571,13 @@ test %>% filter(listingDate == '2018-04-23', criminal==TRUE) %>% select(listingT
 #libraries
 
 
-map_cl <- model_fit %>%
-  filter(topic_40>.3)
+map_cl <- model_fit %>% arrange(desc(Topic34)) %>% head(20)
 
-bounds = c(min(map_cl$lng), min(map_cl$lat), max(map_cl$lng), max(map_cl$lat))
+bounds = c(min(map_cl$lng - .01), min(map_cl$lat - .01), max(map_cl$lng + .01), max(map_cl$lat +.01))
 cl_map <- get_map(location=bounds, source="stamen", maptype = "toner", force = FALSE)
 
 ggmap(cl_map)+
-  geom_point(aes(lng,lat,color=topic_13), alpha = .5, data = map_cl)
+  geom_point(aes(lng,lat,color=Topic34), alpha = .5, data = map_cl)
 
 
 ```
@@ -605,11 +622,53 @@ new_fit_covariate <- fitNewDocuments(model=model,
                        log_sqft,
                 prevalencePrior="Covariate",
                 verbose = TRUE)
+new_fit_topics = make.dt(new_fit_average) %>% inner_join(cl_test %>% mutate(docnum=as.numeric(rownames(cl_test))))
 ```
 
+
+2 (0) X 
+--4 (1)
+8(0) O
+--11(1)
+17 (0) O
+21 (0) O - not over .5 in training
+23 (0) O
+24 (0) O - not over .5 in training
+27 (0) O
+29 (0) O
+31 (0) O
+33 (0) O
+34 (0) O
+35 (0) O
+36 (0) O
+37 (0) O
+38 (0) O
+
+2 -
+8 -
+17 Black, Latinx
+23 Asian
+27 -
+29 Latinx
+30 -
+31 -
+33 Black
+34 Black
+35 Asian, Latinx
+36 Asian
+37 Black, Asian, Latinx
+
 ```{r}
-new_fit_topics = make.dt(new_fit_average) %>% inner_join(cl_test %>% mutate(docnum=as.numeric(rownames(cl_test))))
-test_model <- glm(Topic18 ~ black_proportion + 
+sum$tables[2]
+library(knitr)
+test_coef_sum %>% filter(!race == 'none', topic == "Topic37") %>% mutate(coefs = round(coefs,4)) %>% select(race,coefs) %>% kable()
+```
+
+
+```{r summarize test results}
+test_coef_sum <- data.frame()
+for(i in paste0('Topic',1:40)){
+  test_model <- glm(get(i) ~ black_proportion + 
                        asian_proportion + 
                        latinx_proportion + 
                        pop_thousands + 
@@ -617,47 +676,17 @@ test_model <- glm(Topic18 ~ black_proportion +
                        log_income + 
                        log_price +
                        log_sqft, data = new_fit_topics)
-summary(test_model)
-```
-
-
-
-```{r}
-model <- full_model_50
-model_gamma <- tidy(model, matrix = "gamma") # get topic proprtions by document
-model_fit <- spread(model_gamma,topic,gamma) %>% 
-    rename_at(vars(`1`:`50`), 
-              funs(paste0('topic_',.))) %>% # rename topics
-    mutate(py_index = temp$meta$py_index) # spread the proportions
-```
-
-Visualizations
-
-```{r}
-n_topics = 50
-model_new <- model
-model_new$theta = new_fit_average$theta
-model_new$eta = new_fit_average$eta
-effects <- estimateEffect(1:n_topics ~ black_proportion + latinx_proportion + asian_proportion + pop_thousands + pov_proportion + log_income + log_price + log_sqft, model_new, out_test$meta)
-sum = summary(effects)
-
-
-
-```
-
-
-```{r}
-coef_sum <- data.frame()
-for(i in 1:n_topics){
-  row <- data.frame(topic = paste('Topic',i),
-                    race = c('black','latinx','asian'),
-                    coefs = c(sum$tables[i][[1]][2,1],sum$tables[i][[1]][3,1],sum$tables[i][[1]][4,1]), 
-                    stderrs = c(sum$tables[i][[1]][2,2],sum$tables[i][[1]][3,2],sum$tables[i][[1]][4,2])
+  test_sum <- summary(test_model)
+  row <- data.frame(topic = i,
+                    race = c('black','asian','latinx'),
+                    coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1]), 
+                    stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2])
                     )
-  coef_sum <- bind_rows(coef_sum, row)
+  test_coef_sum <- bind_rows(test_coef_sum, row)
 }
-coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>%  filter(race=='black') %>%
-  filter(abs(coefs) > .06) %>% 
+test_coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>%    
+  #filter(race=='black') %>%
+  filter(abs(coefs) > .05) %>% 
   ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
     geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
     geom_pointrange(aes(ymax = high_est, ymin = low_est, color=race), size=.2)+
@@ -666,121 +695,170 @@ coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic
     #theme_minimal() + # auto exlude backgound shading
     theme(text = element_text(size=10))+ #, # set values for text
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions")+
+    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions - Test Set")+
     theme(text = element_text(size=10), #, # set values for text
           #axis.text.y = element_blank(),
           #axis.title.x = element_blank(),
           axis.title.y = element_blank()) +
     ylim(-max(abs(coef_sum$coefs))-.05,max(abs(coef_sum$coefs))+.05)+
+    #ylim(-.12,.09)+
     coord_flip() # remove gridlines
-
-#coef_sum %>% filter(race=='asian') %>% arrange(desc(abs(coefs))) #%>% select(topic)
 ```
 
-
-ROBUSTNESSS: DOES IT WORK IF I ONLY USE NON_DUPES
-
-There might be duplicates of my 12354 training set texts in the test set. What happens if I de-duplicate the test set with the training set and then test again?
-
-```{r}
-cl_test_dropped <- cl_test %>% bind_rows(cl_dropped %>% mutate(py_index = 999999))
-```
-
-
-
-```{r lame loopy dupe cleaning -- exploration}
-# loopy loops
-# init a high model total
-cl_train_dropped <- cl_train
-thresh = .8
-interval = 49
-model_total=51
-n_topics = 40
-i = 'Topic1'
-# loop while the model total is high
-while(model_total>40){
-  model_total=0 # reset model total
-  # preprocess the documents, make a corpus
-  temp <- textProcessor(documents = cl_train_dropped$cleanText, meta=cl_train_dropped, onlycharacter = TRUE)
-  out <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
-  # fit a limited model to that data
-  dupe_model <- stm(out$documents, out$vocab, K = n_topics, max.em.its = 50,verbose = TRUE)
-  dupe_fit <- make.dt(dupe_model,meta = cl_train_dropped %>% select(-(Topic1:Topic40),-docnum))
-  # start some counters
-  it_start = 1 
-  it_total = 701
-  # loop through iterations
-  while(it_total>100){
-    it_total = 0
-    it_max = 0
-    # loop through topics
-    for(i in paste0('Topic',1:n_topics)){
-      # grab the top 100 documents matching each topic
-      top_100 <- dupe_fit %>% 
-        arrange(get(i)) %>% 
-        select(py_index) %>% 
-        slice(it_start:(it_start+interval)) %>% 
-        inner_join(cl_train_dropped, by='py_index') %>%
-        select(py_index,cleanText)
-      # get the texts of those documents and compare them
-      dist_matrix <- stringdistmatrix(cl_train_dropped$cleanText, method = 'jaccard')
-      candidates <- as.data.frame(which(as.matrix(dist_matrix)<thresh, arr.ind = T)) %>% 
-        filter(row!=col) %>% 
-        mutate(candidate = ifelse(row>col,col,row))
-      # get the ids of the ones to drop
-      drop_list <- top_100$py_index[c(unique(candidates$candidate))]
-      # drop them
-      cl_train_dropped <- cl_train_dropped %>% filter(!py_index %in% drop_list)
-      # drop them from the fit object too
-      dupe_fit <- dupe_fit %>% filter(!py_index %in% drop_list)
-      print(paste("Dropped", length(drop_list), "listings from",i)) # print for logging
-      # update the total for this iteration
-      it_total <- it_total + length(drop_list)
-      # if this topic beat the last max for this iteration update it
-      if(length(drop_list)>it_max){
-        it_max = length(drop_list)
-      }
-    }
-    # update the start for this iteration
-    it_start = it_start + 100 - it_max
-    print(paste("Dropped",it_total,"total listings this iteration")) # print for logging
-    model_total <- model_total + it_total
-  }
-  print(paste("Dropped",model_total,"total listings with this model")) # print for logging
+```{r summarize test results}
+test_coef_sum <- data.frame()
+for(i in paste0('Topic',1:40)){
+  test_model <- glm(get(i) ~ white_proportion +
+                       pop_thousands + 
+                       pov_proportion +
+                       log_income + 
+                       log_price +
+                       log_sqft, data = new_fit_topics)
+  test_sum <- summary(test_model)
+  row <- data.frame(topic = i,
+                    race = c('white','pop','pov'),
+                    coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1]), 
+                    stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2])
+                    )
+  test_coef_sum <- bind_rows(test_coef_sum, row)
 }
+test_coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>%    
+  filter(topic=='Topic35') %>%
+  #filter(abs(coefs) > .05) %>% 
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est, color=race), size=.2)+
+    #geom_text(aes(y = coefs + (.0009*nchar(title)), label = title)) +
+    #geom_text(aes(label = topic), nudge_y = -.009) +
+    #theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions - Test Set")+
+    theme(text = element_text(size=10), #, # set values for text
+          #axis.text.y = element_blank(),
+          #axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-max(abs(coef_sum$coefs))-.05,max(abs(coef_sum$coefs))+.05)+
+    #ylim(-.12,.09)+
+    coord_flip() # remove gridlines
 ```
 
-
-```{r}
-it_total = 0
-it_max = 0
-thresh = .7
-dupe_fit <- model_fit
-dupe_model <- model
-cl_train_dropped <- cl_train
-# loop through topics
-addresses <- cl_train_dropped%>% group_by(matchAddress) %>% count() %>% arrange(desc(n)) %>% filter(n>10)
-for(i in addresses$matchAddress){
-  # grab the top 100 documents matching each topic
-  top_100 <- cl_train_dropped %>% filter(matchAddress == i)
-  # get the texts of those documents and compare them
-  dist_matrix <- stringdistmatrix(top_100$cleanText, method = 'jaccard')
-  candidates <- as.data.frame(which(as.matrix(dist_matrix)<thresh, arr.ind = T)) %>% 
-    filter(row!=col) %>% 
-    mutate(candidate = ifelse(row>col,col,row))
-  # get the ids of the ones to drop
-  drop_list <- top_100$py_index[c(unique(candidates$candidate))]
-  # drop them
-  cl_train_dropped <- cl_train_dropped %>% filter(!py_index %in% drop_list)
-  # drop them from the fit object too
-  dupe_fit <- dupe_fit %>% filter(!py_index %in% drop_list)
-  print(paste("Dropped", length(drop_list), "listings from",i)) # print for logging
-  # update the total for this iteration
-  it_total <- it_total + length(drop_list)
-  # if this topic beat the last max for this iteration update it
-  if(length(drop_list)>it_max){
-    it_max = length(drop_list)
+```{r robustness: permutation test}
+# pull off the non-topic columns, these stay fixed
+permute_meta <- new_fit_topics %>% select(-(Topic1:Topic40))
+ran_topics <- new_fit_topics %>% select(Topic1:Topic40) 
+# pull off the topic distributions, these will permute
+permute_test <- data_frame()
+# loop which saves coefs from each run
+for(run in 1:500){
+  # loop which saves coefs for each topic
+  permute_coefs <- data.frame() # empty dataframe
+  permute_coef_sum <- data.frame()
+  permute_topics <- cbind(permute_meta,ran_topics %>% sample_frac(1))
+  for(i in paste0('Topic',1:40)){
+    test_model <- glm(get(i) ~ black_proportion + 
+                         asian_proportion + 
+                         latinx_proportion + 
+                         pop_thousands + 
+                         pov_proportion +
+                         log_income + 
+                         log_price +
+                         log_sqft, data = permute_topics)
+    test_sum <- summary(test_model)
+    row <- data_frame(topic = as.character(i),
+                      race = as.character(c('black','asian','latinx')),
+                      coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1]),
+                      stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2])
+                      )
+    permute_coef_sum <- bind_rows(permute_coef_sum, row)
+  }
+  permute_test <- bind_rows(permute_test, permute_coef_sum %>% mutate(run = run))
+  if(run %% 100 == 0){
+    print(run)
   }
 }
+
+```
+
+```{r graph permutation test results}
+ggplot()+
+  geom_histogram(aes(coef_sum$coefs, y = ..density.., alpha = .5),fill = 'red')+
+  geom_histogram(aes(permute_test$coefs, y = ..density.., alpha = .5), fill = 'blue')
+ggplot(top_texts %>% gather(key, value, Topic1:Topic40) %>% filter(key==topic))+
+  geom_histogram(aes(value))
+top_texts %>% gather(key, value, Topic1:Topic40) %>% filter(key==topic) %>% summary(value)
+``` 
+
+```{r}
+new_fit_topics %>% arrange(desc(Topic2)) %>% head(100) %>% select(matchAddress, Topic2)
+```
+
+```{r}
+more_cov_test <- new_fit_topics %>% select(Topic1:Topic40, log_price, log_sqft, GEOID10) %>% inner_join(tracts, by='GEOID10') %>%
+  drop_na(black_proportion, asian_proportion, latinx_proportion, pop_thousands, log_income, log_price) # drop na values in covariate cols
+colnames(more_cov_test)
+```
+
+```{r summarize test results}
+more_coef_sum <- data.frame()
+for(i in paste0('Topic',1:40)){
+  test_model <- glm(get(i) ~ black_proportion +
+                       asian_proportion+
+                       latinx_proportion+
+                       pop_thousands + 
+                       pov_proportion +
+                       log_income + 
+                       log_price +
+                       log_sqft +
+                       col_degree+
+                       commute, data = more_cov_test)
+  test_sum <- summary(test_model)
+  row <- data.frame(topic = i,
+                    race = c('black','asian','latinx'),
+                    coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1]), 
+                    stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2])
+                    )
+  more_coef_sum <- bind_rows(more_coef_sum, row)
+}
+more_coef_sum %>% mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(topic)) %>%    
+  #filter(topic=='Topic24') %>%
+  #filter(abs(coefs) > .04) %>% 
+  ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
+    geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
+    geom_pointrange(aes(ymax = high_est, ymin = low_est, color=race), size=.2)+
+    #geom_text(aes(y = coefs + (.0009*nchar(title)), label = title)) +
+    #geom_text(aes(label = topic), nudge_y = -.009) +
+    #theme_minimal() + # auto exlude backgound shading
+    theme(text = element_text(size=10))+ #, # set values for text
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+    ggtitle("Estimated Effects of neighborhood racial proportions on Topic Distributions - Test Set")+
+    theme(text = element_text(size=10), #, # set values for text
+          #axis.text.y = element_blank(),
+          #axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
+    ylim(-max(abs(coef_sum$coefs))-.05,max(abs(coef_sum$coefs))+.05)+
+    #ylim(-.12,.09)+
+    coord_flip() # remove gridlines
+```
+
+privacy
+heart
+safe neighborhood
+quiet building
+drugs
+eviction
+felony
+conviction
+section 8
+
+```{r}
+merged_fit <- rbind(model_fit, new_fit_topics)
+cl_data %>% filter(str_detect(listingText, 'section 8')) %>%
+  #select(Topic1:Topic40) %>% 
+  select(white_proportion:latinx_proportion) %>%
+  summarise_all(mean) %>% t()
+lm_data <- merged_fit %>% select(white_proportion, Topic1:Topic38)
+prediction_model <- lm(white_proportion ~ ., data = lm_data)
+summary(prediction_model)
 ```
 
