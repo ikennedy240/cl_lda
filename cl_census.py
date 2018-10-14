@@ -137,3 +137,4 @@ def prep_scraped_data(path = 'data/new_data', archive = 'archive', import_all=Fa
 
 
 if __name__ == '__main__':
+    pass
