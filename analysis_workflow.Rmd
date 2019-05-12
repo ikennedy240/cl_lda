@@ -9,7 +9,7 @@ output:
 library(stm) # runs the topic models
 library(quanteda) # makes the dictionary and corpus
 library(tidyverse) # makes nice output and stuff
-library(tidytext) # does amazing things with text
+#library(tidytext) # does amazing things with text
 library(SnowballC)
 library(stringdist)
 library(ggmap)
@@ -20,12 +20,12 @@ library(forcats)
 
 # Get Started
 Load the craigslist data:
-
+ 
 ```{r read data, echo=FALSE, warning=FALSE, message=FALSE}
 cl_full <- read_csv('data/cl_full.csv') %>% #import cl data # maintain original indices
   mutate(py_index = 1:dim(.)[1],
          log_price = log(cleanRent),# make a logged price variable
-         log_sqft = log(cleanSqft),
+         log_sqft = log(cleanSqft), 
          GEOID10 = as.character(GEOID10)
          )# make a log square foot variable
 cl_data <- cl_full # make a copied df to use below (because we'll drop duplicates)
@@ -41,9 +41,11 @@ acs_codes <- c('B03002_001E','B03002_003E','B03002_004E','B03002_005E','B03002_0
 acs_names <- c('total_RE','white', 'black', 'aindian', 'asian', 'pacisland', 'other', 'latinx', 'total_poverty', 'under_poverty', 'income', 'col_degree','commute', 'total_tenure', 'owner_occupied', 'rental', 'total_tenure_size', 'rental_20_49','rental_over_50','total_tenure_year', 'built_10_13', 'built_after_14')
 re_cols <- c("white","black", "aindian", "asian","pacisland", "other", "latinx", "all_other") # save a vector of race and ethnicity categories
 names(acs_codes) <- acs_names
-tracts <- get_acs(geography = 'tract', variables = acs_codes, output = 'wide', state = 'WA') %>% #grab census data
+tracts_17 <- get_acs(geography = 'tract', year = 2017, variables = acs_codes, output = 'wide', state = 'WA', geometry = TRUE) %>% #grab census data
   select(-ends_with("M")) %>% mutate(all_other = aindian+pacisland+other) # drop moe columns
-tracts <- bind_cols(tracts, setNames(tracts[re_cols]/tracts$total_RE, paste0(re_cols,"_proportion"))) %>% # make racial proportion columns
+tracts_no_geo <- sf::st_drop_geometry(tracts)
+
+tracts <- bind_cols(tracts, setNames(tracts_no_geo[re_cols]/tracts_no_geo$total_RE,paste0(re_cols,"_proportion"))) %>% # make racial proportion columns
   mutate(pov_proportion = under_poverty/total_poverty, # poverty proportion variable
          log_income = log(income), # log income variable
          pop_thousands = total_RE/1000, # population in thousands
@@ -55,12 +57,11 @@ tracts <- bind_cols(tracts, setNames(tracts[re_cols]/tracts$total_RE, paste0(re_
 
 
 
-
 ```
 
 
 ```{r make neighborhood typology}
-tract_type <- gather(tracts %>% 
+tract_type <- gather(sf::st_drop_geometry(tracts) %>% 
   select(white_proportion, black_proportion, asian_proportion, latinx_proportion, all_other_proportion, GEOID), key, value, -GEOID) %>% #go to long format
   mutate(key=str_remove(key,'_proportion'), key=str_remove(key,'all_')) %>% #clean up the key
   group_by(GEOID) %>% # group by tract
@@ -90,22 +91,24 @@ tract_type <- gather(tracts %>%
   )
 
 
-tracts <- tracts %>% mutate(neighborhood_type = factor(collapsed_type))
-tracts$neighborhood_type <-  fct_other(tracts$collapsed_type, drop = c("asian black", "latinx white", "asian white"), other_level = "majority non-white") %>% fct_collapse(`white mixed` = c("white other", "white mixed"))
+
 
 # now we add the tract type back on to the tracts
 tracts <- tract_type %>% select(GEOID, type, collapsed_type) %>% inner_join(tracts, by = "GEOID")
+tracts$neighborhood_type <-  fct_other(tracts$collapsed_type, drop = c("asian black", "latinx white", "asian white"), other_level = "majority non-white") %>% fct_collapse(`white mixed` = c("white other", "white mixed"))
+#tracts <- tracts %>% mutate(neighborhood_type = factor(collapsed_type))
 
 cl_dropped %>% select(type, collapsed_type, neighborhood_type) %>% distinct(type, .keep_all = TRUE) %>% tail(36) %>% kable()
 tracts %>% filter(type == 'asian white') %>% select(ends_with('proportion')) %>% arrange(desc(white_proportion))
 ```
 
 
-
 ```{r merge tracts data and cl_data}
 cl_data <- inner_join(cl_data, tracts, by = c("GEOID10" = "GEOID"))
 ```
 
+
+During the process of writing this article, new ACS data was released. 
 
 Clean Text
 ```{r text cleaning}
@@ -333,7 +336,7 @@ cl_test <- cl_dropped[!(cl_dropped$py_index %in% cl_train$py_index),]
 ```
 
 # Run STM Model
-```{r fit the models}
+```{r prep for stm models}
 # run the STM text processor for additional cleaning, including stemming, removing punctuation, numbers, and words smaller than 3 characters
 # preprocess the documents, make a corpus
 
@@ -361,7 +364,7 @@ out <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
 
 
 
-```{r fit stm models}
+```{r fit stm models} 
 
 # on 7-24 I decided to add bedrooms and sqft to the model because I don't think it should treat large adn small expensive units the same
 
@@ -657,14 +660,14 @@ white black
 
 
 
-
+# Export Key Texts
 
 Ok, what's the deal here, what do you want from this:
 - I want texts that represent the topics
 - I want texts that represent various kinds of neighborhoods
 - I want to limit the total number of texts I have to deal with
 
-```{r export key texts}
+```{r export key texts} 
 coef_sum <- data.frame()
 for(i in 1:n_topics){
   row <- data.frame(topic = paste('Topic',i),
@@ -766,7 +769,7 @@ topic = 'Topic1'
 top_coef <- coef_sum %>% group_by(topic) %>% summarise(min = min(coefs), max = max(coefs)) %>% mutate(coefs = max) %>% inner_join(coef_sum) %>% mutate(race = as.character(race))
 # grab the texts
 # add to a dataframe with some metadata
-top_texts <- map_dfr(paste0('Topic', 1:n_topics), prep_df, n=3, covariates = 'none',random=TRUE) # map through the topics and make a df
+top_texts <- map_dfr(paste0('Topic', 1:n_topics,'_p'), prep_df, n=10, covariates = 'none',random=TRUE) # map through the topics and make a df
 # walk the dataframe to make files
 walk(top_texts$py_index, text_output, df=top_texts, filepath = 'output/text/extras/mixed/')
 
@@ -781,10 +784,10 @@ walk(extra$py_index, text_output, df=extra, filepath = 'output/text/extras/')
 for(topic in unique(top_texts$topic)){
   
     df = top_texts[top_texts$topic==topic,]
-    filepath = paste0('output/Topics/',topic,'.txt') # include the topic in the filename
+    filepath <-  file.path('output','topics',paste0(topic,'.txt')) # include the topic in the filename
     # prepare file contents
-    write_file(paste0('This document contains texts that were a high match for topic ', topic,'\n\n', 'Topic Title:\n\n\nTopic Title Explanation:\n\n'), filepath)
     sink(filepath, append = TRUE)
+    cat(paste('This document contains texts that were a high match for topic ', topic, '/n/nTopic Title:','/n/nTopic Title Explanation:/n/n'))
     print(labelTopics(model, topics = as.integer(str_extract(topic, '\\d+'))))
     for(i in 1:10){
       line = df[i,]
@@ -831,6 +834,8 @@ dist_matrix
 
 
 # Expand to Test Set
+
+While we were doing this work, ACS 2017 became available
 
 ```{r summarize test results using proportions and log transformation}
 test_coef_sum <- data.frame()
@@ -1021,11 +1026,11 @@ ggplot(new_fit_topics %>% group_by(listingDate) %>% summarise(Topic19 = mean(Top
 test_coef_sum_bi <- data.frame() 
 new_fit_topics['N_type_'] <- fct_relevel(fct_drop(new_fit_topics$neighborhood_type), c('predominantly white'))
 for(i in paste0('Topic',1:40)){
-  test_model <- glm(get(i) ~ N_type_,
+  test_model <- glm(log(get(i)) ~ N_type_,
                     data = new_fit_topics)
   test_sum <- summary(test_model)
   print(i)
-  print(test_sum)
+  print(test_model)
   row <- data.frame(topic = as.character(i),
                     n_type = as.character(c('mixed','white asian','white black','white latinx','white mixed','majority non-white')),
                     coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1],test_sum$coefficients[5,1],test_sum$coefficients[6,1],test_sum$coefficients[7,1]), 
@@ -1037,9 +1042,10 @@ for(i in paste0('Topic',1:40)){
 
 ```{r summarize test results multivariable}
 test_coef_sum <- data.frame()  
+model_list <- list()
 new_fit_topics['N_type_'] <- fct_relevel(fct_drop(new_fit_topics$neighborhood_type), c('predominantly white'))
 for(i in paste0('Topic',1:40)){
-  test_model <- glm(get(i) ~ N_type_+
+  test_model <- glm(log(get(i)) ~ N_type_+
                      pov_proportion+
                      log_income+
                      pop_thousands+
@@ -1053,8 +1059,9 @@ for(i in paste0('Topic',1:40)){
                     data = new_fit_topics)
   test_sum <- summary(test_model)
   print(i)
-  print(test_sum)
-  row <- data.frame(topic = as.character(i),
+  print(texreg::htmlreg(test_model))
+  model_list[i] <- texreg::htmlreg(test_model)
+  row <- tibble(topic = as.character(i),
                     n_type = as.character(c('mixed','white asian','white black','white latinx','white mixed','majority non-white')),
                     coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1],test_sum$coefficients[5,1],test_sum$coefficients[6,1],test_sum$coefficients[7,1]), 
                     stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2],test_sum$coefficients[5,2],test_sum$coefficients[6,2],test_sum$coefficients[7,2])
@@ -1070,34 +1077,36 @@ summary(model_compare)
 ```
 
 
-```{r make key viz}
+```{r make key viz, fig.height=5, fig.width=9}
 test_coef_sum %>%  
   left_join(read_csv('resources/topic_descriptions.txt'), by =  c('topic', 'n_type')) %>%
   mutate(high_est = coefs + stderrs, low_est = coefs - stderrs, topic = factor(str_extract(topic, '\\d+'))) %>% 
   arrange(desc(coefs))  %>%
-  filter(topic %in% topics_to_examine,
+  filter(#topic %in% topics_to_examine,
+         topic %in% c(1,32,30)
          #n_type %in% c("majority non-white", "white black")
          #n_type %in% c("majority non-white", "mixed", "white mixed")
          ) %>% 
   ggplot(aes(x = reorder(topic, -coefs), y = coefs))+
     geom_hline(yintercept = 0, color = "red", alpha=.5) + # plot a line at 0
     #geom_point(aes(color = n_type))+
-    geom_pointrange(aes(ymax = high_est, ymin = low_est, color=n_type), size=.2, alpha = .8)+
+    geom_pointrange(aes(ymax = high_est, ymin = low_est, color=n_type, shape = n_type), size=.5, alpha = .8)+
     #geom_text(aes(y = coefs + (.0009*nchar(description)), label = description)) +
-    geom_text(aes(y = -(coefs/abs(coefs))*.5 -(coefs/abs(coefs)*str_length(description)*.01), label = description), check_overlap = TRUE, family = 'Monaco', size = 2.5) +
+    geom_text(aes(y = -(coefs/abs(coefs))*.5 -(coefs/abs(coefs)*str_length(description)*.01), label = description), check_overlap = TRUE, family = 'Monaco', size = 4) +
     #geom_text(aes(y=0, label = topic), family = 'Monaco', size = 4)+
     #geom_label(aes(y=0, x = 15, label = "Topic Number"))+
     theme_minimal() + # auto exlude backgound shading
     #theme(legend.position = 'none')+ #, # set values for text
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-    ggtitle("Estimated Effects of neighborhood type on Topic Distributions, no Covariates",
-            subtitle = 'Showing only topics of interest as *Topic Title (Topic Number)*')+
+    #ggtitle("Estimated Effects of neighborhood type on Topic Distributions, no Covariates",
+    #        subtitle = 'Showing only topics of interest as *Topic Title (Topic Number)*')+
     theme(text = element_text(size=10), #, # set values for text
           axis.text.y = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_blank()) +
     scale_color_discrete(name="Neighborhood Type")+
-    ylim(-max(abs(test_coef_sum$coefs))-.01,max(abs(test_coef_sum$coefs))+.01)+
+    scale_shape_discrete(name="Neighborhood Type")+
+    ylim(-max(abs(test_coef_sum$coefs))-.1,max(abs(test_coef_sum$coefs))+.1)+
     scale_x_discrete(expand = c(.05,.6))+
     #facet_wrap(~n_type)+
     coord_flip()
@@ -1129,34 +1138,16 @@ permute_meta <- new_fit_topics %>% select(-(Topic1:Topic40))
 ran_topics <- new_fit_topics %>% select(Topic1:Topic40) 
 # pull off the topic distributions, these will permute
 permute_test <- data_frame()
+covariates <- c('N_type_', 'pov_proportion','log_income','pop_thousands','share_college','share_commuters','share_oo','share_rental_over_20','share_built_after_10','log_price','log_sqft')
 # loop which saves coefs from each run
-for(run in 1:500){
+for(run in 1:10000){
   # loop which saves coefs for each topic
   permute_coefs <- data.frame() # empty dataframe
   permute_coef_sum <- data.frame()
   permute_topics <- cbind(permute_meta,ran_topics %>% sample_frac(1))
-  for(i in paste0('Topic',1:40)){
-    test_model <- glm(get(i) ~ N_type_+
-                     pov_proportion+
-                     log_income+
-                     pop_thousands+
-                     share_college+
-                     share_commuters+
-                     share_oo+
-                     share_rental_over_20+
-                     share_built_after_10+
-                     log_price+
-                     log_sqft, data = permute_topics)
-    test_sum <- summary(test_model)
-    row <- data.frame(topic = as.character(i),
-                    n_type = as.character(c('mixed','white asian','white black','white latinx','white mixed','majority non-white')),
-                    coefs = c(test_sum$coefficients[2,1],test_sum$coefficients[3,1],test_sum$coefficients[4,1],test_sum$coefficients[5,1],test_sum$coefficients[6,1],test_sum$coefficients[7,1]), 
-                    stderrs = c(test_sum$coefficients[2,2],test_sum$coefficients[3,2],test_sum$coefficients[4,2],test_sum$coefficients[5,2],test_sum$coefficients[6,2],test_sum$coefficients[7,2])
-                    )
-    permute_coef_sum <- bind_rows(permute_coef_sum, row)
-  }
+  permute_coef_sum <- estimate_effects(permute_topics, covariates, transform_y = 'log', focal_covariates = 'N_type_')
   permute_test <- bind_rows(permute_test, permute_coef_sum %>% mutate(run = run))
-  if(run %% 100 == 0){
+  if(run %% 500 == 0){
     print(run)
   }
 }
@@ -1164,9 +1155,10 @@ for(run in 1:500){
 ```
 
 
+
 ```{r graph permutation test results}
 ggplot()+
-  geom_histogram(aes(coef_sum$coefs, y = ..density..,fill = 'observed'), alpha = .5)+
+  geom_histogram(aes(test_coef_sum$coefs, y = ..density..,fill = 'observed'), alpha = .5)+
   geom_histogram(aes(permute_test$coefs, y = ..density.., fill = 'permuted'), alpha = .5)
 ggplot(top_texts %>% gather(key, value, Topic1:Topic40) %>% filter(key==topic))+
   geom_histogram(aes(value))
@@ -1238,6 +1230,24 @@ felony
 conviction
 section 8 (black, latinx)
 gated community (black, latinx)
+
+
+```{r robustness: ldaRobust, fig.height=15, fig.width=10}
+library(ldaRobust)
+
+r_stm <- new("rstm",
+            documents = out$documents, 
+            vocab = out$vocab, 
+            stm_u = full_40_nt, 
+            K = 6,
+            
+            compute_parallel = TRUE)
+
+r_stm <- fit(r_stm)
+sim_threshold <- 0.93
+r_stm_cluster <- get_cluster_matrix(r_stm, sim_threshold)
+or_topic_in_alt_plot(r_stm_cluster, dir = '')
+```
 
 # Security Regression
 
@@ -1322,6 +1332,32 @@ merged_fit %>% mutate(high_white = ifelse(black_proportion > 0.06,1,0)) %>% grou
 stargazer(terms_model, tax_model, type='text')
 ```
 
+```{r}
+tax_sum <- summary(tax_model)$coefficients
+terms_sum <- summary(terms_model)$coefficients
+security_plot <- bind_rows(tax_sum[,1], tax_sum[,2], terms_sum[,1], terms_sum[,2]) %>% mutate(model = rep(c("Tax Model", "Terms Model"), each = 2), type = rep(c("coef","se"), 2)) %>% gather(covariate, value, -model, -type) %>% spread(type, value)
+
+
+
+sims <- 10000
+simbetas <- MASS::mvrnorm(sims, tax_sum[,1], vcov(tax_model))  
+
+
+
+probs <-  # save the probs
+
+security_plot %>% filter(str_detect(covariate, 'Neighborhood')) %>% 
+  mutate(covariate = str_replace(covariate, '`Neighborhood Type:`', '')) %>%
+  ggplot(aes(x = coef, y = reorder(covariate, coef), color = model, xmin = coef-(1.96*se), xmax = coef+(1.96*se)))+
+    geom_point()+
+    geom_errorbarh(height = .2)+
+    geom_vline(aes(xintercept = 0), color = 'red')+
+    theme_minimal()+
+    xlab("Logistic Regression Coefficient")+
+    ylab("Neighborhood Type")
+```
+
+
 ```{r prep dq map}
 library(tigris)
 dq_addresses <- read_lines('resources/dqaddresses.txt')
@@ -1351,8 +1387,14 @@ wa_nt <- wa_shape %>% inner_join(tracts %>% mutate(GEOID10 = GEOID)) %>%
 ```
 
 ```{r plot kc maps}
-kc_cl_dots <- merged_fit %>% filter(GEOID10 %in% kc_nt$Tract_FIPS, Topic28>.15)
+
+kc_cl_30 <- merged_fit %>% filter(GEOID10 %in% kc_nt$Tract_FIPS, Topic30>.1)
+kc_cl_39 <- merged_fit %>% filter(GEOID10 %in% kc_nt$Tract_FIPS, Topic39>.1)
+kc_cl_28 <- merged_fit %>% filter(GEOID10 %in% kc_nt$Tract_FIPS, Topic28>.1)
+kc_cl_33 <- merged_fit %>% filter(GEOID10 %in% kc_nt$Tract_FIPS, Topic33>.1)
+
 wa_dq_dots <- dq_latlon
+
 ggplot() + 
   geom_sf(data = kc_nt, # King County Neigh. Types dataframe
           alpha = .7,
@@ -1360,9 +1402,8 @@ ggplot() +
           color = 'grey',
           size = .1) +
   geom_point(aes(x = lng, y = lat),
-             data = kc_cl_dots,
-             size = .4,
-             alpha = .9)+
+             data = kc_cl_39,
+             size = .4)+
   # geom_point(aes(x = lng, y = lat), 
   #            data = tibble(lng = c(-122.29598,-122.34886), lat = c(47.731976,47.62573)),
   #            size = 2,
@@ -1372,7 +1413,7 @@ ggplot() +
            ylim=c(47.77,47.15),
            datum = NA) +
   theme(
-    #legend.position = "none",
+    legend.position = "none",
     rect = element_blank()) +
   scale_fill_brewer("Neighborhood\nTypes",
                     type= 'qual',
@@ -1383,6 +1424,12 @@ ggplot() +
         axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
+
+ggsave('plots/cl_39.png', device = png())
+```
+
+
+```{r}
 library(leaflet)
 
 leaflet(dq_latlon) %>% addTiles() %>% addCircles()
@@ -1391,7 +1438,7 @@ library(sf)
 shape <- read_sf(dsn = "~/Work/UW/Code/GIT/typology_comparison/data/census")
 wa_shape = shape %>% filter(STATEFP10==53)
 #gridExtra::grid.arrange(b,a, nrow=1)
-#ggsave('output/Plots/cl_map.png', device = png())
+#
 ggplot() + 
   geom_sf(data = wa_nt, # Wa state Neigh. Types dataframe
           alpha = .7,
@@ -1666,8 +1713,11 @@ ggplot(aes(y = topic, x = pe))+
 merged_fit %>% filter(str_detect(listingText, "police")) %>% sample_n(1) %>% t()
 ```
 
-```{r}
-merged_fit %>% filter(str_detect(listingText, 'police')) %>% select(listingText)
+```{r} 
+merged_fit %>% mutate(white = neighborhood_type=='predominantly white') %>%
+  count(white, str_detect(listingText, 'light rail')) %>% 
+  group_by(white) %>% 
+  mutate(freq = n/sum(n))
 ```
 
 ```{r}
@@ -1686,4 +1736,19 @@ dataset %>% count(listingDate) %>% ggplot(aes(n))+geom_histogram()
 ```
 
 
+
+```{r}
+# function for simply exporting texts
+file <-  'output/text.txt'
+texts <- cl_data %>% filter(aindian_proportion>.1)
+for(i in 1:nrow(texts)){
+  row = texts[i,]
+  meta = paste("This text was from a listing at", row$matchAddress, row$matchAddress2, "with", row$aindian_proportion, "proportion of Native folks")
+  write_lines(meta, file, append = TRUE)
+  write_lines(row$listingTitle, file, append = TRUE)
+  write_lines(row$listingText, file, append = TRUE)
+  write_lines('--------------\n\n\n', file, append = TRUE)
+}
+  
+```
 
