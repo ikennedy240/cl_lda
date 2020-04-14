@@ -23,7 +23,7 @@ During the era of de jure discrimination through mechanisms like redlining, excl
 
 By 1968, rents had increased so that a three-bedroom home in the Southend of Seattle was advertised in the same paper on February 18 of that year for two hundred and fifty dollars a month (over $1800 in 2019 dollars). The listing was short, and shown in Figure 1: 
 
-![Newspaper clipping](/plots/Figure1.tiff)
+![newspaper clipping](/plots/figure_1.png)
 
 In contrast to a couple decades prior, landlords rarely included such strongly racial language in the late 60s . For one thing, most people likely already knew which neighborhoods were friendly for which people. The Southend, though, bordered the Central District, where most Black households in Seattle lived. Perhaps the person who posted this listing wanted to make sure that prospective tenants knew who was welcome and may have worried that the neighborhood name might discourage White tenants. At the same time, the writer of this listing might have worried that without this kind of coded exclusion, they would need to turn away prospective Black tenants trying to rent the unit. 
 
@@ -65,22 +65,22 @@ We regress the log of the topic proportions for each document on the neighborhoo
 
 For example, results for “Commuting Distance” (Topic 39) and “Convenience and Ease” (Topic 40) are shown in Figure 2. The coefficient associating “Commuting Distance” (Topic 39) with majority non-White neighborhoods is 0.51. That means that we expect that, on average, listings for a unit in majority non-White neighborhoods will include this topic 0.51e^0.51×100% or 84.9% more than listings in predominantly White neighborhoods. We use this method to calculate the percentage increases reported below. In contrast to the large effect for “Commuting Distance” (Topic 39), “Convenience and Ease” (Topic 40), a topic which centered on easy to access storage and convenient parking, had only small differences in its prevalence across neighborhood types.
 
-![regression plot](/plots/Figure 2.png)
+![regression plot](/plots/figure_2.png)
 
 The quantitative results identify the topics which vary with neighborhood racial proportion. Topics which have to do with trust (Topics 1 and 32), with personality and other less quantifiable positive qualities (Topics 23, 28), and centrality (Topics 7 and 20) are associated more with predominantly White neighborhoods. Topics associated with travel (Topics 30 and 39), safety (Topic 26), and property amenities (as opposed to unit amenities) (Topics 8, 4, and 31) are more associated with less White neighborhoods. 
 
 For example, consider two topics concerning trust, shown in Figure 3. “Shared Units” (Topic 1) listings advertise units that are attached to the landlord’s home or property, often called accessory units, and “Subleases” (Topic 32) are requests for new tenants to assume a lease or sublet for a short period of time. Both of these arrangements require high levels of trust between the two parties. Our model estimates that, compared to a listing from a predominantly White neighborhood, a listing from a less White tract contains 15.0% (for White Mixed neighborhoods) to 23.7% (for majority non-White neighborhoods) less of “Shared Units” (Topic 1) and from a non-significant 3.1% increase (for majority non-White neighborhoods) to a 13.4% decrease (for White Latinx neighborhoods) of “Subleases” (Topic 32). This suggests that these high-trust arrangements may be most commonly advertised in the Whitest neighborhoods. We can also arrive at this same inference by examining Figure 3 and noticing that Topics 1 and 32 are arranged on the left side of the plot, indicating their association with predominantly White neighborhoods.
 
-![regression plot](/plots/Figure 3.png)
+![regression plot](/plots/figure_3.png)
 
 We also compare regression results and spatial distribution, with an example shown in Figures 4 and 5. 
 
-![map plot](/plots/Figure 4.png)
-![regression plot](/plots/Figure 5.png)
+![map plot](/plots/figure_4.png)
+![regression plot](/plots/figure_5.png)
 
 We can see from Figure 5 that “Vintage Charm” (Topic 28) is clustered in central Seattle. This topic focused on smaller units in older buildings built with natural materials, and included words like ‘vintage’, ‘charm’, ‘brick’, ‘hardwood’, and ‘studio’, and was associated with predominantly White neighborhoods. Contrastingly, “Safe and Friendly” (Topic 26), includes a number of central listings, but has many more peripheral listings than “Vintage Charm” (Topic 28). This pattern—that topics associated with more White neighborhoods are also more central—occurs for other topics as well. In part, this reflects the long-standing spatial and racial demographic order in Seattle. The oldest, most central, and most established neighborhoods have been Whiter because of explicitly racially motivated redlining and racial covenants enforced by real estate agents who could have been expelled from the Real Estate Board for non-compliance (Rothstein 2017). These historical patterns have been exacerbated by changes in Seattle over the past decades, as non-White and poorer populations have been pushed out of more desirable central areas by rising rents and evictions (Thomas 2017, Hess 2020). In other words, neighborhoods’ racial composition and their peripheral status are intertwined. 
 
-![map plot](/plots/Figure 6.png)
+![map plot](/plots/figure_6.png)
 
 Both “Driving and Bus Times” (30) and “Commuting Distance” (39) were more associated with less White neighborhood types (see Figure 2). Given that more central neighborhoods have also been whiter in Seattle, it would be reasonable to consider that this association was a product of less White neighborhoods also requiring more talk about transportation options simply because they were further from the center of the city. However, while the spatial distribution of these topics, shown in Figure 6, does include listings in peripheral areas, both topics also include significant numbers of listings in central areas, especially less White central areas. While listings including “Vintage Charm” (28) are more common in Whiter, more central neighborhoods, less White neighborhoods are more likely to mention transportation options—ways to leave the area—regardless of whether they are central or peripheral.
 
