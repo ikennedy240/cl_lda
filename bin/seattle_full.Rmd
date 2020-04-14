@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r load dependencies}
+#dependencies
+suppressMessages(library(tidyverse)) #provides dplyr and magrittr
+suppressMessages(library(lubridate)) #makes dates helluva lot less painful
+suppressMessages(library(forcats))   #helps for categorical coding/recoding
+suppressMessages(library(curl))      #curl_download > download.file
+suppressMessages(library(sf))        #for new school spatial
+suppressMessages(library(sp))        #for old school spatial
+suppressMessages(library(urltools))  #for handling URLs
+suppressMessages(library(sqldf))     #an abstraction layer for database interfaces
+suppressMessages(library(dbplyr))    #dplyr syntax for some of the dbi work
+suppressMessages(library(progress))  #easy progress tracking for long loops
+```
+
+```{r get table}
+DB <- dbConnect(SQLite(), dbname = "R:/Project/national-rent/data/natrent.db")
+clean_tbl <- tbl(DB, "clean")
+```
+
+```{r filter to interest}
+seattle <- clean_tbl %>%
+    filter(listingLoc == 'Seattle') %>%
+    collect()
+```
+
+```{r}
+seattle_sample <- seattle %>% distinct(postID, .keep_all = TRUE) %>% distinct(listingTitle, .keep_all = TRUE) %>% distinct(scrapedAddress,scrapedBeds,scrapedRent, .keep_all = TRUE) %>% sample_n(20000)
+write_csv(seattle_sample,'H:/seattle_sample.csv')
+```
+
+

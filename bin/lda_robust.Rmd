@@ -1,0 +1,130 @@
+---
+title: "Robust LDA"
+output: html_notebook
+---
+
+
+```{r}
+library(ldaRobust)
+library(dplyr)
+library(topicmodels)
+library(tm)
+library(tidytext)
+library(stringr)
+library(stm)
+library(tidyverse)
+```
+
+
+```{r set up data}
+set.seed(1024)
+data <- cl_dropped %>% select(cleanText, postID)
+data <- unnest_tokens(data, word, cleanText) %>% count(postID, word)
+data %>% filter(str_detect(word, '\\d')) %>% nrow()
+data <- data %>% cast_dtm(term = word, document = postID, value = n)
+sample_data<- cl_dropped %>% select(cleanText, postID) %>% sample_n(10000)
+sample_data <- unnest_tokens(sample_data, word, cleanText) %>% count(postID, word)
+sample_data <- sample_data %>% cast_dtm(term = word, document = postID, value = n)
+```
+
+```{r}
+lda <-  topicmodels::LDA(data, 40)
+lda_2 <-  topicmodels::LDA(sample_data, 10)
+```
+
+```{r}
+original_lda_predictive_features <- sapply(1:nrow(lda@beta), function(i)
+  as.character((data.frame(pr = lda@beta[i,], feature = lda@terms) %>% 
+  dplyr::arrange(desc(pr)) %>%
+  head(n = 10))$feature))
+print(original_lda_predictive_features)
+```
+
+
+```{r}
+original_lda_predictive_features <- sapply(1:nrow(lda_2@beta), function(i)
+  as.character((data.frame(pr = lda_2@beta[i,], feature = lda_2@terms) %>% 
+  dplyr::arrange(desc(pr)) %>%
+  head(n = 10))$feature))
+print(original_lda_predictive_features)
+```
+
+```{r}
+r <- new("rlda", 
+         dtm=data, 
+         lda_u=lda, 
+         K = 6,
+         
+         compute_parallel = TRUE)
+r_2 <- new("rlda", 
+         dtm=sample_data, 
+         lda_u=lda_2, 
+         K = 6,
+         
+         compute_parallel = TRUE)
+```
+
+```{r}
+r <- ldaRobust::fit(r)
+r_2 <- ldaRobust::fit(r_2)
+```
+
+```{r}
+r <- get_cluster_matrix(r, sim_threshold = 0.93)
+or_topic_in_alt_plot(r = r, dir = "")
+```
+
+```{r}
+r_2 <- get_cluster_matrix(r_2, sim_threshold = 0.93)
+or_topic_in_alt_plot(r = r_2, dir = "")
+```
+
+
+```{r}
+plot_cluster_proportion(r, dir = "")
+```
+
+
+
+------------
+```{r}
+## PROCESS TRAINING DATA 
+temp <- textProcessor(documents = cl_dropped$cleanText, meta=cl_dropped, onlycharacter = TRUE) 
+out <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
+
+```
+
+```{r}
+stm <- stm(out$documents, 
+                     out$vocab, 
+                     K = 40,
+                     data = out$meta,
+                     seed = 24)
+stm_p <- stm(out$documents, 
+                     out$vocab, 
+                     K = 40,
+                     prevalence = ~ white_proportion+
+                     black_proportion+
+                     asian_proportion+
+                     latinx_proportion+
+                     all_other_proportion+
+                     pov_proportion+
+                     log_income+
+                     pop_thousands+
+                     share_college+
+                     share_commuters+
+                     share_oo+
+                     share_rental_over_20+
+                     share_built_after_10+
+                     log_price+
+                     log_sqft,
+                     data = out$meta,
+                     seed = 24)
+```
+
+```{r}
+model_fit <- as_tibble(make.dt(stm, out$meta)) %>% drop_na('postID')
+model_fit <- inner_join(model_fit, as_tibble(make.dt(stm_p, out$meta$postID) %>% drop_na('meta')), by = c('postID'='meta'), suffix = c('','_p'))
+write_csv(model_fit, 'hlm_cl.csv')
+```
+

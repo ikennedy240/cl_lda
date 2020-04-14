@@ -1,0 +1,234 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+DB <- dbConnect(RPostgres::Postgres(),
+                  dbname = "natrent",
+                  host = "natrent0.csde.washington.edu",
+                  port = 5432, 
+                  user = names(cred),
+                  password = cred[[names(cred)]])
+```
+
+
+Clean Text
+```{r text cleaning}
+cl_data <- read_csv('data/seattle_huge.csv')
+neighborhoods <- read_file('resources/seattle_stop_words.txt') # read stopword file
+pattern <- paste0('\\b',str_replace_all(neighborhoods,'\n', '|'),'\\b\\s*') # make regex
+# drop urls
+cl_data <- cl_data %>% mutate(dupeText = str_to_lower(listingText), # convert to lower
+                              dupeText = str_replace_all(dupeText, # clean urls 
+                                                           '(http)?(www)?\\S*(\\.com|\\.net|\\.gov|\\.be|\\.org)\\S*', ''),
+                              dupeText = str_replace_all(dupeText, pattern, ''), # remove neighborhood names
+                              dupeText = str_replace_all(dupeText,"(\\w+)\\W|/(\\w+)","\\1 \\2"), # fix words connected by - or / or another non-word character so that they're separated as a space
+                              dupeText = ifelse(str_length(dupeText)>3,dupeText,NA), # sets texts to NA if they're less than 3 characters (Because otherwise they throw off the text processor below)
+                              listingText = str_replace_all(listingText, 'QR Code Link to This Post', '') # remove this phrase from the listing text
+                                                           ) %>% 
+  # this will make some rows NA, drop them
+  drop_na(dupeText) 
+
+```
+
+
+I decided that there was some meaty content in the listing titles. So the following block merges the titles with the clean text and then cleans with same format used on the texts above. The new variable is called cleanText.
+
+```{r complete prep on text}
+cl_data <- cl_data %>%
+  mutate(textAndTitle = paste(listingTitle, listingText, sep='\n\n'),
+         cleanText = str_to_lower(textAndTitle), # convert to lower
+         cleanText = str_replace_all(cleanText, # clean urls 
+                                      '(http)?(www)?\\S*(\\.com|\\.net|\\.gov|\\.be|\\.org)\\S*', ''),
+         cleanText = str_replace_all(cleanText, pattern, ''), # remove neighborhood names
+         cleanText = str_replace_all(cleanText,"(\\w+)\\W+|/(\\w+)","\\1 \\2"), # fix words connected by - or / or another non-word character so that they're separated as a space, and remove punctuation
+         cleanText = ifelse(str_length(cleanText)>3,cleanText,NA), # sets texts to NA if they're less than 3 characters (Because otherwise they throw off the text processor below)
+         listingText = str_replace_all(listingText, 'QR Code Link to This Post', ''))  %>%  # remove this phrase from the listing text 
+  drop_na(cleanText) # this will make some rows NA, drop them
+```
+
+
+
+Clean duplicates
+I picked .08 after exploring sorted and topic modeled texts to see what threshhold seemed to be closest to what I would sort as duplicates. I adjusted to a greedier matching (previously I used .05) after I was unhappy with the results once I started the qualitative coding. I also decreased the model total cutoff below from 50 to 40. That means I only stop searching for dupes when fitting a WHOLE NEW model only came up with 40 possible dupes. I also increased the max model iterations to 50, which makes these models much more like what I'll run eventually.
+
+That was when I was using simple Jaccard matching which I think is fast and quite good for finding very close duplicates, say those as a result of different spellings. However, in my corpus there are documents which are made with a template by property manageers. These have more difference than a mispelling or two, and so single-character Jaccard matching has trouble distinguishing them from texts which just happen to be similar, we'll call  those 'false-dupes'. The false dupes problem meant that I was dropping thousands of texts from my corpus that weren't actually duplicates. To deal with that, I experimented with other string distance measured and eventually settled on Jaccard matching using 10-grams. That's sigificantly slower but also, based on my testing, seems to be more accurate: only very very low matches are false matches. In fact, the only true false-dupes I read were only around a .2 match (so they had a .8 measured jaccard 10-gram difference), compared to a .95 match for simple jaccard. Documents at around .7 difference were often from the same development or property manager but had different unit descriptions. Since those kinds of texts would be acceptable to include, I set the new threshold at .7 for jaccard 10-gram distance.
+
+
+```{r set vars for dupe cleaning}
+#start up vars
+thresh = .7
+interval = 50
+n_topics = 30
+cl_dropped <- cl_data
+#cl_save <- cl_dropped
+# cl_dropped <- cl_save
+# cl_dropped_08 <- cl_dropped
+```
+
+I initially just dropped duplicates based on textual similarity using the LDA, then adjusted to use STM, but I found that I still had lots of very similar texts from the same addresses in my models. This means that my associations with racial proportion are more about the material differences in housing stock available in black neighborhoods (controlling for economic factors), then about discursive differences. The following routine robustly removes matches for each address in the sample. There are some issues: I'm not using fuzzy address matching, so some duplicates might come from the address being written multiple ways. Also, many times property management companies use similar texts across the properties they manange: those won't be sorted out by this method. However, by completing this step first, I make it easier for the next STM dupe removal step.
+
+```{r drop by shared address}
+# loop through addresses
+addresses <- cl_dropped%>% group_by(matchAddress) %>% count() %>% arrange(desc(n)) %>% filter(n>10)
+address_total <- 0
+for(i in addresses$matchAddress){
+  # grab the top 100 documents matching each topic
+  top_100 <- cl_dropped %>% filter(matchAddress == i)
+  # get the texts of those documents and compare them
+  dist_matrix <- stringdistmatrix(top_100$dupeText, method = 'jaccard', q = 10)
+  candidates <- as.data.frame(which(as.matrix(dist_matrix)<thresh, arr.ind = T)) %>% 
+    filter(row!=col) %>% 
+    mutate(candidate = ifelse(row>col,row,col))
+  # get the ids of the ones to drop
+  drop_list <- top_100$py_index[c(unique(candidates$candidate))]
+  # drop them
+  cl_dropped <- cl_dropped %>% filter(!py_index %in% drop_list)
+  print(paste("Dropped", length(drop_list), "listings from",i)) # print for logging
+  # update the total for this iteration
+  address_total <- address_total + length(drop_list)
+}
+print(address_total)
+#write_csv(cl_dropped, "data/cl_dropped_addresses.csv")
+```
+
+
+```{r stm loop cleaning}
+# loopy loops
+# init a high model total
+model_total=6
+# loop while the model total is high
+while(model_total>5){
+  model_total=0 # reset model total
+  # preprocess the documents, make a corpus
+  temp <- textProcessor(documents = cl_dropped$dupeText, meta=cl_dropped, onlycharacter = TRUE) 
+  out_dupe <- prepDocuments(temp$documents, temp$vocab, meta = temp$meta)
+  # fit a limited model to that data
+  dupe_model <- stm(out_dupe$documents, out_dupe$vocab, K = n_topics, max.em.its = 100, seed=24 ,verbose = TRUE)
+  dupe_fit <- as_data_frame(make.dt(dupe_model, out_dupe$meta))
+  # start some counters
+  it_start = 1 
+  it_total = 11
+  # loop through iterations
+  while(it_total>10){
+    it_total = 0
+    it_max = 0
+    # loop through topics
+    for(i in paste0('Topic',1:n_topics)){
+      # grab the top 100 documents matching each topic
+      top_100 <- dupe_fit %>% 
+        arrange(desc(get(i))) %>% 
+        select(py_index) %>% 
+        slice(it_start:(it_start+interval)) %>% 
+        inner_join(cl_dropped, by='py_index') %>%
+        select(py_index,dupeText)
+      # get the texts of those documents and compare them
+      dist_matrix <- stringdistmatrix(top_100$dupeText, method = 'jaccard', q = 10)
+      candidates <- as.data.frame(which(as.matrix(dist_matrix)<thresh, arr.ind = T)) %>% 
+        filter(row!=col) %>% 
+        mutate(candidate = ifelse(row>col,row,col))
+      # get the ids of the ones to drop
+      drop_list <- top_100$py_index[c(unique(candidates$candidate))]
+      # drop them
+      cl_dropped <- cl_dropped %>% filter(!py_index %in% drop_list)
+      # drop them from the fit object too
+      dupe_fit <- dupe_fit %>% filter(!py_index %in% drop_list)
+      print(paste("Dropped", length(drop_list), "listings from",i)) # print for logging
+      # update the total for this iteration
+      it_total <- it_total + length(drop_list)
+      # if this topic beat the last max for this iteration update it
+      if(length(drop_list)>it_max){
+        it_max = length(drop_list)
+      }
+    }
+    # update the start for this iteration
+    it_start = it_start + 100 - it_max
+    print(paste("Dropped",it_total,"total listings this iteration")) # print for logging
+    model_total <- model_total + it_total
+  }
+  print(paste("Dropped",model_total,"total listings with this model")) # print for logging
+}
+write_csv(cl_dropped, "data/cl_dropped.csv")
+```
+
+#notes for finding the best threshold:
+8/7: .08 was way too greedy. I'm now looking at more like a .03 as a reasonable cutoff. I got non-matches even at .05. However, I haven't yet seen any non-matches under .04, and I've seen some very similar (but not exactly the same) matches at 0.039. I then observed some candidates at .047 and 0.48 which were clearly not matches: post id: 6470137879 and post id: 6537495772. Looking deeper, I found a match at 0.04347826 with post id: 6580790444 and post id: 6580676411
+
+post id: 6580790444 and post id: 6580676411 at q=10 match at .253
+not matches: post id: 6470137879 and post id: 6537495772 match at .98
+
+post id: 6580657583 and post id: 6134864208 matched at 0.3236878, they're not exactly the same but from the same development and same key blurb
+
+post id: 6294562979 and  post id: 6496923767 matched at 0.3727811, they're clearly different listings (both 1bdrms but different sqft), but from the same development. They also have different feature lists. Still, they have a key shared paragraph. post id: 6335337190 is from the same development and matched ....3767 at 0.4171076. I'd still consider it a dupe.
+
+Looking at some listings from the Maverick's apartment, matching with post id: 6215244664, ranged from low .4s to .58. They all had the same list of features, but the .58 with post id: 6134807465 was written before the development opened. Though the feature list was the same, the rest of the text was completely distinct. The same was true for post id: 6319614634, which matched at around .55. post id: 6209272455 matched at just over .50, and it could be a duplicate, but would be fine if it were maintained. post id: 6272918342 matched with a .49 and was too close, I'd want to drop it for sure. This is pushing me towards a .5 threshold, though dropping all of these texts would be OK too.
+
+Ok, now I'm looking at some of Kevin Falk's listings, matching with post id: 6218383684. Looking at the highest match in the .40s, post id: 6487945574 at .43, it's for a different unit, but uses Kevin's same spiel abou the neighborhood (even thought they're from different places!). Post id: 6380109657, matching at .52, though, seemed like only slightly less of a match. It's notable that noting I've read under .6 that was certainly not a duplicate. However, at .569, post id: 6185438087 though it still had Kevin's format, had more separate content. I'd be OK with it as a separate listing. This pushes me towards a .55 threshold.
+
+Now some from 57 Apartments matching with post id: 6528181107. Again, all of th listings under .6 seem to pe actually from 57 apartments and are quite similar. Looking at post id: 6230206243 which matched with about a .55, it gets this high difference rating because it has some different featers. However, I would mark it as a duplicate. This is pushing me towards a higher threshold.
+
+
+
+Now some from "the martin" matching with post id: 6375324984. Even post id: 6580914693, matching at .68, is from the martin, but it is significantly different. There's only one paragraph of boilerplate and the rest seems to be describing a different unit. This makes me want to consider a .6 threshold. I'm going to grap some more listings from above .7 even to try and find some false duplicates
+
+I spent some real time trying to get up to a true false duplicate. post id: 6445924806 matches with post id: 6254034227 at.8 and is similar in some ways, but is clearly not a duplicate. So .8 is too high. That's good to know.
+
+I'm going to try a .7 threshold and see how it goes.
+
+```{r test if dopped docs were actually dupes}
+# grab a sample of 100 documents
+sample_dupes <- cl_dropped %>% sample_n(100)
+# check each agianst the corpus and count matches
+sample_dupes['matches'] = 0
+for(i in 31:60){
+  line = sample_dupes[i,]
+  dist_matrix <- stringdistmatrix(line$dupeText, cl_data$dupeText, method = 'jaccard', q = 10)
+  to.8 <- as.data.frame(which(as.matrix(dist_matrix)<.8&as.matrix(dist_matrix)>.7, arr.ind = T)) %>% 
+    filter(row!=col) %>% 
+    mutate(candidate = ifelse(row>col,row,col))
+  to.7 <- as.data.frame(which(as.matrix(dist_matrix)<.7&as.matrix(dist_matrix)>.6, arr.ind = T)) %>% 
+    filter(row!=col) %>% 
+    mutate(candidate = ifelse(row>col,row,col))
+  to.6 <- as.data.frame(which(as.matrix(dist_matrix)<.6&as.matrix(dist_matrix)>.5, arr.ind = T)) %>% 
+    filter(row!=col) %>% 
+    mutate(candidate = ifelse(row>col,row,col))
+  sample_dupes$matches[i] <- length(unique(to.7$candidate)) + length(unique(to.6$candidate))
+  print(paste("Matches for line",i))
+  print(length(unique(to.8$candidate)))
+  print(length(unique(to.7$candidate)))
+  print(length(unique(to.6$candidate)))
+  hist(dist_matrix)
+}
+# report average matches 
+
+40,46,52,60
+i=46
+line = sample_dupes[i,]
+dist_matrix <- stringdistmatrix(line$dupeText, cl_data$dupeText, method = 'jaccard', q = 10)
+to.8 <- as.data.frame(which(as.matrix(dist_matrix)<.8&as.matrix(dist_matrix)>.7, arr.ind = T)) %>% 
+  filter(row!=col) %>% 
+  mutate(candidate = ifelse(row>col,row,col))
+to.7 <- as.data.frame(which(as.matrix(dist_matrix)<.7&as.matrix(dist_matrix)>.6, arr.ind = T)) %>% 
+  filter(row!=col) %>% 
+  mutate(candidate = ifelse(row>col,row,col))
+to.6 <- as.data.frame(which(as.matrix(dist_matrix)<.6&as.matrix(dist_matrix)>.5, arr.ind = T)) %>% 
+  filter(row!=col) %>% 
+  mutate(candidate = ifelse(row>col,row,col))
+sample_dupes$matches[i] <- length(unique(candidates$candidate))
+print(paste("Matches for line",i))
+print(length(unique(to.8$candidate)))
+print(length(unique(to.7$candidate)))
+print(length(unique(to.6$candidate)))
+match_type = c(rep.int(.8,length(unique(to.8$candidate))), rep.int(.7,length(unique(to.7$candidate))), rep.int(.6,length(unique(to.6$candidate))))
+matches <- bind_rows(cl_data[to.8$candidate,], cl_data[to.7$candidate,], cl_data[to.6$candidate,]) %>% mutate(match_type = match_type)
+dist_matrix_limited <- stringdistmatrix(line$dupeText, matches$dupeText, method = 'jaccard', q=10)
+cat(line$dupeText)
+cat(matches$dupeText[2])
+matches$postID[84]
+hist(dist_matrix[dist_matrix<.9])
+test <- cl_dropped %>% filter(matchAddress=='1221 1st Ave')
+stringdist(test$dupeText[[5]], test$dupeText[[7]], method = 'jaccard', q=10)
+
+cl_dropped %>% count(collapsed_type)
+```

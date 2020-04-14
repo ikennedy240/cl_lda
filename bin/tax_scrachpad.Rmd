@@ -1,0 +1,27 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+vars <- all.vars(tax_model$formula)
+security_cfs <- tax_model$data %>% select(vars) %>% summarize_all(mean)
+security_cfs <- security_cfs[rep(seq_len(nrow(security_cfs)), each=7),] %>% mutate(`Neighborhood Type:` = unique(tax_model$data$neighborhood_type))
+security_cfs %>% transmute(ntype =`Neighborhood Type:` , tax_probs= predict(tax_model, newdata = security_cfs, type = 'response'), terms_probs= predict(terms_model, newdata = security_cfs, type = 'response'))
+```
+
+```{r}
+topicX <- 'Topic1'
+test_coef_sum_bi %>% mutate(percent_increase = coefs*exp(coefs)) %>% filter(topic == topicX)
+test_coef_sum %>% mutate(percent_increase = coefs*exp(coefs)) %>% filter(topic == topicX)
+test_coef_sum %>% mutate(percent_increase = coefs*exp(coefs)) %>% filter(topic == topicX) %>% summarize_all(mean)
+merged_fit %>% transmute(med_black = black_proportion>median(black_proportion), beach = str_detect(str_to_lower(str_c(listingText, listingTitle)), 'light rail')) %>% group_by(med_black) %>% summarise(mean(beach))
+```
+```{r}
+merged_fit %>% select(postID, cleanRent, cleanSqft, cleanBeds, lat, lng, GEOID10, seattle, listingTitle, listingText, cleanText, neighborhood_type, ends_with('proportion'), pop_thousands, starts_with('share')) %>% drop_na(postID) %>% sample_n(5000) %>% write_csv("seattle_sample_demog.csv")
+```
+
